@@ -30,7 +30,7 @@ FROM donnees_fournies.joueur J;
 
 
 INSERT INTO Grille
-SELECT G.id AS id_grille, MAX(G.num_ligne) AS taille, (difficulté???)
+SELECT G.id AS id_grille, MAX(G.num_ligne) AS taille, NULL AS difficulté
 FROM donnees_fournies.grille G
 GROUP BY G.id;
 
