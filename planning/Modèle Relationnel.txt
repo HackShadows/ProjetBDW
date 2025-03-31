@@ -22,16 +22,25 @@ Element(n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲)
 Tuile(i̲d̲_̲t̲u̲i̲l̲e̲, chemin_texture)
 
 
-TuileJeu(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲, nombre)
+TuileJeu(#̲i̲d̲_̲t̲u̲i̲l̲e̲)
 
 
 TuileContrainte(#̲i̲d̲_̲t̲u̲i̲l̲e̲, difficulté, nb_points)
 
 
-Contrainte(#̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲)
-est_associée_à(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲)
+Contrainte(i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲)
+
 
 ContrainteElement(#̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲, nombre, #nom_élément)
+
+
 ContrainteNombre(#̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲, type, nombre)
+
+
+est_associée_à(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲)
+
+
+contient1(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲, nombre)
+
 
 contient2(#̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲, #̲i̲d̲_̲g̲r̲i̲l̲l̲e̲, ligne, position)
