@@ -1,0 +1,30 @@
+Classement(PRIMARY KEY taille_grille, PRIMARY KEY difficulté, nom, date_création, date_maj)
+Joueur(PRIMARY KEY id_joueur, nom, prénom, pseudo, année_naiss)
+
+est_classé_dans(PRIMARY KEY (#taille_grille, #difficulté), PRIMARY KEY #id_joueur)
+
+
+
+Partie(PRIMARY KEY id_partie, date, horraire, en_cour, score, #id_joueur, #id_grille, #id_pioche)
+
+Grille(PRIMARY KEY id_grille, taille, difficulté)
+Pioche(PRIMARY KEY id_pioche, nb_tuiles_découvertes)
+Tour(PRIMARY KEY (#id_partie, id_tour), posx, posy, #id_tuile)
+
+
+
+Element(PRIMARY KEY nom_élément)
+
+Tuile(PRIMARY KEY id_tuile, chemin_texture)
+contient1(PRIMARY KEY #id_tuile, PRIMARY KEY nombre, PRIMARY KEY #nom_élément)
+
+TuileContrainte(PRIMARY KEY #id_tuile, difficulté, nb_points)
+
+
+Contrainte(PRIMARY KEY id_contrainte)
+est_associée_à(PRIMARY KEY #id_tuile, PRIMARY KEY #id_contrainte)
+
+ContrainteElement(PRIMARY KEY #id_contrainte, nombre, #nom_élément)
+ContrainteNombre(PRIMARY KEY #id_contrainte, type, nombre)
+
+contient2(PRIMARY KEY #id_contrainte, PRIMARY KEY ligne, PRIMARY KEY position, PRIMARY KEY #id_grille)
