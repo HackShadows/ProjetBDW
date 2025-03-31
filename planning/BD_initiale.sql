@@ -22,6 +22,17 @@ create table Joueur (
   PRIMARY KEY (id_joueur)
 );
 
+create table Partie (
+  id_partie integer, 
+  date_création datetime,
+  en_cours boolean, 
+  score integer,
+  id_joueur integer,
+  id_grille integer,
+  id_pioche integer,
+  PRIMARY KEY (id_partie)
+);
+
 create table Grille (
   id_grille integer, 
   taille integer,
@@ -55,20 +66,33 @@ create table Tuile (
   PRIMARY KEY (id_tuile)
 );
 
-create table TuileContrainte (
+create table TuileJeu (
   id_tuile integer,
-  difficulté varchar(16),
-  chemin_texture varchar(128), 
   PRIMARY KEY (id_tuile)
 );
 
-create table Partie (
-  id_partie integer, 
-  date_création datetime,
-  en_cours boolean, 
-  score integer,
-  id_joueur integer,
-  id_grille integer,
-  id_pioche integer,
-  PRIMARY KEY (id_partie)
+create table TuileContrainte (
+  id_tuile integer,
+  difficulté varchar(16),
+  nb_points integer,
+  PRIMARY KEY (id_tuile)
+);
+
+create table Contrainte (
+  id_contranite integer,
+  PRIMARY KEY (id_contranite)
+);
+
+create table ContrainteElement (
+  id_contranite integer,
+  nombre integer,
+  nom_élément varchar(32),
+  PRIMARY KEY (id_contranite)
+);
+
+create table ContrainteNombre (
+  id_contranite integer,
+  nombre integer,
+  type_contrainte varchar(32),
+  PRIMARY KEY (id_contranite)
 );
