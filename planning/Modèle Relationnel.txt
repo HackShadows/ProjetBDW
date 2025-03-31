@@ -1,22 +1,29 @@
 Classement(t̲a̲i̲l̲l̲e̲_̲g̲r̲i̲l̲l̲e̲, d̲i̲f̲f̲i̲c̲u̲l̲t̲é̲, nom, date_création, date_maj)
+
+
 Joueur(i̲d̲_̲j̲o̲u̲e̲u̲r̲, nom, prénom, pseudo, année_naiss)
 
-est_classé_dans((̲#̲t̲a̲i̲l̲l̲e̲_̲g̲r̲i̲l̲l̲e̲,̲ ̲#̲d̲i̲f̲f̲i̲c̲u̲l̲t̲é̲), i̲d̲_̲j̲o̲u̲e̲u̲r̲)
 
+Partie(i̲d̲_̲p̲a̲r̲t̲i̲e̲, date_création, en_cours, score, #id_joueur, (#taille_grille, #difficulté), #id_grille, #id_pioche)
 
-
-Partie(i̲d̲_̲p̲a̲r̲t̲i̲e̲, date_création, en_cours, score, #id_joueur, #id_grille, #id_pioche)
 
 Grille(i̲d̲_̲g̲r̲i̲l̲l̲e̲, taille, difficulté)
-Pioche(i̲d̲_̲p̲i̲o̲c̲h̲e̲, nb_tuiles_découvertes)
-Tour((̲i̲d̲_̲p̲a̲r̲t̲i̲e̲,̲ ̲i̲d̲_̲t̲o̲u̲r̲), posx, posy, #id_tuile)
 
+
+Pioche(i̲d̲_̲p̲i̲o̲c̲h̲e̲, nb_tuiles_découvertes)
+
+
+Tour((̲#i̲d̲_̲p̲a̲r̲t̲i̲e̲,̲ i̲d̲_̲t̲o̲u̲r̲), posx, posy, #id_tuile)
 
 
 Element(n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲)
 
-Tuile(#̲i̲d̲_̲t̲u̲i̲l̲e̲, chemin_texture)
-contient1(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲, nombre)
+
+Tuile(i̲d̲_̲t̲u̲i̲l̲e̲, chemin_texture)
+
+
+TuileJeu(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲, nombre)
+
 
 TuileContrainte(#̲i̲d̲_̲t̲u̲i̲l̲e̲, difficulté, nb_points)
 
