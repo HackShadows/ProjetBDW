@@ -2,7 +2,7 @@ DROP SCHEMA IF EXISTS projetbdw CASCADE;
 CREATE SCHEMA projetbdw;
 SET search_path TO projetbdw;
 
-/*Création des tables*/
+/* Création des tables */
 
 create table Classement (
   taille_grille integer, 
@@ -137,3 +137,5 @@ ALTER TABLE contient1 ADD FOREIGN KEY (id_tuile) REFERENCES TuileJeu (id_tuile);
 ALTER TABLE contient1 ADD FOREIGN KEY (nom_élément) REFERENCES Element (nom_élément);
 ALTER TABLE contient2 ADD FOREIGN KEY (id_tuile) REFERENCES TuileContrainte (id_tuile);
 ALTER TABLE contient2 ADD FOREIGN KEY (id_grille) REFERENCES Grille (id_grille);
+
+/* Insertion des enregistrements */
