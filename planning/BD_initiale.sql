@@ -99,20 +99,20 @@ create table ContrainteNombre (
   PRIMARY KEY (id_contrainte)
 );
 
-create table est_associee_a (
+create table associe_contrainte (
   id_tuile integer,
   id_contrainte integer,
   PRIMARY KEY (id_tuile, id_contrainte)
 );
 
-create table contient1 (
+create table contient_element (
   id_tuile integer,
   nom_élément varchar(32),
   nombre INTEGER,
   PRIMARY KEY (id_tuile, nom_élément)
 );
 
-create table contient2 (
+create table contient_tuile_contrainte (
   id_tuile integer,
   id_grille INTEGER,
   ligne boolean,
@@ -131,9 +131,9 @@ ALTER TABLE TuileContrainte ADD FOREIGN KEY (id_tuile) REFERENCES Tuile (id_tuil
 ALTER TABLE ContrainteElement ADD FOREIGN KEY (id_contrainte) REFERENCES Contrainte (id_contrainte);
 ALTER TABLE ContrainteElement ADD FOREIGN KEY (nom_élément) REFERENCES Element (nom_élément);
 ALTER TABLE ContrainteNombre ADD FOREIGN KEY (id_contrainte) REFERENCES Contrainte (id_contrainte);
-ALTER TABLE est_associee_a ADD FOREIGN KEY (id_tuile) REFERENCES TuileContrainte (id_tuile);
-ALTER TABLE est_associee_a ADD FOREIGN KEY (id_contrainte) REFERENCES Contrainte (id_contrainte);
-ALTER TABLE contient1 ADD FOREIGN KEY (id_tuile) REFERENCES TuileJeu (id_tuile);
-ALTER TABLE contient1 ADD FOREIGN KEY (nom_élément) REFERENCES Element (nom_élément);
-ALTER TABLE contient2 ADD FOREIGN KEY (id_tuile) REFERENCES TuileContrainte (id_tuile);
-ALTER TABLE contient2 ADD FOREIGN KEY (id_grille) REFERENCES Grille (id_grille);
+ALTER TABLE associe_contrainte ADD FOREIGN KEY (id_tuile) REFERENCES TuileContrainte (id_tuile);
+ALTER TABLE associe_contrainte ADD FOREIGN KEY (id_contrainte) REFERENCES Contrainte (id_contrainte);
+ALTER TABLE contient_element ADD FOREIGN KEY (id_tuile) REFERENCES TuileJeu (id_tuile);
+ALTER TABLE contient_element ADD FOREIGN KEY (nom_élément) REFERENCES Element (nom_élément);
+ALTER TABLE contient_tuile_contrainte ADD FOREIGN KEY (id_tuile) REFERENCES TuileContrainte (id_tuile);
+ALTER TABLE contient_tuile_contrainte ADD FOREIGN KEY (id_grille) REFERENCES Grille (id_grille);

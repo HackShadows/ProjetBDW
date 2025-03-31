@@ -83,21 +83,21 @@ FROM données_fournies.contrainte_nombre CN;
 
 
 
-INSERT INTO est_associee_a
+INSERT INTO associe_contrainte
 SELECT APC.id_tuile AS id_tuile, APC.id_contrainte AS id_contrainte
 FROM données_fournies.a_pour_contrainte APC;
 
 
-INSERT INTO contient1
+INSERT INTO contient_element
 SELECT TJ.id AS id_tuile, E.nom AS nom_élément, TJ.nombre_element AS nombre
 FROM données_fournies.tuile_jeu TJ JOIN données_fournies.element E ON TJ.id_element = E.id;
 
 
-INSERT INTO contient2
+INSERT INTO contient_tuile_contrainte
 SELECT G.id_tuile AS id_tuile, G.id AS id_grille, FALSE, G.num_colonne
 FROM données_fournies.grille G
 WHERE G.num_ligne=0;
-INSERT INTO contient2
+INSERT INTO contient_tuile_contrainte
 SELECT G.id_tuile AS id_tuile, G.id AS id_grille, TRUE, G.num_ligne
 FROM données_fournies.grille G
 WHERE G.num_colonne=0;
