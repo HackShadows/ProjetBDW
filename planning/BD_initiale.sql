@@ -1,5 +1,5 @@
 DROP SCHEMA IF EXISTS projetbdw CASCADE;
-CREATE SCHEMA IF NOT EXISTS projetbdw;
+CREATE SCHEMA projetbdw;
 SET search_path TO projetbdw;
 
 /*Création des tables*/
@@ -24,10 +24,12 @@ create table Joueur (
 
 create table Partie (
   id_partie integer, 
-  date_création datetime,
+  date_création TIMESTAMP,
   en_cours boolean, 
   score integer,
   id_joueur integer,
+  taille_grille INTEGER,
+  difficulté VARCHAR(10),
   id_grille integer,
   id_pioche integer,
   PRIMARY KEY (id_partie)
@@ -37,7 +39,7 @@ create table Grille (
   id_grille integer, 
   taille integer,
   difficulté varchar(10), 
-  PRIMARY KEY (id_joueur)
+  PRIMARY KEY (id_grille)
 );
 
 create table Pioche (
@@ -79,20 +81,59 @@ create table TuileContrainte (
 );
 
 create table Contrainte (
-  id_contranite integer,
-  PRIMARY KEY (id_contranite)
+  id_contrainte integer,
+  PRIMARY KEY (id_contrainte)
 );
 
 create table ContrainteElement (
-  id_contranite integer,
+  id_contrainte integer,
   nombre integer,
   nom_élément varchar(32),
-  PRIMARY KEY (id_contranite)
+  PRIMARY KEY (id_contrainte)
 );
 
 create table ContrainteNombre (
-  id_contranite integer,
+  id_contrainte integer,
   nombre integer,
   type_contrainte varchar(32),
-  PRIMARY KEY (id_contranite)
+  PRIMARY KEY (id_contrainte)
 );
+
+create table est_associee_a (
+  id_tuile integer,
+  id_contrainte integer,
+  PRIMARY KEY (id_tuile, id_contrainte)
+);
+
+create table contient1 (
+  id_tuile integer,
+  nom_élément varchar(32),
+  nombre INTEGER,
+  PRIMARY KEY (id_tuile, nom_élément)
+);
+
+create table contient2 (
+  id_tuile integer,
+  id_grille INTEGER,
+  ligne boolean,
+  position INTEGER,
+  PRIMARY KEY (id_tuile, id_grille)
+);
+
+ALTER TABLE Partie ADD FOREIGN KEY (id_joueur) REFERENCES Joueur (id_joueur);
+ALTER TABLE Partie ADD FOREIGN KEY (taille_grille, difficulté) REFERENCES Classement (taille_grille, difficulté);
+ALTER TABLE Partie ADD FOREIGN KEY (id_grille) REFERENCES Grille (id_grille);
+ALTER TABLE Partie ADD FOREIGN KEY (id_pioche) REFERENCES Pioche (id_pioche);
+ALTER TABLE Tour ADD FOREIGN KEY (id_partie) REFERENCES Partie (id_partie);
+ALTER TABLE Tour ADD FOREIGN KEY (id_tuile) REFERENCES TuileJeu (id_tuile);
+ALTER TABLE TuileJeu ADD FOREIGN KEY (id_tuile) REFERENCES Tuile (id_tuile);
+ALTER TABLE TuileContrainte ADD FOREIGN KEY (id_tuile) REFERENCES Tuile (id_tuile);
+ALTER TABLE ContrainteElement ADD FOREIGN KEY (id_contrainte) REFERENCES Contrainte (id_contrainte);
+ALTER TABLE ContrainteElement ADD FOREIGN KEY (nom_élément) REFERENCES Element (nom_élément);
+ALTER TABLE ContrainteNombre ADD FOREIGN KEY (id_contrainte) REFERENCES Contrainte (id_contrainte);
+ALTER TABLE est_associee_a ADD FOREIGN KEY (id_tuile) REFERENCES TuileContrainte (id_tuile);
+ALTER TABLE est_associee_a ADD FOREIGN KEY (id_contrainte) REFERENCES Contrainte (id_contrainte);
+ALTER TABLE contient1 ADD FOREIGN KEY (id_tuile) REFERENCES TuileJeu (id_tuile);
+ALTER TABLE contient1 ADD FOREIGN KEY (nom_élément) REFERENCES Element (nom_élément);
+ALTER TABLE contient2 ADD FOREIGN KEY (id_tuile) REFERENCES TuileContrainte (id_tuile);
+ALTER TABLE contient2 ADD FOREIGN KEY (id_grille) REFERENCES Grille (id_grille);
