@@ -55,7 +55,7 @@ FROM données_fournies.tuile T;
 
 
 INSERT INTO TuileJeu
-SELECT TJ.id AS id_tuile
+SELECT DISTINCT TJ.id AS id_tuile
 FROM données_fournies.tuile_jeu TJ;
 
 
@@ -83,7 +83,7 @@ FROM données_fournies.contrainte_nombre CN;
 
 
 
-INSERT INTO est_associée_à
+INSERT INTO est_associee_a
 SELECT APC.id_tuile AS id_tuile, APC.id_contrainte AS id_contrainte
 FROM données_fournies.a_pour_contrainte APC;
 
