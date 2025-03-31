@@ -1,4 +1,4 @@
-Joueur: id, nom, prénom, pseudo, année_naiss
+Joueur: id_joueur, nom, prénom, pseudo, année_naiss
 est_classé_dans, 1N Classement, 1N Joueur, 11 Partie : score
 Classement: taille_grille, _difficulté, nom, date_création, date_maj
 :
@@ -6,31 +6,31 @@ Classement: taille_grille, _difficulté, nom, date_création, date_maj
 :
 
 appartient_à, 11 Pioche, 11 Partie
-Partie: id, date_création, horaire_début, en_cours
+Partie: id_partie, date_création, horaire_début, en_cours
 dispose_de, 11 Grille, 11 Partie
-Grille: id, taille, difficulté
+Grille: id_grille, taille, difficulté
 :
 :
 
-Pioche: id, nb_tuiles_découvertes
+Pioche: id_pioche, nb_tuiles_découvertes
 est_associée_au, 1N Partie, _11 Tour
-Tuile: id, chemin_texture
+Tuile: id_tuile, chemin_texture
 contient2, 1N Grille, 0N TuileContrainte : ligne, position
 :
 :
 
 :
-Tour: id
+Tour: id_tour
 /XT\ Tuile -> TuileContrainte, TuileJeu
 TuileContrainte: difficulté, nb_points
 est_associée_à, 1N TuileContrainte, 0N Contrainte
-ContrainteNombre: type, nombre
+ContrainteNombre: type_contrainte, nombre
 
 :
 est_jouée_au, 11 Tour, 0N TuileJeu : posx, posy
 TuileJeu: 
 :
-Contrainte: id
+Contrainte: id_contrainte
 /XT\ Contrainte -> ContrainteElement, ContrainteNombre
 
 :
