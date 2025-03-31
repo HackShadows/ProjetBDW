@@ -23,7 +23,7 @@
 
 INSERT INTO Joueur
 SELECT J.idJ AS id_joueur, J.nom AS nom, J.prénom AS prénom, J.pseudo AS pseudo, J.année_naiss AS année_naiss
-FROM donnees_fournies.joueur J;
+FROM données_fournies.joueur J;
 
 
 -- Rien pour Partie
@@ -31,13 +31,13 @@ FROM donnees_fournies.joueur J;
 
 INSERT INTO Grille
 SELECT G.id AS id_grille, MAX(G.num_ligne) AS taille, NULL AS difficulté
-FROM donnees_fournies.grille G
+FROM données_fournies.grille G
 GROUP BY G.id;
 
 
 INSERT INTO Pioche
 SELECT P.id_grille AS id_pioche, MAX(P.rang) AS nb_tuiles_découvertes
-FROM donnees_fournies.pioche P
+FROM données_fournies.pioche P
 GROUP BY P.id_grille;
 
 
@@ -46,60 +46,60 @@ GROUP BY P.id_grille;
 
 INSERT INTO Element
 SELECT E.nom AS nom_élément
-FROM donnees_fournies.element E;
+FROM données_fournies.element E;
 
 
 INSERT INTO Tuile
 SELECT T.id AS id_tuile, T.fichier AS chemin_texture
-FROM donnees_fournies.tuile T;
+FROM données_fournies.tuile T;
 
 
 INSERT INTO TuileJeu
 SELECT TJ.id AS id_tuile
-FROM donnees_fournies.tuile_jeu TJ;
+FROM données_fournies.tuile_jeu TJ;
 
 
 INSERT INTO TuileContrainte
 SELECT TC.id AS id_tuile, TC.niveau AS difficulté, TC.points AS nb_points
-FROM donnees_fournies.tuile_contrainte TC;
+FROM données_fournies.tuile_contrainte TC;
 
 
 INSERT INTO Contrainte
 SELECT CE.id AS id_contrainte
-FROM donnees_fournies.contrainte_element CE;
+FROM données_fournies.contrainte_element CE;
 INSERT INTO Contrainte
 SELECT CN.id AS id_contrainte
-FROM donnees_fournies.contrainte_nombre CN;
+FROM données_fournies.contrainte_nombre CN;
 
 
 INSERT INTO ContrainteElement
 SELECT CE.id AS id_contrainte, CE.nb_elements AS nombre, E.nom AS nom_élément
-FROM donnees_fournies.contrainte_element CE JOIN donnees_fournies.element E ON CE.id_element = E.id;
+FROM données_fournies.contrainte_element CE JOIN données_fournies.element E ON CE.id_element = E.id;
 
 
 INSERT INTO ContrainteNombre
 SELECT CN.id AS id_contrainte, CN.nb_elements AS nombre, CN.typeC AS type_contrainte
-FROM donnees_fournies.contrainte_nombre CN;
+FROM données_fournies.contrainte_nombre CN;
 
 
 
 INSERT INTO est_associée_à
 SELECT APC.id_tuile AS id_tuile, APC.id_contrainte AS id_contrainte
-FROM donnees_fournies.a_pour_contrainte APC;
+FROM données_fournies.a_pour_contrainte APC;
 
 
 INSERT INTO contient1
 SELECT TJ.id AS id_tuile, E.nom AS nom_élément, TJ.nombre_element AS nombre
-FROM donnees_fournies.tuile_jeu TJ JOIN donnees_fournies.element E ON TJ.id_element = E.id;
+FROM données_fournies.tuile_jeu TJ JOIN données_fournies.element E ON TJ.id_element = E.id;
 
 
 INSERT INTO contient2
 SELECT G.id_tuile AS id_tuile, G.id AS id_grille, FALSE, G.num_colonne
-FROM donnees_fournies.grille G
+FROM données_fournies.grille G
 WHERE G.num_ligne=0;
 INSERT INTO contient2
 SELECT G.id_tuile AS id_tuile, G.id AS id_grille, TRUE, G.num_ligne
-FROM donnees_fournies.grille G
+FROM données_fournies.grille G
 WHERE G.num_colonne=0;
 
 DROP SCHEMA IF EXISTS données_fournies CASCADE;
