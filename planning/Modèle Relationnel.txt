@@ -1,30 +1,30 @@
-Classement(PRIMARY KEY taille_grille, PRIMARY KEY difficulté, nom, date_création, date_maj)
-Joueur(PRIMARY KEY id_joueur, nom, prénom, pseudo, année_naiss)
+Classement(t̲a̲i̲l̲l̲e̲_̲g̲r̲i̲l̲l̲e̲, d̲i̲f̲f̲i̲c̲u̲l̲t̲é̲, nom, date_création, date_maj)
+Joueur(i̲d̲_̲j̲o̲u̲e̲u̲r̲, nom, prénom, pseudo, année_naiss)
 
-est_classé_dans(PRIMARY KEY (#taille_grille, #difficulté), PRIMARY KEY #id_joueur)
-
-
-
-Partie(PRIMARY KEY id_partie, date, horraire, en_cour, score, #id_joueur, #id_grille, #id_pioche)
-
-Grille(PRIMARY KEY id_grille, taille, difficulté)
-Pioche(PRIMARY KEY id_pioche, nb_tuiles_découvertes)
-Tour(PRIMARY KEY (#id_partie, id_tour), posx, posy, #id_tuile)
+est_classé_dans((̲#̲t̲a̲i̲l̲l̲e̲_̲g̲r̲i̲l̲l̲e̲,̲ ̲#̲d̲i̲f̲f̲i̲c̲u̲l̲t̲é̲), i̲d̲_̲j̲o̲u̲e̲u̲r̲)
 
 
 
-Element(PRIMARY KEY nom_élément)
+Partie(i̲d̲_̲p̲a̲r̲t̲i̲e̲, date, horraire, en_cour, score, #id_joueur, #id_grille, #id_pioche)
 
-Tuile(PRIMARY KEY id_tuile, chemin_texture)
-contient1(PRIMARY KEY #id_tuile, PRIMARY KEY nombre, PRIMARY KEY #nom_élément)
+Grille(i̲d̲_̲g̲r̲i̲l̲l̲e̲, taille, difficulté)
+Pioche(i̲d̲_̲p̲i̲o̲c̲h̲e̲, nb_tuiles_découvertes)
+Tour((̲i̲d̲_̲p̲a̲r̲t̲i̲e̲,̲ ̲i̲d̲_̲t̲o̲u̲r̲), posx, posy, #id_tuile)
 
-TuileContrainte(PRIMARY KEY #id_tuile, difficulté, nb_points)
 
 
-Contrainte(PRIMARY KEY id_contrainte)
-est_associée_à(PRIMARY KEY #id_tuile, PRIMARY KEY #id_contrainte)
+Element(n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲)
 
-ContrainteElement(PRIMARY KEY #id_contrainte, nombre, #nom_élément)
-ContrainteNombre(PRIMARY KEY #id_contrainte, type, nombre)
+Tuile(#̲i̲d̲_̲t̲u̲i̲l̲e̲, chemin_texture)
+contient1(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲, nombre)
 
-contient2(PRIMARY KEY #id_contrainte, PRIMARY KEY ligne, PRIMARY KEY position, PRIMARY KEY #id_grille)
+TuileContrainte(#̲i̲d̲_̲t̲u̲i̲l̲e̲, difficulté, nb_points)
+
+
+Contrainte(#̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲)
+est_associée_à(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲)
+
+ContrainteElement(#̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲, nombre, #nom_élément)
+ContrainteNombre(#̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲, type, nombre)
+
+contient2(#̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲, #̲i̲d̲_̲g̲r̲i̲l̲l̲e̲, ligne, position)
