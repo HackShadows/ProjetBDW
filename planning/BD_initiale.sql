@@ -137,5 +137,3 @@ ALTER TABLE contient1 ADD FOREIGN KEY (id_tuile) REFERENCES TuileJeu (id_tuile);
 ALTER TABLE contient1 ADD FOREIGN KEY (nom_élément) REFERENCES Element (nom_élément);
 ALTER TABLE contient2 ADD FOREIGN KEY (id_tuile) REFERENCES TuileContrainte (id_tuile);
 ALTER TABLE contient2 ADD FOREIGN KEY (id_grille) REFERENCES Grille (id_grille);
-
-/* Insertion des enregistrements */

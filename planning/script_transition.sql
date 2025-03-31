@@ -94,10 +94,12 @@ FROM donnees_fournies.tuile_jeu TJ JOIN donnees_fournies.element E ON TJ.id_elem
 
 
 INSERT INTO contient2
-SELECT G.id_tuile AS id_contrainte, G.id AS id_grille, FALSE, G.num_colonne
+SELECT G.id_tuile AS id_tuile, G.id AS id_grille, FALSE, G.num_colonne
 FROM donnees_fournies.grille G
 WHERE G.num_ligne=0;
 INSERT INTO contient2
-SELECT G.id_tuile AS id_contrainte, G.id AS id_grille, TRUE, G.num_ligne
+SELECT G.id_tuile AS id_tuile, G.id AS id_grille, TRUE, G.num_ligne
 FROM donnees_fournies.grille G
 WHERE G.num_colonne=0;
+
+DROP SCHEMA IF EXISTS données_fournies CASCADE;

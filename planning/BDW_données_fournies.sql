@@ -1,4 +1,4 @@
-DROP SCHEMA IF EXISTS données_fournies;
+DROP SCHEMA IF EXISTS données_fournies CASCADE;
 CREATE SCHEMA données_fournies;
 SET search_path TO données_fournies;
 
