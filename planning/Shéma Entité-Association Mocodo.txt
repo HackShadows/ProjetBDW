@@ -34,7 +34,7 @@ dispose_de, 11 Grille, 11 Partie
 est_jouée_au, 11 Tour, 0N TuileJeu : posx, posy
 Tour: id
 est_associée_au, 1N Partie, _11 Tour
-Partie: id, date_création, horaire_début, en_cours
+Partie: id, date_création, en_cours
 appartient_à, 11 Pioche, 11 Partie
 Pioche: id, nb_tuiles_découvertes
 

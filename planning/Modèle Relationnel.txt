@@ -5,7 +5,7 @@ est_classé_dans((̲#̲t̲a̲i̲l̲l̲e̲_̲g̲r̲i̲l̲l̲e̲,̲ ̲#̲d̲i̲f̲
 
 
 
-Partie(i̲d̲_̲p̲a̲r̲t̲i̲e̲, date_création, horaire_début, en_cours, score, #id_joueur, #id_grille, #id_pioche)
+Partie(i̲d̲_̲p̲a̲r̲t̲i̲e̲, date_création, en_cours, score, #id_joueur, #id_grille, #id_pioche)
 
 Grille(i̲d̲_̲g̲r̲i̲l̲l̲e̲, taille, difficulté)
 Pioche(i̲d̲_̲p̲i̲o̲c̲h̲e̲, nb_tuiles_découvertes)
