@@ -34,7 +34,7 @@ Contrainte(i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲)
 ContrainteElement(#̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲, nombre, #nom_élément)
 
 
-ContrainteNombre(#̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲, type_contrainte, nombre)
+ContrainteNombre(#̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲, nombre, type_contrainte)
 
 
 est_associée_à(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲t̲e̲)
