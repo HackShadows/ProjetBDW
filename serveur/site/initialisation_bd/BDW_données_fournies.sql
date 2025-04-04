@@ -108,7 +108,7 @@ INSERT INTO tuile_jeu (id, id_element, nombre_element) VALUES (27,6,1);
 INSERT INTO tuile (id, typeT, fichier) VALUES (27,'jeu','tj27.png');
 
 INSERT INTO tuile_jeu (id, id_element, nombre_element) VALUES (28,3,1);
-INSERT INTO tuile_jeu (id, id_element, nombre_element) VALUES (26,4,1);
+INSERT INTO tuile_jeu (id, id_element, nombre_element) VALUES (28,4,1);
 INSERT INTO tuile (id, typeT, fichier) VALUES (28,'jeu','tj28.png');
 
 INSERT INTO tuile_jeu (id, id_element, nombre_element) VALUES (29,3,1);
