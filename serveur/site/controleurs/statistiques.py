@@ -2,7 +2,7 @@ from model.model_pg import is_existing_recipe, insert_recipe
 from controleurs.includes import add_activity
 
 
-add_activity(SESSION['HISTORIQUE'], "consultation de la page ajouter recette")
+# add_activity(SESSION['HISTORIQUE'], "consultation de la page ajouter recette")
 
 if POST and 'bouton_valider' in POST:  # formulaire soumis
     nom_recette = POST['nom_recette'][0]  # attention, un <input> retourne une liste

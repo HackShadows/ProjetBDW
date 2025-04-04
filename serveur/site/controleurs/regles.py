@@ -1,7 +1,7 @@
 from model.model_pg import get_instances, get_recipe, get_steps_recipe
 from controleurs.includes import add_activity
 
-add_activity(SESSION['HISTORIQUE'], "affichage des données")
+# add_activity(SESSION['HISTORIQUE'], "affichage des données")
 
 if GET and 'id_recette' in GET: # Cas affichage des détails d'une recette 
     REQUEST_VARS['affichage'] = 'detail'
