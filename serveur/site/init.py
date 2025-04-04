@@ -6,6 +6,6 @@ from datetime import datetime
 
 
 
-SESSION['APP'] = "Mitonmar"
-SESSION['BASELINE'] = "Partagez vos recettes"
+SESSION['APP'] = "Projet_BDW"
+SESSION['BASELINE'] = "Lost Seas"
 SESSION['CURRENT_YEAR'] = datetime.now().year
