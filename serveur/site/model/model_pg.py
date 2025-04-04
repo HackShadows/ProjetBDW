@@ -138,33 +138,44 @@ def get_nb_element(connexion, id_tuile :int) -> int:
     if nb is None: return None
     return nb[0]['nb']
 
-def get_element_simple(connexion, nom_element :str) -> str:
+def get_elements(connexion) -> list[str]:
     """
-    Retourne l'image de la tuile possédant seulement un élément 'nom_element'
+    Retourne la liste de tous les éléments existants.
     
     Paramètres
     ----------
     connexion : 
         Connexion à la base de donnée.
-    nom_element : str
-        Nom de l'élément à afficher.
 
     Renvoie
     -------
-    Nom de l'image correspondant à la tuile souhaitée.
+    Liste de tous les éléments.
     """
-    query = 'SELECT * FROM etape WHERE id_recette=%s ORDER BY numero'
-    return execute_select_query(connexion, query, [nom_element])
+    l = get_instances(connexion, "element")
+    if l is None: return None
+    return l[0]['nom_élément']
 
-def is_existing_recipe(connexion, nom_recette):
+def get_tuiles_1element(connexion) -> dict:
     """
-    retourne True si le nom de la recette n'existe pas dans la BD
-    String nom_recette : nom de la recette
-    Retourne un booléen
+    Retourne les images des tuiles à un seul élément, avec le nom de l'élément correspondant en clé.
+    
+    Paramètres
+    ----------
+    connexion : 
+        Connexion à la base de donnée.
+
+    Renvoie
+    -------
+    Dictionnaire (clé = nom de l'élément, valeur = image de la tuile).
     """
-    query = 'SELECT count(*) AS nb FROM recette WHERE nom_recette=%s'
-    nb = execute_select_query(connexion, query, [nom_recette])[0]['nb']
-    return (nb > 0)
+    query1 = 'SELECT id_tuile FROM contient_element GROUP BY id_tuile HAVING SUM(nombre) <= 1'
+    query = 'SELECT id_tuile, nom_élément FROM contient_element WHERE id_tuile IN (%s)'
+    result = execute_select_query(connexion, query, [query1])
+    if result is None: return None
+    dico = {}
+    for dic in result :
+        dico[dic["nom_élément"]] = get_img_tuile(connexion, dic["id_tuile"])
+    return dico
 
 def insert_recipe(connexion, nom_recette, cat_recette):
     """
