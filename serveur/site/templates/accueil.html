@@ -1,25 +1,64 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-<h2>Le site de recettes pour le cours de BDW</h2>
-
-<p id="parag_description">
-	Vous pouvez gérer des recettes, des ingrédients, et les auteurs.
-	<br>
-	Utilisez le menu à gauche pour découvrir les fonctionnalités de ce site.
+<p>
+	Lost Seas est un jeu de société de stratégie, simple à prendre en main et agréable à jouer à plusieurs.
+	Ce site étends le plaisir du jeu en proposant une version solo et en ligne, accessible partout à partir de n'importe quel appareil.
 </p>
+<p>
+	Avant de commencer, n'hésitez pas à lire <a href="/regles">les règles du jeu</a>.
+</p>
+<div id="player-page">
+	<h2>Choisissez un joueur</h2>
 
-<p>Que faire sur ce site ?</p>
-<ul>
-	<li>Afficher les données de la base</li>
-	<li>Ajouter une recette</li>
-	<li>Rechercher une recette</li>
-	<li>Générer un historique de votre activité sur le site</li>
-	<li>...</li>
-</ul>
-
-<div>
-	<img src="mitonmar/static/img/top-plats.png" />
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Pseudo</th>
+				<th>Prénom</th>
+				<th>Nom</th>
+				<th>Année de naissance</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for player in REQUEST_VARS['joueurs'][1] %}
+			<tr>
+				<th><button>{{ player['id_joueur'] }}</button></th>
+				<td>{{ player['pseudo'] }}</td>
+				<td>{{ player['prénom'] }}</td>
+				<td>{{ player['nom'] }}</td>
+				<td>{{ player['année_naiss'] }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 </div>
+<div id="activite">
+	<h2>Activité du site</h2>
 
+	<ul>
+		<li>Nombre de joueurs : {{ REQUEST_VARS['joueurs'][0] }}</li>
+		<li>Nombre de parties jouée depuis le lancement : {{ REQUEST_VARS['nb_parties']['en_cours'] }} dont {{ REQUEST_VARS['nb_parties']['terminées'] }} en cours !</li>
+		<li>Voici les statistiques des 10 dernières parties finies sur le site :
+			<table>
+				<thead>
+					<th>Joueur</th>
+					<th>Difficulté</th>
+					<th>Taille</th>
+					<th>Score</th>
+				</thead>
+				<tbody>
+					{% for partie in REQUEST_VARS['parties_terminées'] %}
+					<tr>
+						<td>{{ partie['pseudo'] }}</td>
+						<td>{{ partie['difficulté'] }}</td>
+						<td>{{ partie['taille'] }}</td>
+						<td>{{ partie['score'] }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</li>
+</div>
 {% endblock %}
