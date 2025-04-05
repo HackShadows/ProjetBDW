@@ -111,7 +111,7 @@
 				<li>
 					<label>
 						<span>{{ nom }}</span>
-						<img href="site/static/img/{{ path }}" width="70px" height="70px">
+						<img src="/site/static/img/tuiles/{{ path }}" width="70px" height="70px">
 					</label>
 				</li>
 				{% endfor %}
@@ -125,7 +125,7 @@
 
 			{# if REQUEST_VARS[tuile random] is not none #}
 			Par exemple, la tuile suivante possède ...
-			<img href="site/static/img/{# val #}">
+			<img src="/site/static/img/tuiles/{# val #}">
 			{# endif #}
 		</li>
 		<li>
@@ -145,14 +145,14 @@
 
 					{# if REQUEST_VARS[tuile random] is not none #}
 					Par exemple, la tuile suivante possède ...
-					<img href="site/static/img/{# val #}">
+					<img src="site/static/img/tuiles/{# val #}">
 					{# endif #}
 
 					A la place d'un chiffre exact, certaines de tuiles demandent à ce qu'un symbole soit présent à la majorité sur la rangée.
 
 					{# if REQUEST_VARS[tuile random] is not none #}
 					Par exemple, la tuile suivante possède ...
-					<img href="site/static/img/{# val #}">
+					<img src="site/static/img//tuiles{# val #}">
 					{# endif #}
 				</li>
 				<li>
@@ -166,7 +166,7 @@
 
 							{# if REQUEST_VARS[tuile random] is not none #}
 							Par exemple, la tuile suivante possède ...
-							<img href="site/static/img/{# val #}">
+							<img src="site/static/img/tuiles/{# val #}">
 							{# endif #}
 						</li>
 						<li>
@@ -174,7 +174,7 @@
 
 							{# if REQUEST_VARS[tuile random] is not none #}
 							Par exemple, la tuile suivante possède ...
-							<img href="site/static/img/{# val #}">
+							<img src="site/static/img/tuiles/{# val #}">
 							{# endif #}
 						</li>
 						<li>
@@ -182,7 +182,7 @@
 
 							{# if REQUEST_VARS[tuile random] is not none #}
 							Par exemple, la tuile suivante possède ...
-							<img href="site/static/img/{# val #}">
+							<img src="site/static/img/tuiles/{# val #}">
 							{# endif #}
 						</li>
 					</ul>
