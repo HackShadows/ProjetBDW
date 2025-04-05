@@ -123,10 +123,8 @@
 
 			Ces tuiles sont uniquement composées d'un ou plusieurs symbole(s).
 
-			{# if REQUEST_VARS[tuile random] is not none #}
-			Par exemple, la tuile suivante possède ...
-			<img src="/site/static/img/tuiles/{# val #}">
-			{# endif #}
+			Par exemple, la tuile suivante possède 2 Dragons et 1 Rocher.
+			<img src="/site/static/img/tuiles/tj60.png">
 		</li>
 		<li>
 			<h3>Les Tuiles d'Expédition</h3>
@@ -141,19 +139,19 @@
 				<li>
 					<h4>Les contraintes de symboles</h4>
 
-					Ce type de contrainte oblige le joueur à avoir le bon nombre de symboles <em>d'un même type</em> dans la rangée.
+					<p>
+						Ce type de contrainte oblige le joueur à avoir le bon nombre de symboles <em>d'un même type</em> dans la rangée.
 
-					{# if REQUEST_VARS[tuile random] is not none #}
-					Par exemple, la tuile suivante possède ...
-					<img src="site/static/img/tuiles/{# val #}">
-					{# endif #}
+						Par exemple, la tuile suivante à besoin de 3 Maelstrom pour être validée.
+						<img src="site/static/img/tuiles/tc119.png">
+					</p>
 
-					A la place d'un chiffre exact, certaines de tuiles demandent à ce qu'un symbole soit présent à la majorité sur la rangée.
+					<p>
+						A la place d'un chiffre exact, certaines tuiles demandent à ce qu'un symbole soit présent à la majorité sur la rangée.
 
-					{# if REQUEST_VARS[tuile random] is not none #}
-					Par exemple, la tuile suivante possède ...
-					<img src="site/static/img//tuiles{# val #}">
-					{# endif #}
+						Par exemple, la tuile suivante à besoin d'une majorité de Kraken pour être validée.
+						<img src="site/static/img//tuiles/tc145.png">
+					</p>
 				</li>
 				<li>
 					<h4>Les contraintes de nombre</h4>
@@ -164,26 +162,20 @@
 						<li>
 							Le premier type demande au joueur un nombre exact de symboles sur la rangée.
 
-							{# if REQUEST_VARS[tuile random] is not none #}
-							Par exemple, la tuile suivante possède ...
-							<img src="site/static/img/tuiles/{# val #}">
-							{# endif #}
+							Par exemple, la tuile suivante requiert qu'il y ait exactement 9 symbols sur la rangée pour être validée.
+							<img src="site/static/img/tuiles/tc157.png">
 						</li>
 						<li>
 							Le deuxième type demande au joueur un nombre exact de <em>types de symbols</em> différents.
 
-							{# if REQUEST_VARS[tuile random] is not none #}
-							Par exemple, la tuile suivante possède ...
-							<img src="site/static/img/tuiles/{# val #}">
-							{# endif #}
+							Par exemple, la tuile suivante requiert 5 types de symbols différents sur la rangée pour être validée.
+							<img src="site/static/img/tuiles/tc162.png">
 						</li>
 						<li>
 							Le troisième type bannis un certain nombre exact de <em>types de symbols</em> sur la rangée.
 
-							{# if REQUEST_VARS[tuile random] is not none #}
-							Par exemple, la tuile suivante possède ...
-							<img src="site/static/img/tuiles/{# val #}">
-							{# endif #}
+							Par exemple, la tuile suivante est validée si il y a plus ou moins de 6 types de symbols différents sur la rangée.
+							<img src="site/static/img/tuiles/tc161.png">
 						</li>
 					</ul>
 				</li>
