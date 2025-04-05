@@ -118,9 +118,9 @@ def get_img_tuile(connexion, id_tuile :int) -> str:
 	# if image is None: return None
 	return image[0]['chemin_texture']
 
-def get_nb_element(connexion, id_tuile :int) -> int:
+def get_elements_tuile(connexion, id_tuile :int) -> dict:
 	"""
-	Retourne le nombre d'éléments présents sur la tuile jeu d'identifiant 'id_tuile'
+	Retourne les éléments présents sur la tuile jeu d'identifiant 'id_tuile'
 	
 	Paramètres
 	----------
@@ -131,46 +131,29 @@ def get_nb_element(connexion, id_tuile :int) -> int:
 
 	Renvoie
 	-------
-	Nombre d'éléments présents sur la tuile.
+	Dictionnaire (clés : noms des éléments, valeurs : nombre d'instances de cet élément sur la tuile).
 	"""
-	query = 'SELECT SUM(nombre) AS nb FROM contient_element WHERE id_tuile=%s '
-	nb = execute_select_query(connexion, query, [id_tuile])
-	return nb[0]['nb']
+	query = 'SELECT nom_élément, nombre FROM contient_element WHERE id_tuile=%s'
+	liste = execute_select_query(connexion, query, [id_tuile])
+	return {dic['nom_élément']:dic['nombre'] for dic in liste}
 
-def get_elements(connexion) -> list[str]:
+def get_infos_joueur(connexion, id_joueur :int) -> dict:
 	"""
-	Retourne la liste de tous les éléments existants.
+	Retourne les informations sur le joueur d'identifiant 'id_joueur'.
 	
 	Paramètres
 	----------
 	connexion : 
 	    Connexion à la base de donnée.
+	id_joueur : int
+	    Identifiant du joueur.
 
 	Renvoie
 	-------
-	Liste de tous les éléments.
+	Dictionnaire (clés : nom, prénom, pseudo, année_naiss).
 	"""
-	l = get_instances(connexion, "element")
-	if l is None: return None
-	return [dic['nom_élément'] for dic in l]
-
-def get_joueurs(connexion) -> list[dict]:
-	"""
-	Retourne la liste de tous les joueurs existants.
-	
-	Paramètres
-	----------
-	connexion : 
-	    Connexion à la base de donnée.
-
-	Renvoie
-	-------
-	Liste de tous les joueurs.
-	"""
-	# l = get_instances(connexion, "joueur")
-	# if l is None: return None
-	# return l
-	return get_instances(connexion, "joueur")
+	query = 'SELECT nom, prénom, pseudo, année_naiss FROM joueur WHERE id_joueur=%s'
+	return execute_select_query(connexion, query, [id_joueur])
 
 
 # Fonctions utilisées par le contrôleur accueil.py
@@ -235,6 +218,50 @@ def get_tuiles_1element(connexion) -> dict:
 	dico = {}
 	for dic in result :
 		dico[dic["nom_élément"]] = get_img_tuile(connexion, dic["id_tuile"])
+	return dico
+
+
+# Fonctions utilisées par le contrôleur classements.py
+
+
+
+
+# Fonctions utilisées par le contrôleur statistiques.py
+def moy_nb_parties(connexion) -> float:
+	"""
+	Retourne le nombre moyen de parties par joueur.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+
+	Renvoie
+	-------
+	Nombre moyen de parties par joueur.
+	"""
+	return count_instances(connexion, "partie") / count_instances(connexion, "joueur")
+
+def score_min_max(connexion) -> dict[tuple[int, dict]]:
+	"""
+	Retourne les informations sur les joueurs ayant le meilleur et le pire score toutes parties confondues.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+
+	Renvoie
+	-------
+	Dictionnaire (clés : mini, maxi, valeurs : (score, dictionnaire(clés : nom, prénom, pseudo, année_naiss))).
+	"""
+	query = 'SELECT id_joueur, score FROM partie ORDER BY score %s LIMIT 1'
+	tris = ['ASC', 'DESC']
+	dico = {}
+	for tri in tris:
+		result = execute_select_query(connexion, query, [tri])[0]
+		joueur = get_infos_joueur(connexion, result["id_joueur"])
+		dico["mini" if tri == 'ASC' else "maxi"] = (result['score'], joueur)
 	return dico
 
 # def insert_recipe(connexion, nom_recette, cat_recette):

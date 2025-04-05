@@ -16,3 +16,6 @@
 #         REQUEST_VARS['message'] = f"Erreur : le fichier d'historique n'est pas disponible."
 #         REQUEST_VARS['message_class'] = "alert-error"
 
+from model.model_pg import get_instances
+
+REQUEST_VARS['classements'] = get_instances(SESSION['CONNEXION'], "classement")
