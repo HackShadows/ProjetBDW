@@ -60,8 +60,17 @@ FROM données_fournies.tuile_jeu TJ;
 
 
 INSERT INTO TuileContrainte
-SELECT TC.id AS id_tuile, TC.niveau AS difficulté, TC.points AS nb_points
-FROM données_fournies.tuile_contrainte TC;
+SELECT TC.id AS id_tuile, FALSE, TC.points AS nb_points
+FROM données_fournies.tuile_contrainte TC
+WHERE TC.niveau = 'Facile';
+INSERT INTO TuileContrainte
+SELECT TC.id AS id_tuile, TRUE, TC.points AS nb_points
+FROM données_fournies.tuile_contrainte TC
+WHERE TC.niveau = 'Difficile';
+-- INSERT INTO TuileContrainte
+-- SELECT TC.id AS id_tuile, NULL, TC.points AS nb_points
+-- FROM données_fournies.tuile_contrainte TC
+-- WHERE TC.niveau NOT IN ('Facile', 'Difficile');
 
 
 INSERT INTO Contrainte
