@@ -110,3 +110,11 @@ main {
 	flex-grow: 1;
 	padding: 3%;
 }
+
+
+
+
+.err-msg {
+	font-weight: 700;
+	color: red;
+}

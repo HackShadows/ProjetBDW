@@ -1,25 +1,209 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-<h2>Le site de recettes pour le cours de BDW</h2>
+<h1>Les règles du jeu</h1>
 
-<p id="parag_description">
-	Vous pouvez gérer des recettes, des ingrédients, et les auteurs.
-	<br>
-	Utilisez le menu à gauche pour découvrir les fonctionnalités de ce site.
+
+
+<p>
+	Lost Seas est un jeu simple mais astucieux qui propose des parties amusantes, le tout en solitaire.
+	L'objectif consiste à remplir un tableau de 16 cases, en collectant et en plaçant habilement des tuiles d'exploration.
+	Le tout en satisfaisant des objectifs définis par des tuiles d’expédition disposées en bordure du plateau.
+	Partez à la découverte de krakens, d'îles désertes et d'autres phénomènes marins dans cette aventure stratégique !
 </p>
 
-<p>Que faire sur ce site ?</p>
-<ul>
-	<li>Afficher les données de la base</li>
-	<li>Ajouter une recette</li>
-	<li>Rechercher une recette</li>
-	<li>Générer un historique de votre activité sur le site</li>
-	<li>...</li>
-</ul>
 
-<div>
-	<img src="mitonmar/static/img/top-plats.png" />
+
+<div class="framed-text">
+	<h2>Matériel et Mise en Place</h2>
+
+	<p><ul>
+		<li>
+			<h3>Cartes d’Expédition</h3>
+
+			8 tuiles d’expédition sont sélectionnées :
+			<ul>
+				<li>4 tuiles destinées à constituer la rangée supérieure, représentant les objectifs de colonnes.</li>
+				<li>4 tuiles pour former la colonne latérale, correspondant aux objectifs des lignes.</li>
+			</ul>
+			Pour chacune de ces tuiles, l'une des faces est choisie et son ordre fixé.
+			Une fois disposées autour du plateau 4 × 4, ces cartes ne peuvent être modifiées.
+		</li>
+		<li>
+			<h3>Tuiles d’Exploration Maritime</h3>
+
+			Les 65 tuiles d’exploration sont mélangées afin de créer une pile face cachée, ce sera la pioche.
+			Ensuite, les 5 premières tuiles sont retournées pour constituer une rangée d’offres visible et servir de base aux choix de tuiles durant la partie.
+		</li>
+	</ul></p>
 </div>
 
+
+
+<div class="framed-text">
+	<h2>Déroulement d’un Tour</h2>
+
+	<ol>
+		<li>
+			<h3>Pioche</h3>
+
+			Chaque tour, le joueur pioche parmis les tuiles à découverts, une tuile à jouer et une autre à mettre dans la défausse.
+			Si à la fin du tour il ne reste qu'une tuile dans la pioche (5 tuiles - 2 tuiles sur 2 tours), alors 4 nouvelles tuiles sont prises du dessus de la pioche.
+		</li>
+		<li>
+			<h3>Placement des Tuiles</h3>
+
+			<p>
+			Une fois la tuile choisie, celle-ci doit être placée sur le plateau 4 × 4, à la place d'une case vide.
+			Ces cartes d’expédition situées en bordure définissent les objectifs de score de chaque ligne ou colonne.
+			Pour obtenir les points indiqués (les objectifs figurés en noir étant plus élevés et difficiles à réaliser),
+			il faut que le contenu de la ligne ou de la colonne corresponde exactement au critère requis.
+			</p>
+
+			<p>Chaque placement doit être réfléchi car les lignes et colonnes se croisent et les espaces se font rares à mesure que le plateau se remplit.</p>
+		</li>
+		<li>
+			<h3>Répéter</h3>
+			Ce processus se répète jusqu'à ce que le plateau soit entièrement complété.
+		</li>
+	</ol>
+</div>
+
+
+
+<div class="framed-text">
+	<h2>Scoring et Fin de Partie</h2>
+
+	Dès que la 16ème tuile est placée sur le plateau, la partie s'achève et le décompte des points peut commencer :
+	<ol>
+		<li>
+			<h3> Vérification des Objectifs</h3>
+
+			<p>Chaque rangée et colonne est examinée par rapport à la carte d’expédition correspondante.
+			Si l’objectif est atteint, la carte d’expédition reste en place. Sinon, elle est retirée.</p>
+		</li>
+		<li>
+			<h3>Calcul du Score</h3>
+
+			<p>Le score final est obtenu en additionnant les points de victoire indiqués sur les cartes d’expédition conservées.
+			L’objectif ultime est de maximiser le total de points pour établir un nouveau record personnel.</p>
+		</li>
+	</ol>
+</div>
+
+
+
+<div class="framed-text">
+	<h2>Les Cartes et Symboles</h2>
+
+	Cette section décompose la signification de chaque carte, tuile et symbole utilisé dans Lost Seas.
+
+	<ul>
+		<li>
+			<h3>Les Symboles</h3>
+
+			Les symboles sont les différents éléments qu'on retrouve sur les tuiles d'expédition. Il en existe 6 sortes :
+			{% if REQUEST_VARS['tuiles_uniques'] is none %}
+			<strong class="err-msg">Erreur lors du chargement des images</strong>
+			{% else %}
+			<ul>
+				{% for nom, path in REQUEST_VARS['tuiles_uniques'].items() %}
+				<li>
+					<label>
+						<span>{{ nom }}</span>
+						<img href="site/static/img/{{ path }}" width="70px" height="70px">
+					</label>
+				</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</li>
+		<li>
+			<h3>Les Tuiles d'Exploration</h3>
+
+			Ces tuiles sont uniquement composées d'un ou plusieurs symbole(s).
+
+			{# if REQUEST_VARS[tuile random] is not none #}
+			Par exemple, la tuile suivante possède ...
+			<img href="site/static/img/{# val #}">
+			{# endif #}
+		</li>
+		<li>
+			<h3>Les Tuiles d'Expédition</h3>
+
+			Ces tuiles représentent les contraintes à respecter pour marquer des points.
+			<p>
+				Le nombre de points que ces tuiles donnent est écrit dans le petit encadré en haut à gauche.
+				Plus le nombre de points est élevé, plus les contraintes de la tuiles sont difficiles à respecter.
+				Pour marquer les points de la tuile, il est necessaire de valider toute les contraintes.
+			</p>
+			<ul>
+				<li>
+					<h4>Les contraintes de symboles</h4>
+
+					Ce type de contrainte oblige le joueur à avoir le bon nombre de symboles <em>d'un même type</em> dans la rangée.
+
+					{# if REQUEST_VARS[tuile random] is not none #}
+					Par exemple, la tuile suivante possède ...
+					<img href="site/static/img/{# val #}">
+					{# endif #}
+
+					A la place d'un chiffre exact, certaines de tuiles demandent à ce qu'un symbole soit présent à la majorité sur la rangée.
+
+					{# if REQUEST_VARS[tuile random] is not none #}
+					Par exemple, la tuile suivante possède ...
+					<img href="site/static/img/{# val #}">
+					{# endif #}
+				</li>
+				<li>
+					<h4>Les contraintes de nombre</h4>
+
+					Ce type de contrainte oblige le joueur à avoir un certain nombre de symboles sur la rangée. Il en existe 3 types :
+
+					<ul>
+						<li>
+							Le premier type demande au joueur un nombre exact de symboles sur la rangée.
+
+							{# if REQUEST_VARS[tuile random] is not none #}
+							Par exemple, la tuile suivante possède ...
+							<img href="site/static/img/{# val #}">
+							{# endif #}
+						</li>
+						<li>
+							Le deuxième type demande au joueur un nombre exact de <em>types de symbols</em> différents.
+
+							{# if REQUEST_VARS[tuile random] is not none #}
+							Par exemple, la tuile suivante possède ...
+							<img href="site/static/img/{# val #}">
+							{# endif #}
+						</li>
+						<li>
+							Le troisième type bannis un certain nombre exact de <em>types de symbols</em> sur la rangée.
+
+							{# if REQUEST_VARS[tuile random] is not none #}
+							Par exemple, la tuile suivante possède ...
+							<img href="site/static/img/{# val #}">
+							{# endif #}
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>
+
+
+
+<div class="framed-text">
+	<h2>Conclusion</h2>
+
+	<p>
+	Lost Seas en solitaire propose une aventure stratégique invitant à exercer sa réflexion et sa capacité d'organisation spatiale.
+	En maîtrisant les règles et en découvrant la signification des différents symboles, chaque partie offre l'opportunité de relever de nouveaux défis et d'établir un record de points.
+
+	Bonne exploration et que la stratégie guide chaque placement !
+	</p>
+</div>
+
+────────────────────────────
 {% endblock %}
