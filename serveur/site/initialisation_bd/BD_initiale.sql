@@ -17,7 +17,7 @@ create table Joueur (
   id_joueur integer, 
   nom varchar(64),
   prénom varchar(64), 
-  pseudo varchar(64), 
+  pseudo varchar(64) UNIQUE, 
   année_naiss integer, 
   PRIMARY KEY (id_joueur)
 );
