@@ -23,3 +23,4 @@ REQUEST_VARS['scores'] = score_min_max(SESSION['CONNEXION'])
 #         REQUEST_VARS['message_class'] = "alert-error"
 
 
+# Score moyen en fonction du classement

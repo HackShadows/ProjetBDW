@@ -75,7 +75,7 @@ create table TuileJeu (
 
 create table TuileContrainte (
   id_tuile integer,
-  difficulté varchar(16),
+  est_difficile boolean,
   nb_points integer,
   PRIMARY KEY (id_tuile)
 );
