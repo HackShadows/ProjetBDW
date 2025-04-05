@@ -94,7 +94,6 @@ def count_instances(connexion, nom_table :str) -> int:
 	"""
 	query = sql.SQL('SELECT COUNT(*) AS nb FROM {table}').format(table=sql.Identifier(nom_table))
 	nb = execute_select_query(connexion, query)
-	if nb is None: return 0
 	return nb[0]['nb']
 
 
@@ -116,7 +115,7 @@ def get_img_tuile(connexion, id_tuile :int) -> str:
 	"""
 	query = 'SELECT chemin_texture FROM tuile WHERE id_tuile=%s'
 	image = execute_select_query(connexion, query, [id_tuile])
-	if image is None: return None
+	# if image is None: return None
 	return image[0]['chemin_texture']
 
 def get_nb_element(connexion, id_tuile :int) -> int:
@@ -136,7 +135,6 @@ def get_nb_element(connexion, id_tuile :int) -> int:
 	"""
 	query = 'SELECT SUM(nombre) AS nb FROM contient_element WHERE id_tuile=%s '
 	nb = execute_select_query(connexion, query, [id_tuile])
-	if nb is None: return None
 	return nb[0]['nb']
 
 def get_elements(connexion) -> list[str]:
@@ -169,9 +167,10 @@ def get_joueurs(connexion) -> list[dict]:
 	-------
 	Liste de tous les joueurs.
 	"""
-	l = get_instances(connexion, "joueur")
-	if l is None: return None
-	return l
+	# l = get_instances(connexion, "joueur")
+	# if l is None: return None
+	# return l
+	return get_instances(connexion, "joueur")
 
 
 # Fonctions utilisées par le contrôleur accueil.py
@@ -212,7 +211,7 @@ def nb_parties(connexion) -> dict:
 	dico = {}
 	for etat in etats:
 		result = execute_select_query(connexion, query, [etat == 'en_cours'])
-		dico[etat] = 0 if result is None else result[0]['nb']
+		dico[etat] = result[0]['nb']
 	return dico
 
 
@@ -233,7 +232,6 @@ def get_tuiles_1element(connexion) -> dict:
 	query1 = 'SELECT id_tuile FROM contient_element GROUP BY id_tuile HAVING SUM(nombre) <= 1'
 	query = 'SELECT id_tuile, nom_élément FROM contient_element WHERE id_tuile IN (%s)'
 	result = execute_select_query(connexion, query, [query1])
-	if result is None: return None
 	dico = {}
 	for dic in result :
 		dico[dic["nom_élément"]] = get_img_tuile(connexion, dic["id_tuile"])
