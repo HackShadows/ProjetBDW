@@ -177,29 +177,29 @@ def get_tuiles_1element(connexion) -> dict:
         dico[dic["nom_élément"]] = get_img_tuile(connexion, dic["id_tuile"])
     return dico
 
-def insert_recipe(connexion, nom_recette, cat_recette):
-    """
-    Insère une nouvelle recette dans la BD
-    String nom_recette : nom de la recette
-    String cat_recette : catégorie de la recette
-    Retourne le nombre de tuples insérés, ou None
-    """
-    query = 'INSERT INTO recette (nom_recette, catégorie) VALUES(%s,%s)'
-    return execute_other_query(connexion, query, [nom_recette,cat_recette])
+# def insert_recipe(connexion, nom_recette, cat_recette):
+#     """
+#     Insère une nouvelle recette dans la BD
+#     String nom_recette : nom de la recette
+#     String cat_recette : catégorie de la recette
+#     Retourne le nombre de tuples insérés, ou None
+#     """
+#     query = 'INSERT INTO recette (nom_recette, catégorie) VALUES(%s,%s)'
+#     return execute_other_query(connexion, query, [nom_recette,cat_recette])
 
-def get_table_like(connexion, nom_table, like_pattern):
-    """
-    Retourne les instances de la table nom_table dont le nom correspond au motif like_pattern
-    String nom_table : nom de la table
-    String like_pattern : motif pour une requête LIKE
-    """
-    motif = '%' + like_pattern + '%'
-    nom_att = 'nom'  # nom attribut dans ingrédient 
-    if nom_table == 'recette':  # à éviter
-        nom_att += '_recette'  # nom attribut dans recette 
-    query = sql.SQL("SELECT * FROM {} WHERE {} ILIKE {}").format(
-        sql.Identifier(nom_table),
-        sql.Identifier(nom_att),
-        sql.Placeholder())
-    #    like_pattern=sql.Placeholder(name=like_pattern))
-    return execute_select_query(connexion, query, [motif])
+# def get_table_like(connexion, nom_table, like_pattern):
+#     """
+#     Retourne les instances de la table nom_table dont le nom correspond au motif like_pattern
+#     String nom_table : nom de la table
+#     String like_pattern : motif pour une requête LIKE
+#     """
+#     motif = '%' + like_pattern + '%'
+#     nom_att = 'nom'  # nom attribut dans ingrédient 
+#     if nom_table == 'recette':  # à éviter
+#         nom_att += '_recette'  # nom attribut dans recette 
+#     query = sql.SQL("SELECT * FROM {} WHERE {} ILIKE {}").format(
+#         sql.Identifier(nom_table),
+#         sql.Identifier(nom_att),
+#         sql.Placeholder())
+#     #    like_pattern=sql.Placeholder(name=like_pattern))
+#     return execute_select_query(connexion, query, [motif])
