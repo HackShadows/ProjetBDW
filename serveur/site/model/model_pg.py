@@ -215,15 +215,36 @@ def get_tuiles_1element(connexion) -> dict:
 	query1 = 'SELECT id_tuile FROM contient_element GROUP BY id_tuile HAVING SUM(nombre) <= 1'
 	query = f'SELECT id_tuile, nom_élément FROM contient_element WHERE id_tuile IN ({query1})'
 	result = execute_select_query(connexion, query)
-	dico = {}
-	for dic in result :
-		dico[dic["nom_élément"]] = get_img_tuile(connexion, dic["id_tuile"])
-	return dico
+	return {dic["nom_élément"] : get_img_tuile(connexion, dic["id_tuile"]) for dic in result}
 
 
 # Fonctions utilisées par le contrôleur classements.py
+def infos_classement(connexion, taille_grille :int, difficulté :str) -> list[dict]:
+	"""
+	Récupère la liste des joueurs présents dans le classements souhaité.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	taille_grille : int
+	    Taille des grilles du classement.
+	difficulté : str
+	    Difficulté des grilles du classement.
 
-
+	Renvoie
+	-------
+	Liste de dictionnaires (clés : 'joueur', 'score', 'rang', 'date', 
+	valeurs : dictionnaire(clés : nom, prénom, pseudo, année_naiss), score du joueur, rang du joueur, date de la partie).
+	"""
+	query = 'SELECT id_joueur, score, date_création AS date FROM partie WHERE taille_grille=%s AND difficulté=%s ORDER BY score DESC, date_création'
+	result = execute_select_query(connexion, query, [taille_grille, difficulté])
+	classement = []
+	for rg, dic in enumerate(result):
+		dic["joueur"] = get_infos_joueur(connexion, dic.pop("id_joueur"))
+		dic['rang'] = rg + 1
+		classement.append(dic)
+	return classement
 
 
 # Fonctions utilisées par le contrôleur statistiques.py
@@ -255,11 +276,11 @@ def score_min_max(connexion) -> dict[tuple[int, dict]]:
 	-------
 	Dictionnaire (clés : mini, maxi, valeurs : (score, dictionnaire(clés : nom, prénom, pseudo, année_naiss))).
 	"""
-	query = 'SELECT id_joueur, score FROM partie ORDER BY score %s LIMIT 1'
+	query = 'SELECT id_joueur, score FROM partie ORDER BY score {ordre} LIMIT 1'
 	tris = ['ASC', 'DESC']
 	dico = {}
 	for tri in tris:
-		result = execute_select_query(connexion, query, [tri])[0]
+		result = execute_select_query(connexion, query.format(ordre=tri))[0]
 		joueur = get_infos_joueur(connexion, result["id_joueur"])
 		dico["mini" if tri == 'ASC' else "maxi"] = (result['score'], joueur)
 	return dico
