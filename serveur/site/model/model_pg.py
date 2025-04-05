@@ -230,8 +230,8 @@ def get_tuiles_1element(connexion) -> dict:
 	Dictionnaire (clé = nom de l'élément, valeur = image de la tuile).
 	"""
 	query1 = 'SELECT id_tuile FROM contient_element GROUP BY id_tuile HAVING SUM(nombre) <= 1'
-	query = 'SELECT id_tuile, nom_élément FROM contient_element WHERE id_tuile IN (%s)'
-	result = execute_select_query(connexion, query, [query1])
+	query = f'SELECT id_tuile, nom_élément FROM contient_element WHERE id_tuile IN ({query1})'
+	result = execute_select_query(connexion, query)
 	dico = {}
 	for dic in result :
 		dico[dic["nom_élément"]] = get_img_tuile(connexion, dic["id_tuile"])
