@@ -173,7 +173,7 @@ def parties_terminees(connexion) -> list[dict]:
 	"""
 	query_parties = 'SELECT id_joueur, score, taille_grille, difficulté FROM partie WHERE en_cours = false ORDER BY date_création DESC LIMIT 10'
 	query = f'SELECT J.pseudo, P.score, P.taille_grille AS taille, P.difficulté FROM ({query_parties}) P JOIN joueur J USING(id_joueur)'
-	result = execute_select_query(connexion, query, [query_parties])
+	result = execute_select_query(connexion, query)
 	return result
 
 def nb_parties(connexion) -> dict:
