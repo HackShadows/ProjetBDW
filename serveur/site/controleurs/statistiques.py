@@ -1,10 +1,7 @@
 from model.model_pg import moy_nb_parties, score_min_max
-#from controleurs.includes import add_activity
 
 REQUEST_VARS['moyenne'] = moy_nb_parties(SESSION['CONNEXION'])
 REQUEST_VARS['scores'] = score_min_max(SESSION['CONNEXION'])
-
-# add_activity(SESSION['HISTORIQUE'], "consultation de la page ajouter recette")
 
 # if POST and 'bouton_valider' in POST:  # formulaire soumis
 #     nom_recette = POST['nom_recette'][0]  # attention, un <input> retourne une liste
