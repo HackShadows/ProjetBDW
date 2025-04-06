@@ -305,7 +305,7 @@ def moy_nb_parties(connexion) -> float:
 	"""
 	return count_instances(connexion, "partie") / count_instances(connexion, "joueur")
 
-def score_min_max(connexion) -> dict[tuple[int, dict]]:
+def score_min_max(connexion) -> dict[tuple[int, dict]|None]:
 	"""
 	Retourne les informations sur les joueurs ayant le meilleur et le pire score toutes parties confondues.
 	
@@ -320,11 +320,13 @@ def score_min_max(connexion) -> dict[tuple[int, dict]]:
 	"""
 	query = 'SELECT id_joueur, score FROM partie WHERE en_cours=false ORDER BY score {ordre}, date_création ASC LIMIT 1'
 	tris = ['ASC', 'DESC']
-	dico = {}
+	dico = {"mini":None, "maxi":None}
 	for tri in tris:
-		result = execute_select_query(connexion, query.format(ordre=tri))[0]
-		joueur = get_infos_joueur(connexion, result["id_joueur"])
-		dico["mini" if tri == 'ASC' else "maxi"] = (result['score'], joueur)
+		result_tmp = execute_select_query(connexion, query.format(ordre=tri))
+		if len(result_tmp) > 0:
+			result = result_tmp[0]
+			joueur = get_infos_joueur(connexion, result["id_joueur"])
+			dico["mini" if tri == 'ASC' else "maxi"] = (result['score'], joueur)
 	return dico
 
 def score_0(connexion) -> list[dict]:
