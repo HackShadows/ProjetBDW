@@ -155,6 +155,24 @@ def get_infos_joueur(connexion, id_joueur :int) -> dict:
 	query = 'SELECT nom, prénom, pseudo, année_naiss FROM joueur WHERE id_joueur=%s'
 	return execute_select_query(connexion, query, [id_joueur])
 
+def get_infos_partie(connexion, id_partie :int) -> dict:
+	"""
+	Retourne les informations sur la partie d'identifiant 'id_partie'.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_partie : int
+	    Identifiant de la partie.
+
+	Renvoie
+	-------
+	Dictionnaire (clés : attributs de partie).
+	"""
+	query = 'SELECT * FROM partie WHERE id_partie=%s'
+	return execute_select_query(connexion, query, [id_partie])
+
 
 # Fonctions utilisées par le contrôleur accueil.py
 def parties_terminees(connexion) -> list[dict]:
@@ -274,9 +292,9 @@ def score_min_max(connexion) -> dict[tuple[int, dict]]:
 
 	Renvoie
 	-------
-	Dictionnaire (clés : mini, maxi, valeurs : (score, dictionnaire(clés : nom, prénom, pseudo, année_naiss))).
+	Dictionnaire (clés : 'mini', 'maxi', valeurs : (score, dictionnaire(clés : nom, prénom, pseudo, année_naiss))).
 	"""
-	query = 'SELECT id_joueur, score FROM partie ORDER BY score {ordre} LIMIT 1'
+	query = 'SELECT id_joueur, score FROM partie WHERE en_cours=false ORDER BY score {ordre}, date_création ASC LIMIT 1'
 	tris = ['ASC', 'DESC']
 	dico = {}
 	for tri in tris:
@@ -284,6 +302,25 @@ def score_min_max(connexion) -> dict[tuple[int, dict]]:
 		joueur = get_infos_joueur(connexion, result["id_joueur"])
 		dico["mini" if tri == 'ASC' else "maxi"] = (result['score'], joueur)
 	return dico
+
+def score_0(connexion) -> list[dict]:
+	"""
+	Retourne les informations sur les joueurs et les parties où le joueur n'a validé aucune contrainte.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+
+	Renvoie
+	-------
+	Liste de dictionnaires (clés :'joueur', 'partie', valeurs : dictionnaire(clés : nom, prénom, pseudo, année_naiss), dictionnaire(clés : attributs de partie)).
+	"""
+	query = 'SELECT id_joueur, id_partie FROM partie WHERE en_cours=false AND score = 0'
+	result = execute_select_query(connexion, query)
+	return [{"joueur":get_infos_joueur(connexion, dic["id_joueur"]), "partie":get_infos_partie(connexion, dic["id_partie"])} for dic in result]
+
+
 
 # def insert_recipe(connexion, nom_recette, cat_recette):
 #     """

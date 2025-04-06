@@ -22,3 +22,13 @@ template = "statistiques.html"
 url = "classements"
 controleur = "controleurs/classements.py"
 template = "classements.html"
+
+[[routes]]
+url = "parties"
+controleur = "controleurs/parties.py"
+template = "parties.html"
+
+[[routes]]
+url = "jeu"
+controleur = "controleurs/jeu.py"
+template = "jeu.html"
