@@ -8,8 +8,8 @@
 <p>
 	Avant de commencer, n'hésitez pas à lire <a href="/regles">les règles du jeu</a>.
 </p>
-<div id="player-page">
-	<h2>Choisissez un joueur</h2>
+<form id="player-page" method="POST" action="/">
+	<h2>Choisissez votre joueur</h2>
 
 	<table>
 		<thead>
@@ -24,7 +24,7 @@
 		<tbody>
 			{% for player in REQUEST_VARS['joueurs'][1] %}
 			<tr>
-				<th><button>{{ player['id_joueur'] }}</button></th>
+				<th><button type="submit" name="id_joueur" value="{{ player['id_joueur'] }}"></button></th>
 				<td>{{ player['pseudo'] }}</td>
 				<td>{{ player['prénom'] }}</td>
 				<td>{{ player['nom'] }}</td>
@@ -33,7 +33,7 @@
 			{% endfor %}
 		</tbody>
 	</table>
-</div>
+</form>
 <div id="activite">
 	<h2>Activité du site</h2>
 
