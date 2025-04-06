@@ -105,7 +105,12 @@ nav li a:hover {
 	background-color: #CCC;
 }
 main {
+	flex-grow: 1;
 	padding: 3%;
+}
+main h1 {
+	margin-bottom: 5%;
+	font-size: 2rem;
 }
 
 
@@ -181,6 +186,7 @@ main {
 	width: 100%;
 	height: 15.3rem;
 	border: solid 2px black;
+	border-radius: 4px;
 	border-collapse: collapse;
 	overflow-y: scroll;
 	text-align: center;
@@ -192,6 +198,7 @@ main {
 #player-page thead th {
 	position: sticky;
 	top: 0px;
+	z-index: 2;
 	padding: .5rem 0;
 	font-size: 1.1rem;
 	background-color: #DDD;
@@ -208,7 +215,52 @@ main {
 	left: 0px;
 	right: 0px;
 	height: 2rem;
+	z-index: 1;
 }
 #player-page button:hover {
 	background-color: #FBC4;
+}
+
+
+
+
+
+#stats-page {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	margin-right: 8%;
+background-image: linear-gradient(to bottom, gold, black);
+border-radius: 50px;
+box-shadow: black 0 10px 30px 0;
+}
+#stats-page li {
+	display: contents;
+}
+#stats-page li:nth-child(-n+2) output { color: #811; }
+#stats-page li:nth-child( n+3) output { color: #8BF; }
+#stats-page li:nth-child(-n+2) label > span { color: #111; }
+#stats-page li:nth-child( n+3) label > span { color: #AAA; }
+#stats-page li:nth-child(-n+2) label > span > span { color: #8F0; }
+#stats-page li:nth-child( n+3) label > span > span { color: #F00; }
+#stats-page label {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	padding: 8% 0;
+}
+#stats-page label > output {
+	font-size: 4rem;
+	font-weight: bold;
+}
+#stats-page label > span {
+	font-size: .8rem;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	word-spacing: 1px;
+}
+#stats-page label > span > span {
+	font-size: 1.2rem;
+	color: red;
+	font-weight: bold;
 }

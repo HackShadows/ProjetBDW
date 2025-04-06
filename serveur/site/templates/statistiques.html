@@ -1,25 +1,52 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-<h2>Le site de recettes pour le cours de BDW</h2>
+<h1>Statistiques des Joueurs</h1>
 
-<p id="parag_description">
-	Vous pouvez gérer des recettes, des ingrédients, et les auteurs.
-	<br>
-	Utilisez le menu à gauche pour découvrir les fonctionnalités de ce site.
-</p>
+<ul id="stats-page">
+	<li><label>
+		<output>{{ (100*23.345)|round/100 }}</output>
+		<span>parties lancées par joueurs en moyenne</span>
+	</label></li>
 
-<p>Que faire sur ce site ?</p>
-<ul>
-	<li>Afficher les données de la base</li>
-	<li>Ajouter une recette</li>
-	<li>Rechercher une recette</li>
-	<li>Générer un historique de votre activité sur le site</li>
-	<li>...</li>
+	<li><label>
+		<output>BLITZSTREAM</output>
+		<span>est le joueur le plus talentueux, avec un score de : <span>99999</span></span>
+	</label></li>
+
+	<li><label>
+		<output>NAKAMURA</output>
+		<span>est le pire joueur qu'on ait connu, avec un score de : <span>-3</span></span>
+	</label></li>
+
+	<li><label>
+		<output>{{ REQUEST_VARS['score_0'] }}</output>
+		<span>est le pire joueur qu'on ait connue</span>
+	</label></li>
+<!--
+	<li><label>
+		<output>X {{ (100*REQUEST_VARS['moyenne']|round)/100 }}</output>
+		<span>lancées par joueurs en moyenne</span>
+	</label></li>
+
+	{% if REQUEST_VARS.scores.maxi is not none %}
+	<li><label>
+		<output>{{ REQUEST_VARS['scores']['maxi'][1]['pseudo'] }}</output>
+		<span>est le joueur le plus talentueux, avec un score de : <span>{{ REQUEST_VARS['scores']['maxi'][0] }}</span></span>
+	</label></li>
+	{% endif %}
+
+	{% if REQUEST_VARS.scores.mini is not none %}
+	<li><label>
+		<output>{{ REQUEST_VARS['scores']['mini'] }}</output>
+		<span>est le pire joueur qu'on ait connu, avec un score de : <span>{{ REQUEST_VARS['scores']['mini'][0] }}</span></span>
+	</label></li>
+	{% endif %}
+
+	<li><label>
+		<output>{{ REQUEST_VARS['score_0'] }}</output>
+		<span>est le pire joueur qu'on ait connue</span>
+	</label></li>
+-->
 </ul>
-
-<div>
-	<img src="mitonmar/static/img/top-plats.png" />
-</div>
-
 {% endblock %}
