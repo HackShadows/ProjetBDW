@@ -2,6 +2,8 @@ import psycopg
 from psycopg import sql
 from psycopg.rows import dict_row
 from logzero import logger
+from datetime import datetime
+
 
 # Fonctions générales
 def execute_select_query(connexion, query :str, params :list=[]) -> list[dict]|None:
@@ -150,9 +152,9 @@ def get_infos_joueur(connexion, id_joueur :int) -> dict:
 
 	Renvoie
 	-------
-	Dictionnaire (clés : nom, prénom, pseudo, année_naiss).
+	Dictionnaire (clés : id_joueur, nom, prénom, pseudo, année_naiss).
 	"""
-	query = 'SELECT nom, prénom, pseudo, année_naiss FROM joueur WHERE id_joueur=%s'
+	query = 'SELECT * FROM joueur WHERE id_joueur=%s'
 	return execute_select_query(connexion, query, [id_joueur])
 
 def get_infos_partie(connexion, id_partie :int) -> dict:
@@ -172,6 +174,28 @@ def get_infos_partie(connexion, id_partie :int) -> dict:
 	"""
 	query = 'SELECT * FROM partie WHERE id_partie=%s'
 	return execute_select_query(connexion, query, [id_partie])
+
+def id_disponible(connexion, nom_table :str) -> int:
+	"""
+	Retourne le plus petit identifiant disponible de la table 'nom_table'.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	nom_table : str
+	    Nom de la table.
+
+	Renvoie
+	-------
+	Un identifiant non utilisé.
+	"""
+	query = f'SELECT id_{nom_table} FROM {nom_table} ORDER BY id_{nom_table}'
+	result = execute_select_query(connexion, query)
+	i = 1
+	lg = len(result)
+	while i <= lg and result[i-1][f"id_{nom_table}"] == i: i += 1
+	return i
 
 
 # Fonctions utilisées par le contrôleur accueil.py
@@ -321,16 +345,65 @@ def score_0(connexion) -> list[dict]:
 	return [{"joueur":get_infos_joueur(connexion, dic["id_joueur"]), "partie":get_infos_partie(connexion, dic["id_partie"])} for dic in result]
 
 
+# Fonctions utilisées par le contrôleur parties.py
+def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :int) :
+	"""
+	Crée une nouvelle partie.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	taille_grille : int
+	    Taille de la grille de la partie.
+	difficulté : str
+	    Difficulté de la grille de la partie.
+	id_joueur : int
+	    Identifiant du joueur associé à la partie.
+	"""
+	query = 'INSERT INTO partie (id_partie, date_création, en_cours, score, id_joueur, taille_grille, difficulté, id_grille, id_pioche) ' \
+	'VALUES (%s, %s, true, 0, %s, %s, %s, %s, %s)'
+	id_partie = id_disponible(connexion, "partie")
+	date_création = datetime.now()
+	id_grille = id_disponible(connexion, "grille")
+	id_pioche = id_disponible(connexion, "pioche")
+	nouvelle_grille(connexion, id_grille, taille_grille, difficulté)
+	nouvelle_pioche(connexion, id_pioche, taille_grille)
+	return execute_other_query(connexion, query, [id_partie, date_création, id_joueur, taille_grille, difficulté, id_grille, id_pioche])
 
-# def insert_recipe(connexion, nom_recette, cat_recette):
-#     """
-#     Insère une nouvelle recette dans la BD
-#     String nom_recette : nom de la recette
-#     String cat_recette : catégorie de la recette
-#     Retourne le nombre de tuples insérés, ou None
-#     """
-#     query = 'INSERT INTO recette (nom_recette, catégorie) VALUES(%s,%s)'
-#     return execute_other_query(connexion, query, [nom_recette,cat_recette])
+def nouvelle_grille(connexion, id_grille :int, taille_grille :int, difficulté :str) :
+	"""
+	Crée une nouvelle grille.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_grille : int
+	    Identifiant de la grille.
+	taille_grille : int
+	    Taille de la grille.
+	difficulté : str
+	    Difficulté de la grille.
+	"""
+	query = 'INSERT INTO grille (id_grille, taille, difficulté) VALUES (%s, %s, %s)'
+	return execute_other_query(connexion, query, [id_grille, taille_grille, difficulté])
+
+def nouvelle_pioche(connexion, id_pioche :int, nb_tuiles_découvertes :int) :
+	"""
+	Crée une nouvelle pioche.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_pioche : int
+	    Identifiant de la pioche.
+	nb_tuiles_découvertes : int
+	    Nombre de tuiles à découvert.
+	"""
+	query = 'INSERT INTO partie (id_pioche, nb_tuiles_découvertes) VALUES(%s, %s)'
+	return execute_other_query(connexion, query, [id_pioche, nb_tuiles_découvertes])
 
 # def get_table_like(connexion, nom_table, like_pattern):
 #     """
