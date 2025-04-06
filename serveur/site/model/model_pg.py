@@ -305,7 +305,7 @@ def moy_nb_parties(connexion) -> float:
 	"""
 	return count_instances(connexion, "partie") / count_instances(connexion, "joueur")
 
-def score_min_max(connexion) -> dict[tuple[int, dict]|None]:
+def score_min_max(connexion) -> dict[tuple[int, dict]|str, None]:
 	"""
 	Retourne les informations sur les joueurs ayant le meilleur et le pire score toutes parties confondues.
 	
