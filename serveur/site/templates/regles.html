@@ -17,25 +17,25 @@
 <div class="framed-text">
 	<h2>Matériel et Mise en Place</h2>
 
-	<p><ul>
+	<ul>
 		<li>
 			<h3>Cartes d’Expédition</h3>
 
-			8 tuiles d’expédition sont sélectionnées :
+			<p>8 tuiles d’expédition sont sélectionnées :</p>
 			<ul>
 				<li>4 tuiles destinées à constituer la rangée supérieure, représentant les objectifs de colonnes.</li>
 				<li>4 tuiles pour former la colonne latérale, correspondant aux objectifs des lignes.</li>
 			</ul>
-			Pour chacune de ces tuiles, l'une des faces est choisie et son ordre fixé.
-			Une fois disposées autour du plateau 4 × 4, ces cartes ne peuvent être modifiées.
+			<p>Pour chacune de ces tuiles, l'une des faces est choisie et son ordre fixé.
+			Une fois disposées autour du plateau 4 × 4, ces cartes ne peuvent être modifiées.</p>
 		</li>
 		<li>
 			<h3>Tuiles d’Exploration Maritime</h3>
 
-			Les 65 tuiles d’exploration sont mélangées afin de créer une pile face cachée, ce sera la pioche.
-			Ensuite, les 5 premières tuiles sont retournées pour constituer une rangée d’offres visible et servir de base aux choix de tuiles durant la partie.
+			<p>Les 65 tuiles d’exploration sont mélangées afin de créer une pile face cachée, ce sera la pioche.
+			Ensuite, les 5 premières tuiles sont retournées pour constituer une rangée d’offres visible et servir de base aux choix de tuiles durant la partie.</p>
 		</li>
-	</ul></p>
+	</ul>
 </div>
 
 
@@ -47,8 +47,8 @@
 		<li>
 			<h3>Pioche</h3>
 
-			Chaque tour, le joueur pioche parmis les tuiles à découverts, une tuile à jouer et une autre à mettre dans la défausse.
-			Si à la fin du tour il ne reste qu'une tuile dans la pioche (5 tuiles - 2 tuiles sur 2 tours), alors 4 nouvelles tuiles sont prises du dessus de la pioche.
+			<p>Chaque tour, le joueur pioche parmis les tuiles à découverts, une tuile à jouer et une autre à mettre dans la défausse.
+			Si à la fin du tour il ne reste qu'une tuile dans la pioche (5 tuiles - 2 tuiles sur 2 tours), alors 4 nouvelles tuiles sont prises du dessus de la pioche.</p>
 		</li>
 		<li>
 			<h3>Placement des Tuiles</h3>
@@ -64,7 +64,7 @@
 		</li>
 		<li>
 			<h3>Répéter</h3>
-			Ce processus se répète jusqu'à ce que le plateau soit entièrement complété.
+			<p>Ce processus se répète jusqu'à ce que le plateau soit entièrement complété.</p>
 		</li>
 	</ol>
 </div>
@@ -102,7 +102,7 @@
 		<li>
 			<h3>Les Symboles</h3>
 
-			Les symboles sont les différents éléments qu'on retrouve sur les tuiles d'expédition. Il en existe 6 sortes :
+			<p>Les symboles sont les différents éléments qu'on retrouve sur les tuiles d'expédition. Il en existe 6 sortes :</p>
 			{% if REQUEST_VARS['tuiles_uniques'] is none %}
 			<strong class="err-msg">Erreur lors du chargement des images</strong>
 			{% else %}
@@ -111,7 +111,7 @@
 				<li>
 					<label>
 						<span>{{ nom }}</span>
-						<img src="/site/static/img/tuiles/{{ path }}" width="70px" height="70px" alt="{{ path }}">
+						<img src="/site/static/img/tuiles/{{ path }}" alt="{{ path }}">
 					</label>
 				</li>
 				{% endfor %}
@@ -121,15 +121,17 @@
 		<li>
 			<h3>Les Tuiles d'Exploration</h3>
 
-			Ces tuiles sont uniquement composées d'un ou plusieurs symbole(s).
+			<p>
+				Ces tuiles sont uniquement composées d'un ou plusieurs symbole(s).
 
-			Par exemple, la tuile suivante possède 2 Dragons et 1 Rocher.
-			<img src="/site/static/img/tuiles/tj60.png">
+				Par exemple, la tuile suivante possède 2 Dragons et 1 Rocher.
+				<img src="/site/static/img/tuiles/tj60.png">
+			</p>
 		</li>
 		<li>
 			<h3>Les Tuiles d'Expédition</h3>
 
-			Ces tuiles représentent les contraintes à respecter pour marquer des points.
+			<p>Ces tuiles représentent les contraintes à respecter pour marquer des points.</p>
 			<p>
 				Le nombre de points que ces tuiles donnent est écrit dans le petit encadré en haut à gauche.
 				Plus le nombre de points est élevé, plus les contraintes de la tuiles sont difficiles à respecter.
@@ -197,5 +199,4 @@
 	</p>
 </div>
 
-────────────────────────────
 {% endblock %}
