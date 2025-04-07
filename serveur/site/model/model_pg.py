@@ -379,14 +379,14 @@ def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :
 	    Identifiant du joueur associé à la partie.
 	"""
 	query = 'INSERT INTO partie (id_partie, date_création, en_cours, score, id_joueur, taille_grille, difficulté, id_grille, id_pioche) ' \
-	'VALUES (%s, %s, true, 0, %s, %s, %s, %s, %s)'
+	'VALUES (%s, %s, true, 0, %s, NULL, NULL, %s, %s)'
 	id_partie = id_disponible(connexion, "partie")
 	date_création = datetime.now()
 	id_grille = id_disponible(connexion, "grille")
 	id_pioche = id_disponible(connexion, "pioche")
 	nouvelle_grille(connexion, id_grille, taille_grille, difficulté)
 	nouvelle_pioche(connexion, id_pioche, taille_grille)
-	return execute_other_query(connexion, query, [id_partie, date_création, id_joueur, taille_grille, difficulté, id_grille, id_pioche])
+	return execute_other_query(connexion, query, [id_partie, date_création, id_joueur, id_grille, id_pioche])
 
 def nouvelle_grille(connexion, id_grille :int, taille_grille :int, difficulté :str) :
 	"""

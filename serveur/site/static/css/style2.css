@@ -22,10 +22,10 @@
 }
 
 .button .button__text {
-	margin-left: 25%;
+	margin-left: 20%;
 	color: #fff;
 	font-weight: 600;
-	font-size: 3rem;
+	font-size: 300%;
 }
 
 .button .button__icon {
@@ -150,7 +150,7 @@
 	align-items: center;
 	width: 100%;
 	z-index: 2;
-	font-size: 40px;
+	font-size: 200%;
 }
   
 .slider .taille {
@@ -197,7 +197,7 @@
 	text-align: center;
 	width: 100%;
 	z-index: 2;
-	font-size: 40px;
+	font-size: 200%;
 }
 
 .radio-inputs {
@@ -207,7 +207,7 @@
 	box-sizing: border-box;
 	box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
 	padding: 0.25rem;
-	font-size: 14px;
+	font-size: 50%;
 	display: flex;
 	flex-direction: row;
 	width: 100%;
