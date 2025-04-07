@@ -21,8 +21,8 @@ contient2, 1N Grille, 0N TuileContrainte : ligne, position
 
 :
 Tour: id_tour
-/XT\ Tuile -> TuileContrainte, TuileJeu
-TuileContrainte: difficulté, nb_points
+/XT\ Tuile <- TuileContrainte, TuileJeu
+TuileContrainte: est_difficile, nb_points
 est_associée_à, 1N TuileContrainte, 0N Contrainte
 ContrainteNombre: type_contrainte, nombre
 
@@ -31,7 +31,7 @@ est_jouée_au, 11 Tour, 0N TuileJeu : posx, posy
 TuileJeu: 
 :
 Contrainte: id_contrainte
-/XT\ Contrainte -> ContrainteElement, ContrainteNombre
+/XT\ Contrainte <- ContrainteElement, ContrainteNombre
 
 :
 :

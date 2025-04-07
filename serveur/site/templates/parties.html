@@ -1,21 +1,14 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-<h2>Le site de recettes pour le cours de BDW</h2>
-
-<p id="parag_description">
-	Vous pouvez gérer des recettes, des ingrédients, et les auteurs.
-	<br>
-	Utilisez le menu à gauche pour découvrir les fonctionnalités de ce site.
-</p>
 
 {% if REQUEST_VARS['AFFICHAGE'] == "DEFAUT" %}
 
-<form method="POST" action="parties">
+<form method="POST" action="parties" class="formulaire">
 	<button type="submit" class="button" name="action" value="nouvelle_partie">
 		<span class="button__text">Créer une partie</span>
 		<span class="button__icon">
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" fill="none" class="svg">
 				<line y2="19" y1="5" x2="12" x1="12"></line>
 				<line y2="12" y1="12" x2="19" x1="5"></line>
 			</svg>
@@ -25,30 +18,35 @@
 
 {% else %}
 
-<form method="POST" action="parties" class="form_main">
-    <p class="heading">Login</p>
-    <div class="inputContainer">
-    	<input type="number" class="inputField" id="username" placeholder="Taille de la grille" min="4" max="6">
-		<label for="cars">Choose a car:</label>
-		<select id="cars" name="cars">
-		  <option value="volvo">Volvo</option>
-		  <option value="saab">Saab</option>
-		  <option value="fiat">Fiat</option>
-		  <option value="audi">Audi</option>
-		</select> 
-    </div>
-    
-	<div class="inputContainer">
-		<input type="text" class="inputField" id="password" placeholder="Difficulté">
-	</div>
-
-	<button type="submit" id="button" name="action" value="créer_partie">Valider</button>
-</form>
+<div  class="formulaire">
+	<form method="POST" action="parties" class="form_main">
+		
+		<label class="slider">Taille de la grille
+			<p class="slider_barre">3 <input type="range" class="taille" min="3" max="6" step="1" value="4"> 6</p>
+		</label>
+		
+		<label class="difficulté">Difficulté
+			<div class="radio-inputs">
+				<label class="radio">
+					<input type="radio" name="radio" checked="" value="facile">
+					<span class="name">Facile</span>
+				</label>
+				<label class="radio">
+					<input type="radio" name="radio" value="moyenne">
+					<span class="name">Moyenne</span>
+				</label>
+					
+				<label class="radio">
+					<input type="radio" name="radio" value="difficile">
+					<span class="name">Difficile</span>
+				</label>
+			</div>
+		</label>
+	
+		<button type="submit" id="button" name="action" value="créer_partie">Valider</button>
+	</form>
+</div>
 
 {% endif %}
-
-<div>
-	<img src="mitonmar/static/img/top-plats.png" />
-</div>
 
 {% endblock %}

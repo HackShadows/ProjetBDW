@@ -1,8 +1,15 @@
 /* From Uiverse.io by andrew-demchenk0 */ 
+.formulaire {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .button {
 	position: relative;
-	width: 150px;
-	height: 40px;
+	width: 70%;
+	aspect-ratio: 5 / 1;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
@@ -15,24 +22,26 @@
 }
 
 .button .button__text {
-	transform: translateX(30px);
+	margin-left: 25%;
 	color: #fff;
 	font-weight: 600;
+	font-size: 3rem;
 }
 
 .button .button__icon {
 	position: absolute;
-	transform: translateX(109px);
+	transform: translateX(300%);
 	height: 100%;
-	width: 39px;
+	width: 25%;
 	background-color: #34974d;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.button .svg {
-	width: 30px;
+.button__icon .svg {
+	width: 40%;
+	height: 40%;
 	stroke: #fff;
 }
 
@@ -45,8 +54,8 @@
 }
 
 .button:hover .button__icon {
-	width: 148px;
-	transform: translateX(0);
+	width: 25%;
+	transform: translateX(150%);
 }
 
 .button:active .button__icon {
@@ -54,6 +63,7 @@
 }
 
 .button:active {
+	background-color: #2e8644;
 	border: 1px solid #2e8644;
 }
 
@@ -62,7 +72,8 @@
 
 
 .form_main {
-	width: 220px;
+	height: 100%;
+	aspect-ratio: 3 / 3;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -72,13 +83,14 @@
 	box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.062);
 	position: relative;
 	overflow: hidden;
+	justify-content: space-around;
 }
 
 .form_main::before {
 	position: absolute;
 	content: "";
-	width: 300px;
-	height: 300px;
+	width: 80%;
+	height: 80%;
 	background-color: rgb(209, 193, 255);
 	transform: rotate(45deg);
 	left: -180px;
@@ -86,48 +98,6 @@
 	z-index: 1;
 	border-radius: 30px;
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.082);
-}
-
-.heading {
-	font-size: 2em;
-	color: #2e2e2e;
-	font-weight: 700;
-	margin: 5px 0 10px 0;
-	z-index: 2;
-}
-
-.inputContainer {
-	width: 100%;
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	z-index: 2;
-}
-
-.inputField {
-	width: 100%;
-	height: 30px;
-	background-color: transparent;
-	border: none;
-	border-bottom: 2px solid rgb(173, 173, 173);
-	margin: 10px 0;
-	color: black;
-	font-size: .8em;
-	font-weight: 500;
-	box-sizing: border-box;
-	padding-left: 30px;
-}
-
-.inputField:focus {
-	outline: none;
-	border-bottom: 2px solid rgb(199, 114, 255);
-}
-
-.inputField::placeholder {
-	color: rgb(80, 80, 80);
-	font-size: 1em;
-	font-weight: 500;
 }
 
 #button {
@@ -148,3 +118,123 @@
 #button:hover {
 	background-color: rgb(126, 84, 255);
 }
+
+/* level settings */
+
+.slider {
+	/* slider */
+	--slider-width: 100%;
+	--slider-height: 6px;
+	--slider-bg: rgb(162, 104, 255);
+	--slider-border-radius: 999px;
+	/* level */
+	--level-color: #fff;
+	--level-transition-duration: .1s;
+	/* icon */
+	--icon-margin: 15px;
+	--icon-color: var(--slider-bg);
+	--icon-size: 25px;
+}
+  
+.slider {
+	cursor: pointer;
+	display: -webkit-inline-box;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: reverse;
+	-ms-flex-direction: row-reverse;
+	flex-direction: column;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	width: 100%;
+	z-index: 2;
+	font-size: 40px;
+}
+  
+.slider .taille {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	width: var(--slider-width);
+	height: var(--slider-height);
+	background: var(--slider-bg);
+	overflow: hidden;
+	border-radius: var(--slider-border-radius);
+	-webkit-transition: height var(--level-transition-duration);
+	-o-transition: height var(--level-transition-duration);
+	transition: height var(--level-transition-duration);
+	cursor: inherit;
+	margin: 0px 5%;
+}
+  
+.slider .taille::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 0;
+	height: 0;
+	-webkit-box-shadow: -200px 0 0 200px var(--level-color);
+	box-shadow: -200px 0 0 200px var(--level-color);
+}
+  
+.slider:hover .taille {
+	height: calc(var(--slider-height) * 2);
+	background: rgb(126, 84, 255);
+}
+
+.slider_barre {
+	width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+
+.difficulté {
+	cursor: pointer;
+	text-align: center;
+	width: 100%;
+	z-index: 2;
+	font-size: 40px;
+}
+
+.radio-inputs {
+	position: relative;
+	border-radius: 0.5rem;
+	background-color: #EEE;
+	box-sizing: border-box;
+	box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+	padding: 0.25rem;
+	font-size: 14px;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+  }
+  
+  .radio-inputs .radio {
+	flex: 1 1 auto;
+	text-align: center;
+  }
+  
+  .radio-inputs .radio input {
+	display: none;
+  }
+  
+  .radio-inputs .radio .name {
+	display: flex;
+	cursor: pointer;
+	align-items: center;
+	justify-content: center;
+	border-radius: 0.5rem;
+	border: none;
+	padding: .5rem 0;
+	color: rgba(51, 65, 85, 1);
+	transition: all .15s ease-in-out;
+  }
+  
+  .radio-inputs .radio input:checked + .name {
+	background-color: #fff;
+	font-weight: 600;
+  }
