@@ -117,7 +117,6 @@ def get_img_tuile(connexion, id_tuile :int) -> str:
 	"""
 	query = 'SELECT chemin_texture FROM tuile WHERE id_tuile=%s'
 	image = execute_select_query(connexion, query, [id_tuile])
-	# if image is None: return None
 	return image[0]['chemin_texture']
 
 def get_elements_tuile(connexion, id_tuile :int) -> dict:
@@ -138,6 +137,22 @@ def get_elements_tuile(connexion, id_tuile :int) -> dict:
 	query = 'SELECT nom_élément, nombre FROM contient_element WHERE id_tuile=%s'
 	liste = execute_select_query(connexion, query, [id_tuile])
 	return {dic['nom_élément']:dic['nombre'] for dic in liste}
+
+def get_joueurs(connexion) -> list[dict]:
+	"""
+	Retourne la liste de tous les joueurs triés par nom.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+
+	Renvoie
+	-------
+	Liste de dictionnaires (clés : id_joueur, nom, prénom, pseudo, année_naiss).
+	"""
+	query = 'SELECT * FROM joueur ORDER BY nom, prénom'
+	return execute_select_query(connexion, query)
 
 def get_infos_joueur(connexion, id_joueur :int) -> dict:
 	"""

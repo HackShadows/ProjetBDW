@@ -16,6 +16,7 @@
 from model.model_pg import get_instances, infos_classement
 
 if POST and 'taille_grille' in POST and 'difficulté' in POST:
-	REQUEST_VARS['infos_classement'] = infos_classement(SESSION['CONNEXION'], POST['taille_grille'][0], POST['difficulté'][0])
+	taille_grille, difficulté = POST['grille'][0].split(" ")
+	REQUEST_VARS['infos_classement'] = infos_classement(SESSION['CONNEXION'], taille_grille, difficulté)
 else:
 	REQUEST_VARS['classements'] = get_instances(SESSION['CONNEXION'], "classement")
