@@ -295,6 +295,16 @@ box-shadow: black 0 10px 30px 0;
 	flex-flow: column nowrap;
 	align-items: stretch;
 	position: relative;
+	min-width: 25vw;
+	padding: 1rem 2rem;
+	border: solid 3px #555;
+	border-radius: 30px;
+	box-shadow: #888 3px 3px 10px, #AAA 5px 1px 5px inset;
+	transition: all .1s linear;
+}
+#classements li:hover {
+	box-shadow: #888 3px 3px 10px, #AAA 5px 1px 20px inset;
+	background-color: #FFF8FF;
 }
 #classements button {
 	position: absolute;
@@ -304,9 +314,10 @@ box-shadow: black 0 10px 30px 0;
 	bottom: 0px;
 	/*background-color: #FE86;*/
 }
-#classements li div {
+#classements li .classement-head {
 	display: flex;
 	flex-flow: row nowrap;
+	justify-content: space-between;
 	align-items: baseline;
 }
 #classements li h2 {
@@ -314,11 +325,25 @@ box-shadow: black 0 10px 30px 0;
 	color: black;
 }
 #classements .classement-maj {
-	margin-left: 5rem;
-	font-size: .9rem;
+	font-size: 1rem;
 	color: #666;
 }
 #classements .classement-crea {
-	font-size: .6rem;
+	font-size: .8rem;
 	color: #666;
+}
+#classements hr {
+	border-bottom: solid 1px #888;
+	margin:.5rem 0;
+}
+#classements .classement-content {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+}
+#classements .classement-difficulte {
+	margin-left: 20%;
+}
+#classements .classement-taille {
+	margin-right: 20%;
 }
