@@ -419,7 +419,7 @@ def nouvelle_pioche(connexion, id_pioche :int, nb_tuiles_découvertes :int) :
 	nb_tuiles_découvertes : int
 	    Nombre de tuiles à découvert.
 	"""
-	query = 'INSERT INTO partie (id_pioche, nb_tuiles_découvertes) VALUES(%s, %s)'
+	query = 'INSERT INTO pioche (id_pioche, nb_tuiles_découvertes) VALUES(%s, %s)'
 	return execute_other_query(connexion, query, [id_pioche, nb_tuiles_découvertes])
 
 # def get_table_like(connexion, nom_table, like_pattern):

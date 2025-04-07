@@ -7,6 +7,6 @@ if POST:
 	else:
 		REQUEST_VARS['AFFICHAGE'] = "DEFAUT"
 	if 'taille_grille' in POST and 'difficulté' in POST:
-		nouvelle_partie(SESSION['CONNEXION'], POST['taille_grille'][0], POST['difficulté'][0], SESSION["joueur_actif"]["id_joueur"])
+		nouvelle_partie(SESSION['CONNEXION'], POST['taille_grille'][0], POST['difficulté'][0], SESSION["joueur_actif"][0]["id_joueur"])
 else:
 	REQUEST_VARS['AFFICHAGE'] = "DEFAUT"
