@@ -39,7 +39,7 @@
 
 	<ul>
 		<li>Nombre de joueurs : {{ REQUEST_VARS['joueurs'][0] }}</li>
-		<li>Nombre de parties jouée depuis le lancement : {{ REQUEST_VARS['nb_parties']['en_cours'] + REQUEST_VARS['nb_parties']['terminées'] }} dont {{ REQUEST_VARS['nb_parties']['terminées'] }} en cours !</li>
+		<li>Nombre de parties jouée depuis le lancement : {{ REQUEST_VARS['nb_parties']['en_cours'] + REQUEST_VARS['nb_parties']['terminées'] }} dont {{ REQUEST_VARS['nb_parties']['en_cours'] }} en cours !</li>
 		<li>Voici les statistiques des 10 dernières parties finies sur le site :
 			<table>
 				<thead>
