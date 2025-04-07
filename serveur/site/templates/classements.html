@@ -7,7 +7,7 @@
 
 <h1>Classement {{ "on sait pas" }}</h1>
 
-<table>
+<table id="classement">
 	<thead>
 		<th>#</th>
 		<th>Joueur</th>
@@ -35,17 +35,31 @@
 
 <p>Retrouvez ici tout les classements du jeu !</p>
 
-<div id="classement-div">
+<form id="classements" method="POST" action="/classements"><ul>
+	<li>
+		<button type="submit" name="grille" value="4 1"></button>
+		<h2>Dummy</h2>
+		<span class="classement-maj">10/01/2025</span>
+		<span class="classement-crea">23/06/2024</span>
+		<span class="classement-difficulte">dur</span>
+		<span class="classement-taille">4x4</span>
+	</li>
 	{% for classement in REQUEST_VARS['classements'] %}
-	<div class="classement">
-		<h2>{{ classement['nom'] }}</h2>
-		<span class="classement-maj">{{ classement['date_maj'] }}</span>
+	<li>
+		<button type="submit" name="grille" value="{{ classement['taille_grille'] }} {{ classement['difficulté'] }}">
+		<div>
+			<h2>{{ classement['nom'] }}</h2>
+			<span class="classement-maj">{{ classement['date_maj'] }}</span>
+		</div>
 		<span class="classement-crea">{{ classement['date_création'] }}</span>
-		<span class="classement-difficulte">{{ classement['difficulté'] }}</span>
-		<span class="classement-taille">{{ classement['taille_grille'] }}</span>
-	</div>
+		<div>
+			<span class="classement-difficulte">{{ classement['difficulté'] }}</span>
+			<span class="classement-taille">{{ classement['taille_grille'] }}</span>
+		</div>
+	</li>
 	{% endfor %}
-</div>
+</ul></form>
+
 
 
 {% endif %}
