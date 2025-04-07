@@ -28,7 +28,7 @@ body {
 header {
 	display: flex;
 	flex-flow: row nowrap;
-	justify-content: center;
+	justify-content: space-evenly;
 	align-items: center;
 	width: 100%;
 	box-shadow: 0 0 3px 0 #ccc;
@@ -38,7 +38,7 @@ header > div {
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: end;
-	margin: 0 25% 0 8%;
+	margin-right: 10%;
 }
 header h1 {
 	font-size: 3.5rem;
@@ -46,10 +46,22 @@ header h1 {
 header strong {
 	font-size: 2rem;
 	margin-bottom: -.5rem
+	word-break: keep-all;
 }
 header > a > img {
 	height: 9rem;
 	margin: 0 20px -20px 20px;
+}
+header > p {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	font-size: 1rem;
+	text-align: center;
+}
+header > p > span {
+	font-size: 1.2rem;
+	color: green;
 }
 
 

@@ -6,4 +6,9 @@
 		<h1>{{ SESSION['APP'] }}</h1>
 		<strong>{{ SESSION['BASELINE'] }}</strong>
 	</div>
+	{% if 'joueur_actif' in SESSION %}
+	<p>Joueur :<span>{{ SESSION['joueur_actif'][0]['pseudo'] }}</span></p>
+	{% else %}
+	<p>Aucun joueur<br>sélectioné</p>
+	{% endif %}
 </header>
