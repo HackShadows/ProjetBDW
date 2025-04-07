@@ -141,7 +141,7 @@ main h1 {
 
 .framed-text {
 	position: relative;
-	padding: 3% 2% 2% 2%;
+	padding: 2rem;
 	border: solid 3px #338;
 	border-radius: 20px;
 	margin: 5% 2%;
@@ -164,16 +164,32 @@ main h1 {
 .framed-text > ul > li, .framed-text > ol > li {
 	margin-top: 2rem;
 }
-.framed-text > ul > li::before, .framed-text > ol > li::before {
+.framed-text h3::before {
 	width: 5%;
 	height: 2px;
-	content: " ";
-	border: solid 1px red;
-	background-color: orange;
+	content: "━━━━━━━━║  ";
 }
 .framed-text img {
 	width: 70px;
 	height: 70px;
+}
+
+.framed-text ol {
+	counter-reset: count;
+}
+.framed-text ol > li {
+	counter-increment: count;
+}
+.framed-text ol > li > h3 {
+	margin-left: .5rem;
+}
+.framed-text ol > li::marker {
+	content: counter(count);
+	font-weight: bold;
+	margin-right: .4rem;
+}
+.framed-text li ul, .framed-text li ol {
+	padding-left: 2rem;
 }
 
 
@@ -233,6 +249,24 @@ main h1 {
 }
 #player-page button:hover {
 	background-color: #FBC4;
+}
+
+
+
+#activite {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: start;
+}
+#activite h2 {
+	margin-bottom: 3rem;
+}
+#activite ul {
+	display: flex;
+	flex-flow: column nowrap;
+}
+#activite li {
+	list-style: none;
 }
 
 
