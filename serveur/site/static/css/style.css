@@ -19,6 +19,7 @@ body {
 	flex-flow: column nowrap;
 	align-items: stretch;
 	width: 100%;
+	min-height: 100vh;
 }
 
 
@@ -83,6 +84,7 @@ footer > * {
 
 
 #div-central {
+	flex-grow: 1;
 	display: flex;
 	flex-flow: row;
 	justify-content: stretch;
@@ -300,5 +302,23 @@ box-shadow: black 0 10px 30px 0;
 	left: 0px;
 	right: 0px;
 	bottom: 0px;
-	background-color: #FE86;
+	/*background-color: #FE86;*/
+}
+#classements li div {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: baseline;
+}
+#classements li h2 {
+	font-size: 2rem;
+	color: black;
+}
+#classements .classement-maj {
+	margin-left: 5rem;
+	font-size: .9rem;
+	color: #666;
+}
+#classements .classement-crea {
+	font-size: .6rem;
+	color: #666;
 }
