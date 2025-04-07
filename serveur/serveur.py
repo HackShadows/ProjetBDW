@@ -59,7 +59,7 @@ class WebHandler(BaseHTTPRequestHandler):
         global SESSION, REQUEST_VARS, GET, POST
         controleur_file = WebHandler._routes[url_path][0]  # get controller filename corresponding to url_path
         template_name = WebHandler._routes[url_path][1]  # get template filename corresponding to url_path
-        with open(controleur_file) as infile:  # execute controller file
+        with open(controleur_file, encoding='utf-8') as infile:  # execute controller file
             try:
                 exec(infile.read())  # security issues, but we assume that the script is run locally only
             except Exception as e:  # print controller error and exit
