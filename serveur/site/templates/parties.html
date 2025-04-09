@@ -4,9 +4,34 @@
 
 {% if REQUEST_VARS['AFFICHAGE'] == "DEFAUT" %}
 
-<form method="POST" action="parties" class="formulaire">
-	<button type="submit" class="button" name="action" value="nouvelle_partie">
-		<span class="button__text">Créer une partie</span>
+<form method="POST" action="parties" class="formulaire" id="player-page">
+	<h2>Choisissez votre partie</h2>
+
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Pseudo</th>
+				<th>Prénom</th>
+				<th>Nom</th>
+				<th>Année de naissance</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for player in REQUEST_VARS['joueurs'][1] %}
+			<tr>
+				<th><button type="submit" name="id_joueur" value="{{ player['id_joueur'] }}"></button></th>
+				<td>{{ player['pseudo'] }}</td>
+				<td>{{ player['prénom'] }}</td>
+				<td>{{ player['nom'] }}</td>
+				<td>{{ player['année_naiss'] }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
+		<button type="submit" class="button" name="action" value="nouvelle_partie">
+		<span class="button__text" id="button__text1">Nouvelle partie</span>
 		<span class="button__icon">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" fill="none" class="svg">
 				<line y2="19" y1="5" x2="12" x1="12"></line>
@@ -14,7 +39,11 @@
 			</svg>
 		</span>
 	</button>
+	<button type="submit" class="button" name="action" value="reprendre_partie">
+		<span class="button__text" id="button__text2">Reprendre la partie</span>
+	</button>
 </form>
+
 
 {% else %}
 

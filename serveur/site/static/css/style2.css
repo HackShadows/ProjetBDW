@@ -3,6 +3,7 @@
 	height: 100%;
 	display: flex;
 	align-items: center;
+	flex-direction: column;
 	justify-content: center;
 }
 
@@ -49,7 +50,7 @@
 	background: #34974d;
 }
 
-.button:hover .button__text {
+.button:hover #button__text1 {
 	color: transparent;
 }
 

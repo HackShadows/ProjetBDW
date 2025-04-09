@@ -1,5 +1,9 @@
-from model.model_pg import nouvelle_partie
+from model.model_pg import nouvelle_partie, parties_en_cours
 
+if "joueur_actif" in SESSION:
+	REQUEST_VARS['parties'] = parties_en_cours(SESSION['CONNEXION'], SESSION["joueur_actif"][0]["id_joueur"])
+else:
+	pass
 
 if POST and 'action' in POST:
 	if POST["action"][0] == "nouvelle_partie":
