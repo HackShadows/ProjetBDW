@@ -1,0 +1,21 @@
+
+
+
+REQUEST_VARS['phase'] = "joue_carte" # 'defausse_carte', 'resultats'
+
+REQUEST_VARS['taille_grille'] = 4 # Sans les tuiles contraintes
+REQUEST_VARS['grille'] = [
+	[None       , 'tc111.png', 'tc111.png', 'tc111.png', 'tc111.png'],
+	['tc111.png', 'tj42.png' , None       , 'tj42.png' , 'tj42.png' ],
+	['tc111.png', None       , None       , None       , None       ],
+	['tc111.png', None       , 'tj42.png' , None       , None       ],
+	['tc111.png', None       , None       , None       , None       ],
+]
+
+REQUEST_VARS['pioche'] = ['tj01.png', None, 'tj03.png', 'tj04.png', 'tj05.png']
+
+# REQUEST_VARS['score']
+# REQUEST_VARS['resultat_grille'] = {
+#	'colonne' : [0, 1, 5, 3],
+#	'ligne'   : [9, 0, 0, 0],
+# }

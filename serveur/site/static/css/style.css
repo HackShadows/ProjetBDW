@@ -381,3 +381,48 @@ box-shadow: black 0 10px 30px 0;
 #classements .classement-taille {
 	margin-right: 20%;
 }
+
+
+
+
+
+
+
+#jeu img {width:70px; height:70px;}
+
+#jeu {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	width: 100%;
+}
+#jeu table input {
+}
+#jeu > ul {
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: stretch;
+	max-height: ;
+	margin-left: 20%;
+}
+#jeu > ul > li {
+	position: relative;
+	width: 70px;
+	height: 70px;
+	list-style: none;
+}
+#jeu > ul input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	appearance: none;
+	z-index: 1;
+}
+#jeu > ul input:hover {
+	background-color: #F003;
+}
+#jeu > ul input:checked {
+	background-color: #F006;
+}
