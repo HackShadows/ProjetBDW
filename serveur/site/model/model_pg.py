@@ -299,7 +299,7 @@ def infos_classement(connexion, taille_grille :int, difficulté :str) -> list[di
 	Liste de dictionnaires (clés : 'joueur', 'score', 'rang', 'date', 
 	valeurs : dictionnaire(clés : nom, prénom, pseudo, année_naiss), score du joueur, rang du joueur, date de la partie).
 	"""
-	query = 'SELECT id_joueur, score, date_création AS date FROM partie WHERE taille_grille=%s AND difficulté=%s ORDER BY score DESC, date_création'
+	query = 'SELECT id_joueur, score, date_création AS date FROM partie WHERE en_cours=false AND taille_grille=%s AND difficulté=%s ORDER BY score DESC, date_création'
 	result = execute_select_query(connexion, query, [taille_grille, difficulté])
 	classement = []
 	for rg, dic in enumerate(result):
@@ -409,12 +409,22 @@ def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :
 	L'identifiant de la nouvelle partie.
 	"""
 	query = 'INSERT INTO partie (id_partie, date_création, en_cours, score, id_joueur, taille_grille, difficulté, id_grille) ' \
-	'VALUES (%s, %s, true, 0, %s, NULL, NULL, %s)'
+	'VALUES (%s, %s, true, 0, %s, %s, %s, %s)'
 	id_partie = id_disponible(connexion, "partie")
 	date_création = datetime.now()
 	id_grille = id_disponible(connexion, "grille")
 	nouvelle_grille(connexion, id_grille, taille_grille, difficulté)
-	execute_other_query(connexion, query, [id_partie, date_création, id_joueur, id_grille])
+	
+	query2 = 'SELECT COUNT(*) AS nb FROM classement WHERE taille_grille = %s AND difficulté=%s'
+	result2 = execute_select_query(connexion, query2, [taille_grille, difficulté])
+	if result2[0]['nb'] == 0 :
+		print("ICIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+		nouveau_classement(connexion, taille_grille, difficulté, date_création)
+	else : 
+		print("ICIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII2")
+		maj_classement(connexion, taille_grille, difficulté, date_création)
+	
+	execute_other_query(connexion, query, [id_partie, date_création, id_joueur, taille_grille, difficulté, id_grille])
 	return id_partie
 
 def nouvelle_grille(connexion, id_grille :int, taille_grille :int, difficulté :str) :
@@ -434,6 +444,43 @@ def nouvelle_grille(connexion, id_grille :int, taille_grille :int, difficulté :
 	"""
 	query = 'INSERT INTO grille (id_grille, taille, difficulté) VALUES (%s, %s, %s)'
 	return execute_other_query(connexion, query, [id_grille, taille_grille, difficulté])
+
+def nouveau_classement(connexion, taille_grille :int, difficulté :str, date_création :datetime) :
+	"""
+	Crée un nouveau classement.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	taille_grille : int
+	    Taille des parties du classement.
+	difficulté : str
+	    Difficulté des parties du classement.
+	date_création : datetime
+	    Date de création du classement.
+	"""
+	nom_classement = f"{taille_grille}x{taille_grille}-{difficulté}"
+	query = 'INSERT INTO classement (taille_grille, difficulté, nom, date_création, date_maj) VALUES (%s, %s, %s, %s, %s)'
+	return execute_other_query(connexion, query, [taille_grille, difficulté, nom_classement, date_création, date_création])
+
+def maj_classement(connexion, taille_grille :int, difficulté :str, date_maj :datetime) :
+	"""
+	Met à jour la date du classement.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	taille_grille : int
+	    Taille des parties du classement.
+	difficulté : str
+	    Difficulté des parties du classement.
+	date_maj : datetime
+	    Date de mise à jour du classement.
+	"""
+	query = 'UPDATE classement SET date_maj=%s WHERE taille_grille=%s AND difficulté=%s'
+	return execute_other_query(connexion, query, [date_maj, taille_grille, difficulté])
 
 def grille_remplie(connexion, id_partie :int) -> bool :
 	"""
