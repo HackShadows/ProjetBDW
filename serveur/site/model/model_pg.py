@@ -408,15 +408,13 @@ def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :
 	-------
 	L'identifiant de la nouvelle partie.
 	"""
-	query = 'INSERT INTO partie (id_partie, date_création, en_cours, score, id_joueur, taille_grille, difficulté, id_grille, id_pioche) ' \
-	'VALUES (%s, %s, true, 0, %s, NULL, NULL, %s, %s)'
+	query = 'INSERT INTO partie (id_partie, date_création, en_cours, score, id_joueur, taille_grille, difficulté, id_grille) ' \
+	'VALUES (%s, %s, true, 0, %s, NULL, NULL, %s)'
 	id_partie = id_disponible(connexion, "partie")
 	date_création = datetime.now()
 	id_grille = id_disponible(connexion, "grille")
-	id_pioche = id_disponible(connexion, "pioche")
 	nouvelle_grille(connexion, id_grille, taille_grille, difficulté)
-	nouvelle_pioche(connexion, id_pioche, taille_grille)
-	execute_other_query(connexion, query, [id_partie, date_création, id_joueur, id_grille, id_pioche])
+	execute_other_query(connexion, query, [id_partie, date_création, id_joueur, id_grille])
 	return id_partie
 
 def nouvelle_grille(connexion, id_grille :int, taille_grille :int, difficulté :str) :
@@ -436,22 +434,6 @@ def nouvelle_grille(connexion, id_grille :int, taille_grille :int, difficulté :
 	"""
 	query = 'INSERT INTO grille (id_grille, taille, difficulté) VALUES (%s, %s, %s)'
 	return execute_other_query(connexion, query, [id_grille, taille_grille, difficulté])
-
-def nouvelle_pioche(connexion, id_pioche :int, nb_tuiles_découvertes :int) :
-	"""
-	Crée une nouvelle pioche.
-	
-	Paramètres
-	----------
-	connexion : 
-	    Connexion à la base de donnée.
-	id_pioche : int
-	    Identifiant de la pioche.
-	nb_tuiles_découvertes : int
-	    Nombre de tuiles à découvert.
-	"""
-	query = 'INSERT INTO pioche (id_pioche, nb_tuiles_découvertes) VALUES(%s, %s)'
-	return execute_other_query(connexion, query, [id_pioche, nb_tuiles_découvertes])
 
 def grille_remplie(connexion, id_partie :int) -> bool :
 	"""
@@ -492,3 +474,20 @@ def grille_remplie(connexion, id_partie :int) -> bool :
 #         sql.Placeholder())
 #     #    like_pattern=sql.Placeholder(name=like_pattern))
 #     return execute_select_query(connexion, query, [motif])
+
+
+# def nouvelle_pioche(connexion, id_pioche :int, nb_tuiles_découvertes :int) :
+# 	"""
+# 	Crée une nouvelle pioche.
+	
+# 	Paramètres
+# 	----------
+# 	connexion : 
+# 	    Connexion à la base de donnée.
+# 	id_pioche : int
+# 	    Identifiant de la pioche.
+# 	nb_tuiles_découvertes : int
+# 	    Nombre de tuiles à découvert.
+# 	"""
+# 	query = 'INSERT INTO pioche (id_pioche, nb_tuiles_découvertes) VALUES(%s, %s)'
+# 	return execute_other_query(connexion, query, [id_pioche, nb_tuiles_découvertes])
