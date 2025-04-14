@@ -188,7 +188,12 @@ def get_infos_partie(connexion, id_partie :int) -> dict:
 	Dictionnaire (clés : attributs de partie).
 	"""
 	query = 'SELECT * FROM partie WHERE id_partie=%s'
-	return execute_select_query(connexion, query, [id_partie])
+	query2 = 'SELECT taille, difficulté FROM grille WHERE id_grille=%s'
+	dico = execute_select_query(connexion, query, [id_partie])[0]
+	res = execute_select_query(connexion, query2, [dico["id_grille"]])[0]
+	dico["taille_grille"] = res["taille"]
+	dico["difficulté"] = res["difficulté"]
+	return dico
 
 def id_disponible(connexion, nom_table :str) -> int:
 	"""
@@ -382,6 +387,8 @@ def parties_en_cours(connexion, id_joueur :int) -> list[dict]:
 	query = f'SELECT P.id_partie, P.score, G.difficulté, G.taille FROM ({query1}) P JOIN grille G USING(id_grille)'
 	return execute_select_query(connexion, query, [id_joueur])
 
+
+# Fonctions utilisées par le contrôleur jeu.py
 def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :int) -> int :
 	"""
 	Crée une nouvelle partie.
@@ -446,8 +453,6 @@ def nouvelle_pioche(connexion, id_pioche :int, nb_tuiles_découvertes :int) :
 	query = 'INSERT INTO pioche (id_pioche, nb_tuiles_découvertes) VALUES(%s, %s)'
 	return execute_other_query(connexion, query, [id_pioche, nb_tuiles_découvertes])
 
-
-# Fonctions utilisées par le contrôleur jeu.py
 def grille_remplie(connexion, id_partie :int) -> bool :
 	"""
 	Renvoie True si la grille est remplie, False sinon.
@@ -464,9 +469,10 @@ def grille_remplie(connexion, id_partie :int) -> bool :
 	Le booléen correspondant.
 	"""
 	query = 'SELECT COUNT(*) AS nb FROM tour WHERE id_partie = %s'
-	query2 = 'SELECT taille_grille FROM partie WHERE id_partie = %s'
+	query_tmp = 'SELECT id_grille FROM partie WHERE id_partie = %s'
+	query2 = f'SELECT taille FROM grille WHERE id_grille = ({query_tmp})'
 	result = execute_select_query(connexion, query, [id_partie])[0]['nb']
-	result2 = execute_select_query(connexion, query2, [id_partie])[0]['taille_grille']
+	result2 = execute_select_query(connexion, query2, [id_partie])[0]['taille']
 	return result == result2**2
 
 
