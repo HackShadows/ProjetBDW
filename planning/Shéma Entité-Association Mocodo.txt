@@ -1,34 +1,34 @@
-Contrainte: id_contrainte
-est_associée_à, 1N TuileContrainte, 0N Contrainte
-TuileContrainte: est_difficile, nb_points
-contient2, 1N Grille, 0N TuileContrainte : ligne, position
 Grille: id_grille, taille, difficulté
+contient2, 1N Grille, 0N TuileContrainte : ligne, position
+TuileContrainte: est_difficile, nb_points
+est_associée_à, 1N TuileContrainte, 0N Contrainte
+Contrainte: id_contrainte
 :
 
-/XT\ Contrainte <- ContrainteElement, ContrainteNombre
-ContrainteNombre: type_contrainte, nombre
+dispose_de, 11 Grille, 11 Partie
+Classement: taille_grille, _difficulté, nom, date_création, date_maj
 /XT\ Tuile <- TuileContrainte, TuileJeu
 Tuile: id_tuile, chemin_texture
-dispose_de, 11 Grille, 11 Partie
-Tour: id_tour, posx, posy, rang
+/XT\ Contrainte <- ContrainteElement, ContrainteNombre
+ContrainteNombre: type_contrainte, nombre
 
-ContrainteElement:
-contient, 0N Element, 1N TuileJeu : nombre
-TuileJeu: 
-appartient_à, 11 Pioche, 11 Partie
 Partie: id_partie, date_création, horaire_début, en_cours
-est_associée_au, 1N Partie, _11 Tour
-
-possède, 11 ContrainteElement, 0N Element : nombre
-Element: nom_élément
-sont_dans, 1N Pioche, 1N TuileJeu : rang
-Pioche: id_pioche
 est_classé_dans, 1N Classement, 1N Joueur, 11 Partie : score
-Classement: taille_grille, _difficulté, nom, date_création, date_maj
+TuileJeu: 
+contient, 0N Element, 1N TuileJeu : nombre
+ContrainteElement:
+:
 
-:
-:
-:
-:
+est_associée_au, 1N Partie, _11 Tour
 Joueur: id_joueur, nom, prénom, pseudo, année_naiss
+sont_dans, 1N Pioche, 1N TuileJeu : rang
+Element: nom_élément
+possède, 11 ContrainteElement, 0N Element : nombre
+:
+
+Tour: id_tour
+a_tiré_dans, 11 Pioche, 11 Tour : posx, posy, rang
+Pioche: id_pioche
+:
+:
 :
