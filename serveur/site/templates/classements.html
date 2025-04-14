@@ -49,7 +49,7 @@
 	</li>
 	{% for classement in REQUEST_VARS['classements'] %}
 	<li>
-		<button type="submit" name="grille" value="{{ classement['taille_grille'] }} {{ classement['difficulté'] }}">
+		<button type="submit" name="grille" value="{{ classement['taille_grille'] }} {{ classement['difficulté'] }}"></button>
 		<div class="classement-head">
 			<h2>{{ classement['nom'] }}</h2>
 			<span class="classement-maj">maj {{ classement['date_maj'] }}</span>
