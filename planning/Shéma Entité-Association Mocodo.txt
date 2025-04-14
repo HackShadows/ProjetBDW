@@ -21,14 +21,14 @@ ContrainteElement:
 
 est_associée_au, 1N Partie, _11 Tour
 Joueur: id_joueur, nom, prénom, pseudo, année_naiss
-sont_dans, 1N Pioche, 1N TuileJeu : rang
+contient3, 1N Pioche, 1N TuileJeu : rang
 Element: nom_élément
 possède, 11 ContrainteElement, 0N Element : nombre
 :
 
 Tour: id_tour
 a_tiré_dans, 11 Pioche, 11 Tour : posx, posy, rang
-Pioche: id_pioche
+Pioche: id_pioche, nb_tuiles_découvertes
 :
 :
 :
