@@ -111,4 +111,9 @@ SELECT G.id_tuile AS id_tuile, G.id AS id_grille, TRUE, G.num_ligne
 FROM données_fournies.grille G
 WHERE G.num_colonne=0;
 
+
+INSERT INTO contient_tuile_jeu
+SELECT P.id_tuile AS id_tuile, P.id_grille AS id_pioche, P.rang AS rang
+FROM données_fournies.pioche P
+
 DROP SCHEMA IF EXISTS données_fournies CASCADE;
