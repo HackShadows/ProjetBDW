@@ -363,7 +363,26 @@ def score_0(connexion) -> list[dict]:
 
 
 # Fonctions utilisées par le contrôleur parties.py
-def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :int) -> int :
+def parties_en_cours(connexion, id_joueur :int) -> list[dict]:
+	"""
+	Renvoie la liste des parties en cours du joueur d'identifiant 'id_joueur'.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_joueur : int
+	    Identifiant du joueur.
+
+	Renvoie
+	-------
+	Liste de dictionnaires (clés :'id_partie', 'score', 'difficulté', 'taille').
+	"""
+	query1 = 'SELECT id_partie, score, id_grille FROM partie WHERE id_joueur = %s AND en_cours = true'
+	query = f'SELECT P.id_partie, P.score, G.difficulté, G.taille FROM ({query1}) P JOIN grille G USING(id_grille)'
+	return execute_select_query(connexion, query, [id_joueur])
+
+def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :int) :
 	"""
 	Crée une nouvelle partie.
 	
