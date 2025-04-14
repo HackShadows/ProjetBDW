@@ -363,7 +363,7 @@ def score_0(connexion) -> list[dict]:
 
 
 # Fonctions utilisées par le contrôleur parties.py
-def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :int) :
+def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :int) -> int :
 	"""
 	Crée une nouvelle partie.
 	
@@ -377,6 +377,10 @@ def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :
 	    Difficulté de la grille de la partie.
 	id_joueur : int
 	    Identifiant du joueur associé à la partie.
+	
+	Renvoie
+	-------
+	L'identifiant de la nouvelle partie.
 	"""
 	query = 'INSERT INTO partie (id_partie, date_création, en_cours, score, id_joueur, taille_grille, difficulté, id_grille, id_pioche) ' \
 	'VALUES (%s, %s, true, 0, %s, NULL, NULL, %s, %s)'
@@ -386,7 +390,8 @@ def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :
 	id_pioche = id_disponible(connexion, "pioche")
 	nouvelle_grille(connexion, id_grille, taille_grille, difficulté)
 	nouvelle_pioche(connexion, id_pioche, taille_grille)
-	return execute_other_query(connexion, query, [id_partie, date_création, id_joueur, id_grille, id_pioche])
+	execute_other_query(connexion, query, [id_partie, date_création, id_joueur, id_grille, id_pioche])
+	return id_partie
 
 def nouvelle_grille(connexion, id_grille :int, taille_grille :int, difficulté :str) :
 	"""
@@ -421,6 +426,30 @@ def nouvelle_pioche(connexion, id_pioche :int, nb_tuiles_découvertes :int) :
 	"""
 	query = 'INSERT INTO pioche (id_pioche, nb_tuiles_découvertes) VALUES(%s, %s)'
 	return execute_other_query(connexion, query, [id_pioche, nb_tuiles_découvertes])
+
+
+# Fonctions utilisées par le contrôleur jeu.py
+def grille_remplie(connexion, id_partie :int) -> bool :
+	"""
+	Renvoie True si la grille est remplie, False sinon.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_partie : int
+	    Identifiant de la partie.
+	
+	Renvoie
+	-------
+	Le booléen correspondant.
+	"""
+	query = 'SELECT COUNT(*) AS nb FROM tour WHERE id_partie = %s'
+	query2 = 'SELECT taille_grille FROM partie WHERE id_partie = %s'
+	result = execute_select_query(connexion, query, [id_partie])[0]['nb']
+	result2 = execute_select_query(connexion, query2, [id_partie])[0]['taille_grille']
+	return result == result2**2
+
 
 # def get_table_like(connexion, nom_table, like_pattern):
 #     """
