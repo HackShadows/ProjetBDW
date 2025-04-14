@@ -4,7 +4,7 @@ Classement(t̲a̲i̲l̲l̲e̲_̲g̲r̲i̲l̲l̲e̲, d̲i̲f̲f̲i̲c̲u̲l̲t̲�
 Joueur(i̲d̲_̲j̲o̲u̲e̲u̲r̲, nom, prénom, pseudo, année_naiss)
 
 
-Partie(i̲d̲_̲p̲a̲r̲t̲i̲e̲, date_création, en_cours, score, #id_joueur, (#taille_grille, #difficulté), #id_grille, #id_pioche)
+Partie(i̲d̲_̲p̲a̲r̲t̲i̲e̲, date_création, en_cours, score, #id_joueur, (#taille_grille, #difficulté), #id_grille)
 
 
 Grille(i̲d̲_̲g̲r̲i̲l̲l̲e̲, taille, difficulté)
@@ -13,7 +13,7 @@ Grille(i̲d̲_̲g̲r̲i̲l̲l̲e̲, taille, difficulté)
 Pioche(i̲d̲_̲p̲i̲o̲c̲h̲e̲, nb_tuiles_découvertes)
 
 
-Tour((̲#i̲d̲_̲p̲a̲r̲t̲i̲e̲,̲ i̲d̲_̲t̲o̲u̲r̲), posx, posy, #id_tuile)
+Tour((̲#i̲d̲_̲p̲a̲r̲t̲i̲e̲,̲ i̲d̲_̲t̲o̲u̲r̲), posx, posy, rang, #id_pioche)
 
 
 Element(n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲)
@@ -44,3 +44,6 @@ contient1(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲, nom
 
 
 contient2(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲i̲d̲_̲g̲r̲i̲l̲l̲e̲, ligne, position)
+
+
+contient3(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #id_pioche, rang)
