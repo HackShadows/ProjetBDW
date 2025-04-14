@@ -71,8 +71,7 @@ create table Tuile (
 create table TuileJeu (
   id_tuile integer,
   PRIMARY KEY (id_tuile)
-);taille_grille INTEGER,
-  difficulté VARCHAR(10),
+);
 
 create table TuileContrainte (
   id_tuile integer,
@@ -153,5 +152,5 @@ ALTER TABLE contient_element ADD FOREIGN KEY (nom_élément) REFERENCES Element 
 ALTER TABLE contient_tuile_contrainte ADD FOREIGN KEY (id_tuile) REFERENCES TuileContrainte (id_tuile);
 ALTER TABLE contient_tuile_contrainte ADD FOREIGN KEY (id_grille) REFERENCES Grille (id_grille);
 
-ALTER TABLE contient_tuile_jeu ADD FOREIGN KEY (id_tuile) REFERENCES TuileContrainte (id_tuile);
+ALTER TABLE contient_tuile_jeu ADD FOREIGN KEY (id_tuile) REFERENCES TuileJeu (id_tuile);
 ALTER TABLE contient_tuile_jeu ADD FOREIGN KEY (id_pioche) REFERENCES Pioche (id_pioche);

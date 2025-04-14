@@ -114,6 +114,6 @@ WHERE G.num_colonne=0;
 
 INSERT INTO contient_tuile_jeu
 SELECT P.id_tuile AS id_tuile, P.id_grille AS id_pioche, P.rang AS rang
-FROM données_fournies.pioche P
+FROM données_fournies.pioche P;
 
 DROP SCHEMA IF EXISTS données_fournies CASCADE;
