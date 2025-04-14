@@ -382,7 +382,7 @@ def parties_en_cours(connexion, id_joueur :int) -> list[dict]:
 	query = f'SELECT P.id_partie, P.score, G.difficulté, G.taille FROM ({query1}) P JOIN grille G USING(id_grille)'
 	return execute_select_query(connexion, query, [id_joueur])
 
-def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :int) :
+def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :int) -> int :
 	"""
 	Crée une nouvelle partie.
 	
