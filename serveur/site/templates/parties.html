@@ -5,45 +5,49 @@
 {% if REQUEST_VARS['AFFICHAGE'] == "DEFAUT" %}
 
 <form method="POST" action="parties" class="formulaire" id="player-page">
-	<h2>Choisissez votre partie</h2>
-
-	<table>
-		<thead>
-			<tr>
-				<th></th>
-				<th>Pseudo</th>
-				<th>Prénom</th>
-				<th>Nom</th>
-				<th>Année de naissance</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for player in REQUEST_VARS['joueurs'][1] %}
-			<tr>
-				<th><button type="submit" name="id_joueur" value="{{ player['id_joueur'] }}"></button></th>
-				<td>{{ player['pseudo'] }}</td>
-				<td>{{ player['prénom'] }}</td>
-				<td>{{ player['nom'] }}</td>
-				<td>{{ player['année_naiss'] }}</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	
-		<button type="submit" class="button" name="action" value="nouvelle_partie">
-		<span class="button__text" id="button__text1">Nouvelle partie</span>
-		<span class="button__icon">
+	<button type="submit" class="button" name="action" value="nouvelle_partie">
+		<span class="button_text" id="button_text1">Nouvelle partie</span>
+		<span class="button_icon">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" fill="none" class="svg">
 				<line y2="19" y1="5" x2="12" x1="12"></line>
 				<line y2="12" y1="12" x2="19" x1="5"></line>
 			</svg>
 		</span>
 	</button>
-	<button type="submit" class="button" name="action" value="reprendre_partie">
-		<span class="button__text" id="button__text2">Reprendre la partie</span>
-	</button>
+	
+	<div>
+		<h2>Choisissez votre partie</h2>
+
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Difficulté</th>
+					<th>Taille</th>
+					<th>Score</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for partie in REQUEST_VARS['parties'] %}
+				<tr>
+					<th><button type="submit" name="id_partie" value="{{ partie['id_partie'] }}"></button></th>
+					<td>{{ partie['difficulté'] }}</td>
+					<td>{{ partie['taille'] }}</td>
+					<td>{{ partie['score'] }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		
+		<button type="submit" class="button" name="action" value="reprendre_partie">
+			<span class="button_text" id="button_text2">Reprendre la partie</span>
+		</button>
+	</div>
 </form>
 
+{% elif REQUEST_VARS['AFFICHAGE'] == "ACCUEIL" %}
+
+<a href="/" class="accueil_redirection">Choisir un joueur</a>
 
 {% else %}
 

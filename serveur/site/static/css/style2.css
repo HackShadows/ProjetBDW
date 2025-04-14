@@ -7,7 +7,7 @@
 	justify-content: center;
 }
 
-.button {
+.button, .accueil_redirection {
 	position: relative;
 	width: 70%;
 	aspect-ratio: 5 / 1;
@@ -18,18 +18,18 @@
 	background-color: #3aa856;
 }
 
-.button, .button__icon, .button__text {
+.button, .button_icon, .button_text, .accueil_redirection {
 	transition: all 0.3s;
 }
 
-.button .button__text {
+.button .button_text, .accueil_redirection {
 	margin-left: 20%;
 	color: #fff;
 	font-weight: 600;
 	font-size: 300%;
 }
 
-.button .button__icon {
+.button .button_icon {
 	position: absolute;
 	transform: translateX(300%);
 	height: 100%;
@@ -40,34 +40,38 @@
 	justify-content: center;
 }
 
-.button__icon .svg {
+.button_icon .svg {
 	width: 40%;
 	height: 40%;
 	stroke: #fff;
 }
 
-.button:hover {
+.button:hover, .accueil_redirection:hover {
 	background: #34974d;
 }
 
-.button:hover #button__text1 {
+.button:hover #button_text1 {
 	color: transparent;
 }
 
-.button:hover .button__icon {
+.button:hover .button_icon {
 	width: 25%;
 	transform: translateX(150%);
 }
 
-.button:active .button__icon {
+.button:active .button_icon {
 	background-color: #2e8644;
 }
 
-.button:active {
+.button:active, .accueil_redirection:active {
 	background-color: #2e8644;
 	border: 1px solid #2e8644;
 }
 
+.accueil_redirection {
+	text-decoration: none;
+	justify-content: center;
+}
 
 
 
