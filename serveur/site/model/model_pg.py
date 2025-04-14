@@ -3,6 +3,7 @@ from psycopg import sql
 from psycopg.rows import dict_row
 from logzero import logger
 from datetime import datetime
+from random import randint
 
 
 # Fonctions générales
@@ -188,12 +189,7 @@ def get_infos_partie(connexion, id_partie :int) -> dict:
 	Dictionnaire (clés : attributs de partie).
 	"""
 	query = 'SELECT * FROM partie WHERE id_partie=%s'
-	query2 = 'SELECT taille, difficulté FROM grille WHERE id_grille=%s'
-	dico = execute_select_query(connexion, query, [id_partie])[0]
-	res = execute_select_query(connexion, query2, [dico["id_grille"]])[0]
-	dico["taille_grille"] = res["taille"]
-	dico["difficulté"] = res["difficulté"]
-	return dico
+	return execute_select_query(connexion, query, [id_partie])[0]
 
 def id_disponible(connexion, nom_table :str) -> int:
 	"""
@@ -418,10 +414,8 @@ def nouvelle_partie(connexion, taille_grille :int, difficulté :str, id_joueur :
 	query2 = 'SELECT COUNT(*) AS nb FROM classement WHERE taille_grille = %s AND difficulté=%s'
 	result2 = execute_select_query(connexion, query2, [taille_grille, difficulté])
 	if result2[0]['nb'] == 0 :
-		print("ICIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
 		nouveau_classement(connexion, taille_grille, difficulté, date_création)
 	else : 
-		print("ICIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII2")
 		maj_classement(connexion, taille_grille, difficulté, date_création)
 	
 	execute_other_query(connexion, query, [id_partie, date_création, id_joueur, taille_grille, difficulté, id_grille])
@@ -443,7 +437,32 @@ def nouvelle_grille(connexion, id_grille :int, taille_grille :int, difficulté :
 	    Difficulté de la grille.
 	"""
 	query = 'INSERT INTO grille (id_grille, taille, difficulté) VALUES (%s, %s, %s)'
-	return execute_other_query(connexion, query, [id_grille, taille_grille, difficulté])
+	execute_other_query(connexion, query, [id_grille, taille_grille, difficulté])
+	remplir_grille(connexion, id_grille, taille_grille, difficulté)
+
+def remplir_grille(connexion, id_grille :int, taille_grille :int, difficulté :str) :
+	"""
+	Remplie la grille avec les tuiles contrainte.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_grille : int
+	    Identifiant de la grille.
+	taille_grille : int
+	    Taille de la grille.
+	difficulté : str
+	    Difficulté de la grille.
+	"""
+	if difficulté == "Moyenne" : pass
+	else :
+		query = 'SELECT id_tuile FROM tuilecontrainte WHERE est_difficile=%s'
+		tuiles = execute_select_query(connexion, query, [difficulté=="Difficile"])
+		nb = len(tuiles)
+		for i in range(2*taille_grille):
+			insert_query = 'INSERT INTO contient_tuile_contrainte (id_tuile, id_grille, ligne, position) VALUES (%s, %s, %s, %s)'
+			execute_other_query(connexion, insert_query, [tuiles[randint(0, nb-1)]['id_tuile'], id_grille, i<taille_grille, i%taille_grille +1])
 
 def nouveau_classement(connexion, taille_grille :int, difficulté :str, date_création :datetime) :
 	"""

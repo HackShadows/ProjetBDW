@@ -1,7 +1,7 @@
 from model.model_pg import nouvelle_partie, get_infos_partie, grille_remplie
 
 if 'taille_grille' in POST and 'difficulté' in POST:
-	id_partie = nouvelle_partie(SESSION['CONNEXION'], POST['taille_grille'][0], POST['difficulté'][0], SESSION["joueur_actif"][0]["id_joueur"])
+	id_partie = nouvelle_partie(SESSION['CONNEXION'], int(POST['taille_grille'][0]), POST['difficulté'][0], SESSION["joueur_actif"][0]["id_joueur"])
 	SESSION['partie_en_cours'] = get_infos_partie(SESSION['CONNEXION'], id_partie)
 
 REQUEST_VARS['taille_grille'] = SESSION['partie_en_cours']['taille_grille']

@@ -1,5 +1,5 @@
 Grille: id_grille, taille, difficulté
-contient_tuile_contrainte, 1N Grille, 0N TuileContrainte : ligne, position
+contient_tuile_contrainte, 1N Grille, 0N TuileContrainte : sur_ligne, position
 TuileContrainte: est_difficile, nb_points
 est_associée_à, 1N TuileContrainte, 0N Contrainte
 Contrainte: id_contrainte

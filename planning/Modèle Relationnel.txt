@@ -43,7 +43,7 @@ est_associee_a(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲i̲d̲_̲c̲o̲n̲t̲r̲a̲i̲n̲
 contient_element(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲, nombre)
 
 
-contient_tuile_contrainte(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲i̲d̲_̲g̲r̲i̲l̲l̲e̲, ligne, position)
+contient_tuile_contrainte(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲i̲d̲_̲g̲r̲i̲l̲l̲e̲, sur_ligne, position)
 
 
 contient_tuile_jeu(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #id_pioche, rang)
