@@ -1,4 +1,4 @@
-from model.model_pg import nouvelle_partie, parties_en_cours
+from model.model_pg import nouvelle_partie, parties_en_cours, get_infos_partie
 
 if "joueur_actif" in SESSION:
 	REQUEST_VARS['parties'] = parties_en_cours(SESSION['CONNEXION'], SESSION["joueur_actif"][0]["id_joueur"])
