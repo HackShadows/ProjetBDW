@@ -115,9 +115,9 @@ create table contient_element (
 create table contient_tuile_contrainte (
   id_tuile integer,
   id_grille INTEGER,
-  ligne boolean,
+  sur_ligne boolean,
   position INTEGER,
-  PRIMARY KEY (id_tuile, id_grille)
+  PRIMARY KEY (id_tuile, id_grille, sur_ligne, position)
 );
 
 create table contient_tuile_jeu (

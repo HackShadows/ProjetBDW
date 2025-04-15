@@ -1,34 +1,39 @@
-Grille: id_grille, taille, difficulté
-contient_tuile_contrainte, 1N Grille, 0N TuileContrainte : sur_ligne, position
-TuileContrainte: est_difficile, nb_points
+Element: nom_élément
+possède, 11 ContrainteElement, 0N Element : nombre
+ContrainteElement:
+/XT\ Contrainte <- ContrainteElement, ContrainteNombre
+ContrainteNombre: type_contrainte, nombre
+:
+:
+
+contient_element, 0N Element, 1N TuileJeu : nombre
+Tuile: id_tuile, chemin_texture
 est_associée_à, 1N TuileContrainte, 0N Contrainte
 Contrainte: id_contrainte
 :
+:
+:
 
-dispose_de, 11 Grille, 11 Partie
-Classement: taille_grille, _difficulté, nom, date_création, date_maj
-/XT\ Tuile <- TuileContrainte, TuileJeu
-Tuile: id_tuile, chemin_texture
-/XT\ Contrainte <- ContrainteElement, ContrainteNombre
-ContrainteNombre: type_contrainte, nombre
-
-Partie: id_partie, date_création, horaire_début, en_cours
-est_classé_dans, 1N Classement, 1N Joueur, 11 Partie : score
 TuileJeu: 
-contient_element, 0N Element, 1N TuileJeu : nombre
-ContrainteElement:
+/XT\ Tuile <- TuileContrainte, TuileJeu
+TuileContrainte: est_difficile, nb_points
+contient_tuile_contrainte, 1N Grille, 0N TuileContrainte, 0N Coordonnees
+Grille: id_grille, taille, difficulté
+:
 :
 
-est_associée_au, 1N Partie, _11 Tour
-Joueur: id_joueur, nom, prénom, pseudo, année_naiss
-contient_tuile_jeu, 1N Pioche, 1N TuileJeu : rang
-Element: nom_élément
-possède, 11 ContrainteElement, 0N Element : nombre
-:
-
-Tour: id_tour
-a_tiré_dans, 11 Pioche, 11 Tour : posx, posy, rang
+contient_tuile_jeu, 1N Pioche, 0N TuileJeu : rang
 Pioche: id_pioche, nb_tuiles_découvertes
+a_tiré_dans, 11 Pioche, 11 Tour : posx, posy, rang
+Coordonnees:sur_ligne, _position
+dispose_de, 11 Grille, 11 Partie
+Joueur: id_joueur, nom, prénom, pseudo, année_naiss
+:
+
 :
 :
-:
+Tour: id_tour
+est_associée_au, 0N Partie, _11 Tour
+Partie: id_partie, date_création, horaire_début, en_cours
+est_classé_dans, 1N Classement, 0N Joueur, 11 Partie : score
+Classement: taille_grille, _difficulté, nom, date_création, date_maj
