@@ -455,14 +455,49 @@ def remplir_grille(connexion, id_grille :int, taille_grille :int, difficulté :s
 	difficulté : str
 	    Difficulté de la grille.
 	"""
-	if difficulté == "Moyenne" : pass
+	query = 'SELECT id_tuile FROM tuilecontrainte WHERE est_difficile=%s'
+	insert_query = 'INSERT INTO contient_tuile_contrainte (id_tuile, id_grille, sur_ligne, position) VALUES (%s, %s, %s, %s)'
+
+	if difficulté == "Moyenne" :
+		tuiles_faciles = execute_select_query(connexion, query, [False])
+		tuiles_difficiles = execute_select_query(connexion, query, [True])
+		nb1 = len(tuiles_faciles)
+		nb2 = len(tuiles_difficiles)
+		for i in range(taille_grille):
+			execute_other_query(connexion, insert_query, [tuiles_faciles[randint(0, nb1-1)]['id_tuile'], id_grille, True, i+1])
+		for i in range(taille_grille):
+			execute_other_query(connexion, insert_query, [tuiles_difficiles[randint(0, nb2-1)]['id_tuile'], id_grille, False, i+1])
 	else :
-		query = 'SELECT id_tuile FROM tuilecontrainte WHERE est_difficile=%s'
 		tuiles = execute_select_query(connexion, query, [difficulté=="Difficile"])
 		nb = len(tuiles)
 		for i in range(2*taille_grille):
-			insert_query = 'INSERT INTO contient_tuile_contrainte (id_tuile, id_grille, ligne, position) VALUES (%s, %s, %s, %s)'
 			execute_other_query(connexion, insert_query, [tuiles[randint(0, nb-1)]['id_tuile'], id_grille, i<taille_grille, i%taille_grille +1])
+
+def get_grille(connexion, id_grille :int) -> list[list[str|None]] :
+	"""
+	Renvoie la grille d'identifiant 'id_grille'.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_grille : int
+	    Identifiant de la grille.
+	
+	Renvoie
+	-------
+	Une liste contenant une liste pour chaque ligne, avec 
+	None si la case est vide, le nom de l'image de la carte présente sinon.
+	"""
+	query = 'SELECT id_tuile FROM contient_tuile_contrainte WHERE id_grille=%s ORDER BY sur_ligne DESC, position'
+	tuiles = execute_select_query(connexion, query, [id_grille])
+	taille_grille = len(tuiles) // 2
+	grille = [[None]]
+	for i in range(taille_grille):
+		grille[0].append(get_img_tuile(connexion, tuiles[i]["id_tuile"]))
+		grille.append([get_img_tuile(connexion, tuiles[taille_grille + i]["id_tuile"])] + [None for _ in range(taille_grille)])
+	return grille
+
 
 def nouveau_classement(connexion, taille_grille :int, difficulté :str, date_création :datetime) :
 	"""
