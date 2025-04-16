@@ -499,6 +499,148 @@ def get_grille(connexion, id_grille :int) -> list[list[str|None]] :
 	return grille
 
 
+def get_pioche(connexion, id_pioche :int) -> list[str|None] :
+	"""
+	Renvoie la pioche d'identifiant 'id_pioche'.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_pioche : int
+	    Identifiant de la pioche.
+	
+	Renvoie
+	-------
+	Une liste contenant None si la case est vide, le nom de l'image de la carte présente sinon.
+	"""
+	query = 'SELECT id_tuile, rang FROM contient_tuile_jeu WHERE id_pioche=%s'
+	tuiles = execute_select_query(connexion, query, [id_pioche])
+	pioche = [None for _ in range(5)]
+	for tuile in tuiles:
+		pioche[tuile['rang']] = get_img_tuile(connexion, tuile["id_tuile"])
+	return pioche
+
+def get_id_pioche(connexion, id_partie :int, id_tour :int) -> int :
+	"""
+	Renvoie l'identifiant de la pioche associée au tour correspondant.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_partie : int
+	    Identifiant de la partie.
+	id_tour : int
+	    Identifiant du tour de jeu.
+	
+	Renvoie
+	-------
+	L'identifiant de la pioche.
+	"""
+	query = 'SELECT id_pioche FROM tour WHERE id_partie=%s AND id_tour=%s'
+	return execute_select_query(connexion, query, [id_partie, id_tour])[0]["id_pioche"]
+
+
+def nouveau_tour(connexion, id_partie :int, id_tour :int, id_pioche :int, rang :int|None = None, posx :int|None = None, posy :int|None = None) :
+	"""
+	Crée un nouveau tour de jeu dans la partie d'identifiant 'id_partie'.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_partie : int
+	    Identifiant de la partie.
+	id_tour : int
+	    Identifiant du tour de jeu.
+	id_pioche : int
+	    Identifiant de la pioche associée au tour.
+	rang : int
+	    Position de la tuile jeu prise dans la pioche (0 -> 4).
+	posx : int
+	    Numéro de la colonne où la tuile jeu a été placée.
+	posy : int
+	    Numéro de la ligne où la tuile jeu a été placée.
+	"""
+	query = 'INSERT INTO tour (id_tour, id_partie, pos_x, pos_y, rang, id_pioche) VALUES (%s, %s, %s, %s, %s, %s)'
+	execute_other_query(connexion, query, [id_tour, id_partie, posx, posy, rang, id_pioche])
+
+
+def nouvelle_pioche(connexion) -> int :
+	"""
+	Crée un nouvelle pioche.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	
+	Renvoie
+	-------
+	L'identifiant de la pioche créée.
+	"""
+	id_pioche = id_disponible(connexion, "pioche")
+	query = 'INSERT INTO pioche (id_pioche, nb_tuiles_découvertes) VALUES (%s, 5)'
+	execute_other_query(connexion, query, [id_pioche])
+	remplir_pioche(connexion, id_pioche)
+	return id_pioche
+
+def remplir_pioche(connexion, id_pioche :int) :
+	"""
+	Remplie la pioche d'identifiant 'id_pioche'.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_pioche : int
+	    Identifiant de la pioche à remplir.
+	"""
+	tuiles_jeu = get_instances(connexion, "tuilejeu")
+	query = 'SELECT rang FROM contient_tuile_jeu WHERE id_pioche = %s'
+	rangs = [rang['rang'] for rang in execute_select_query(connexion, query, [id_pioche])]
+	insert_query = 'INSERT INTO contient_tuile_jeu (id_tuile, id_pioche, rang) VALUES (%s, %s, %s)'
+	nb = len(rangs)
+	nb_tuiles = len(tuiles_jeu)
+	rg = 0
+	for _ in range(5-nb):
+		while rg in rangs: rg += 1
+		execute_other_query(connexion, insert_query, [tuiles_jeu[randint(0, nb_tuiles-1)]["id_tuile"], id_pioche, rg])
+		rg += 1
+
+def défausser_pioche(connexion, id_pioche :int, rang :int) -> int :
+	"""
+	Retire une tuile jeu de la pioche d'identifiant 'id_pioche'.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_pioche : int
+	    Identifiant de la pioche.
+	rang : int
+	    Rang de la tuile à retirer de la pioche (0 -> 4).
+	
+	Renvoie
+	-------
+	L'identifiant de la nouvelle pioche obtenue.
+	"""
+	assert 0 <= rang <= 4
+	query = 'SELECT id_tuile, rang FROM contient_tuile_jeu WHERE id_pioche = %s'
+	tuiles = [(tuile['id_tuile'], tuile["rang"]) for tuile in execute_select_query(connexion, query, [id_pioche]) if tuile["rang"] != rang]
+	
+	new_id_pioche = id_disponible(connexion, "pioche")
+	insert_query1 = 'INSERT INTO pioche (id_pioche, nb_tuiles_découvertes) VALUES (%s, %s)'
+	execute_other_query(connexion, insert_query1, [new_id_pioche, len(tuiles)])
+	
+	insert_query2 = 'INSERT INTO contient_tuile_jeu (id_tuile, id_pioche, rang) VALUES (%s, %s, %s)'
+	for id_tuile, rang in tuiles:
+		execute_other_query(connexion, insert_query2, [id_tuile, new_id_pioche, rang])
+	
+	return new_id_pioche
+
+
 def nouveau_classement(connexion, taille_grille :int, difficulté :str, date_création :datetime) :
 	"""
 	Crée un nouveau classement.
