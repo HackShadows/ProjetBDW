@@ -486,3 +486,11 @@ main h1 {
 	margin: 15%;
 	background-color: #AAA4;
 }
+.tuile-score-nul {
+	font-size: 2rem;
+	color: #800;
+}
+.tuile-score-bien {
+	font-size: 2rem;
+	color: #0F0;
+}

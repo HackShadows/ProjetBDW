@@ -34,19 +34,6 @@
 <h1>Classements</h1>
 
 <form id="classements" method="POST" action="/classements"><ul>
-	<li>
-		<button type="submit" name="grille" value="4 1"></button>
-		<div class="classement-head">
-			<h2>Dummy</h2>
-			<span class="classement-maj">maj 10/01/2025</span>
-		</div>
-		<span class="classement-crea">création 23/06/2024</span>
-		<hr>
-		<div class="classement-content">
-			<span class="classement-difficulte">dur</span>
-			<span class="classement-taille">4x4</span>
-		</div>
-	</li>
 	{% for classement in REQUEST_VARS['classements'] %}
 	<li>
 		<button type="submit" name="grille" value="{{ classement['taille_grille'] }} {{ classement['difficulté'] }}"></button>

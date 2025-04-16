@@ -31,7 +31,11 @@
 				<img src="site/static/img/tuiles/{{ REQUEST_VARS['grille'][y][x] }}">
 				{% endif %}
 				{% else %}
+				{% if REQUEST_VARS['grille'][y][x] is none %}
+				<div class="tuile-emplacement"></div>
+				{% else %}
 				<img src="site/static/img/tuiles/{{ REQUEST_VARS['grille'][y][x] }}">
+				{% endif %}
 				{% endif %}
 			</td>
 			{% endfor %}
