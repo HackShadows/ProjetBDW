@@ -1,7 +1,7 @@
 from model.model_pg import nouvelle_partie, get_infos_partie
 from model.model_pg import nouvelle_pioche, get_pioche, get_id_pioche, défausser_pioche, remplir_pioche
 from model.model_pg import get_grille, grille_remplie
-from model.model_pg import nouveau_tour
+from model.model_pg import nouveau_tour, get_contraintes_validées, get_img_tuile
 
 
 connexion = SESSION['CONNEXION']
@@ -50,6 +50,8 @@ if POST:
 
 if grille_remplie(connexion, id_partie) : 
 	REQUEST_VARS['phase'] = 'resultats'
+	REQUEST_VARS['resultat_grille'] = get_contraintes_validées(connexion, id_partie)
+	REQUEST_VARS['score'] = sum(REQUEST_VARS['resultat_grille']["colonne"] + REQUEST_VARS['resultat_grille']["ligne"])
 
 elif SESSION["num_tour"] % 4 < 2 : 
 	REQUEST_VARS['phase'] = "joue_carte"
@@ -57,15 +59,12 @@ elif SESSION["num_tour"] % 4 < 2 :
 
 else : REQUEST_VARS['phase'] = "defausse_carte"
 
+REQUEST_VARS['grille'] = [list(map(lambda id_tuile: get_img_tuile(connexion, id_tuile) if id_tuile != None  else None, ligne)) for ligne in SESSION['grille']]
 
-REQUEST_VARS['grille'] = SESSION['grille']
-
-REQUEST_VARS['pioche'] = get_pioche(connexion, id_pioche)
-
+REQUEST_VARS['pioche'] = list(map(lambda id_tuile: get_img_tuile(connexion, id_tuile) if id_tuile != None  else None, get_pioche(connexion, id_pioche)))
 
 
-# REQUEST_VARS['score']
-# REQUEST_VARS['resultat_grille'] = {
-#	'colonne' : [0, 1, 5, 3],
+# = {
+#'colonne' : [0, 1, 5, 3],
 #	'ligne'   : [9, 0, 0, 0],
 # }

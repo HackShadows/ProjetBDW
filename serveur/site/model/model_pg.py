@@ -499,7 +499,7 @@ def get_grille(connexion, id_grille :int) -> list[list[str|None]] :
 	return grille
 
 
-def get_pioche(connexion, id_pioche :int) -> list[str|None] :
+def get_pioche(connexion, id_pioche :int) -> list[int|None] :
 	"""
 	Renvoie la pioche d'identifiant 'id_pioche'.
 	
@@ -512,13 +512,13 @@ def get_pioche(connexion, id_pioche :int) -> list[str|None] :
 	
 	Renvoie
 	-------
-	Une liste contenant None si la case est vide, le nom de l'image de la carte présente sinon.
+	Une liste contenant None si la case est vide, l'identifiant de la tuile présente sinon.
 	"""
 	query = 'SELECT id_tuile, rang FROM contient_tuile_jeu WHERE id_pioche=%s'
 	tuiles = execute_select_query(connexion, query, [id_pioche])
 	pioche = [None for _ in range(5)]
 	for tuile in tuiles:
-		pioche[tuile['rang']] = get_img_tuile(connexion, tuile["id_tuile"])
+		pioche[tuile['rang']] = tuile["id_tuile"]
 	return pioche
 
 def get_id_pioche(connexion, id_partie :int, id_tour :int) -> int :
@@ -678,6 +678,7 @@ def maj_classement(connexion, taille_grille :int, difficulté :str, date_maj :da
 	query = 'UPDATE classement SET date_maj=%s WHERE taille_grille=%s AND difficulté=%s'
 	return execute_other_query(connexion, query, [date_maj, taille_grille, difficulté])
 
+
 def grille_remplie(connexion, id_partie :int) -> bool :
 	"""
 	Renvoie True si la grille est remplie, False sinon.
@@ -700,6 +701,28 @@ def grille_remplie(connexion, id_partie :int) -> bool :
 	result2 = execute_select_query(connexion, query2, [id_partie])[0]['taille']
 	return result == result2**2
 
+
+def get_contraintes_validées(connexion, id_partie :int) -> bool :
+	"""
+	Renvoie True si la grille est remplie, False sinon.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_partie : int
+	    Identifiant de la partie.
+	
+	Renvoie
+	-------
+	Le booléen correspondant.
+	"""
+	query = 'SELECT COUNT(*) AS nb FROM tour WHERE id_partie = %s'
+	query_tmp = 'SELECT id_grille FROM partie WHERE id_partie = %s'
+	query2 = f'SELECT taille FROM grille WHERE id_grille = ({query_tmp})'
+	result = execute_select_query(connexion, query, [id_partie])[0]['nb']
+	result2 = execute_select_query(connexion, query2, [id_partie])[0]['taille']
+	return result == result2**2
 
 # def get_table_like(connexion, nom_table, like_pattern):
 #     """
