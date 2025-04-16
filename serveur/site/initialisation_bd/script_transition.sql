@@ -36,7 +36,7 @@ GROUP BY G.id;
 
 
 INSERT INTO Pioche
-SELECT P.id_grille AS id_pioche, MAX(P.rang) AS nb_tuiles_découvertes
+SELECT P.id_grille AS id_pioche, COUNT(P.rang) AS nb_tuiles_découvertes
 FROM données_fournies.pioche P
 GROUP BY P.id_grille;
 
@@ -103,11 +103,11 @@ FROM données_fournies.tuile_jeu TJ JOIN données_fournies.element E ON TJ.id_el
 
 
 INSERT INTO contient_tuile_contrainte
-SELECT G.id_tuile AS id_tuile, G.id AS id_grille, FALSE, G.num_colonne
+SELECT G.id_tuile AS id_tuile, G.id AS id_grille, TRUE, G.num_colonne
 FROM données_fournies.grille G
 WHERE G.num_ligne=0;
 INSERT INTO contient_tuile_contrainte
-SELECT G.id_tuile AS id_tuile, G.id AS id_grille, TRUE, G.num_ligne
+SELECT G.id_tuile AS id_tuile, G.id AS id_grille, FALSE, G.num_ligne
 FROM données_fournies.grille G
 WHERE G.num_colonne=0;
 
