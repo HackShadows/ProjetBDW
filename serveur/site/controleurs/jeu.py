@@ -1,7 +1,7 @@
 from model.model_pg import nouvelle_partie, get_infos_partie
 from model.model_pg import nouvelle_pioche, get_pioche, get_id_pioche, défausser_pioche, remplir_pioche
 from model.model_pg import get_grille, grille_remplie
-from model.model_pg import nouveau_tour, get_contraintes_validées, get_img_tuile
+from model.model_pg import nouveau_tour, get_contraintes_validées, get_img_tuile, get_contraintes
 
 
 connexion = SESSION['CONNEXION']
@@ -49,8 +49,9 @@ if POST:
 
 
 if grille_remplie(connexion, id_partie) : 
+	print(get_contraintes_validées(connexion, SESSION['grille']))
 	REQUEST_VARS['phase'] = 'resultats'
-	REQUEST_VARS['resultat_grille'] = get_contraintes_validées(connexion, id_partie)
+	REQUEST_VARS['resultat_grille'] = get_contraintes_validées(connexion, SESSION['grille'])
 	REQUEST_VARS['score'] = sum(REQUEST_VARS['resultat_grille']["colonne"] + REQUEST_VARS['resultat_grille']["ligne"])
 
 elif SESSION["num_tour"] % 4 < 2 : 
@@ -62,9 +63,3 @@ else : REQUEST_VARS['phase'] = "defausse_carte"
 REQUEST_VARS['grille'] = [[get_img_tuile(connexion, id_tuile) if id_tuile is not None else None for id_tuile in ligne] for ligne in SESSION['grille']]
 
 REQUEST_VARS['pioche'] = [get_img_tuile(connexion, id_tuile) if id_tuile is not None  else None for id_tuile in get_pioche(connexion, id_pioche)]
-
-
-# = {
-#'colonne' : [0, 1, 5, 3],
-#	'ligne'   : [9, 0, 0, 0],
-# }

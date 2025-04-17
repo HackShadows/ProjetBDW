@@ -702,27 +702,145 @@ def grille_remplie(connexion, id_partie :int) -> bool :
 	return result == result2**2
 
 
-def get_contraintes_validées(connexion, id_partie :int) -> bool :
+def get_contraintes(connexion, id_tuile :int) -> dict :
 	"""
-	Renvoie True si la grille est remplie, False sinon.
+	Renvoie les informations de la tuile contrainte d'identifiant 'id_tuile'.
 	
 	Paramètres
 	----------
 	connexion : 
 	    Connexion à la base de donnée.
-	id_partie : int
-	    Identifiant de la partie.
+	id_tuile : int
+	    Identifiant de la tuile contrainte.
 	
 	Renvoie
 	-------
-	Le booléen correspondant.
+	Dictionnaire (clés :'type', 'nb_points', 'nombre' et ('type_contrainte' ou 'nom_élément')).
 	"""
-	query = 'SELECT COUNT(*) AS nb FROM tour WHERE id_partie = %s'
-	query_tmp = 'SELECT id_grille FROM partie WHERE id_partie = %s'
-	query2 = f'SELECT taille FROM grille WHERE id_grille = ({query_tmp})'
-	result = execute_select_query(connexion, query, [id_partie])[0]['nb']
-	result2 = execute_select_query(connexion, query2, [id_partie])[0]['taille']
-	return result == result2**2
+	query = 'SELECT id_contrainte FROM associe_contrainte WHERE id_tuile = %s'
+	query_nombre = 'SELECT type_contrainte, nombre FROM contraintenombre WHERE id_contrainte = %s'
+	query_élément = 'SELECT nom_élément, nombre FROM contrainteelement WHERE id_contrainte = %s'
+	query_score = 'SELECT nb_points FROM tuilecontrainte WHERE id_tuile = %s'
+	contraintes = execute_select_query(connexion, query, [id_tuile])
+	score = int(execute_select_query(connexion, query_score, [id_tuile])[0]["nb_points"])
+	nb_contraintes = len(contraintes)
+	
+	if nb_contraintes == 0: raise AssertionError("Pas de contrainte associée à cette tuile !")
+	elif nb_contraintes == 1:
+		contrainte_nombre = execute_select_query(connexion, query_nombre, [contraintes[0]['id_contrainte']])
+		if len(contrainte_nombre) != 1: 
+			contrainte_élément = execute_select_query(connexion, query_élément, [contraintes[0]['id_contrainte']])
+			if len(contrainte_élément) != 1 : raise AssertionError("Problème !")
+			return {"type" : "élément", "nb_points" : score, "nom_élément" : contrainte_élément[0]["nom_élément"], "nombre" : contrainte_élément[0]["nombre"]}
+		else:
+			return {"type" : "nombre", "nb_points" : score, "type_contrainte" : contrainte_nombre[0]["type_contrainte"], "nombre" : contrainte_nombre[0]["nombre"]}
+	else:
+		dico = {"type" : "élément", "nb_points" : score, "nom_élément" : [], "nombre" : []}
+		for contrainte in contraintes:
+			contrainte_élément = execute_select_query(connexion, query_élément, [contrainte['id_contrainte']])
+			if len(contrainte_élément) != 1 : raise AssertionError("Problème !")
+			dico['nom_élément'].append(contrainte_élément[0]["nom_élément"])
+			dico['nombre'].append(contrainte_élément[0]["nombre"])
+		return dico
+
+def contrainte_nombre_valide(connexion, type_contrainte :str, nombre :int, tuiles_jeu :list[int]) -> bool :
+	"""
+	Indique si la contrainte nombre a été validée.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	type_contrainte : str
+	    Type de contrainte (NB_Elts_Exact, NB_Diff_Elts, NB_Elt_Fix_Exact).
+	nombre : int
+	    Nombre associée à la contrainte.
+	tuiles_jeu : list[int]
+	    Liste des identifiants des tuiles jeu qui doivent vérifier la contrainte.
+	
+	Renvoie
+	-------
+	True si la contrainte est vérifiée, False sinon.
+	"""
+
+	return True
+
+def contrainte_élément_valide(connexion, nom_élément :str, nombre :int|None, tuiles_jeu :list[int]) -> bool :
+	"""
+	Indique si la contrainte élément a été validée.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	nom_élément : str
+	    Nom de l'élément (Kraken, Dragon, Maelstrom, Epave, Sable, Rocher).
+	nombre : int|None
+	    Nombre d'éléments devant être présent (None si l'élément est majoritaire).
+	tuiles_jeu : list[int]
+	    Liste des identifiants des tuiles jeu qui doivent vérifier la contrainte.
+	
+	Renvoie
+	-------
+	True si la contrainte est vérifiée, False sinon.
+	"""
+	if nombre is None:
+		elts = {}
+		for id_tuile in tuiles_jeu:
+			assert id_tuile is not None
+			elements = get_elements_tuile(connexion, id_tuile)
+			for k, v in elements.items():
+				if k in elts: elts[k] += v
+				else: elts[k] = v
+		if nom_élément not in elts: return False
+		nb = elts[nom_élément]
+		for v in elts.values():
+			if v > nb : return False
+		return True
+	else:
+		nb = 0
+		for id_tuile in tuiles_jeu:
+			assert id_tuile is not None
+			elements = get_elements_tuile(connexion, id_tuile)
+			if nom_élément in elements: nb += elements[nom_élément]
+		return nb == nombre
+
+def get_contraintes_validées(connexion, grille :list[list[int|None]]) -> dict[list[int]] :
+	"""
+	Renvoie les scores des différentes tuiles contraintes ayant été validées.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	grille : list[list[int|None]]
+	    Grille de la partie en cours composée des identifiants des tuiles.
+	
+	Renvoie
+	-------
+	Dictionnaire (clés :'colonne', 'ligne', valeurs : list[0 si la tuile n'est pas validée son score sinon]).
+	"""
+	dico = {"colonne" : [], "ligne" : []}
+
+	for ligne in grille[1:]:
+		contraintes = get_contraintes(connexion, ligne[0])
+		if contraintes["type"] == "élément":
+			if isinstance(contraintes["nom_élément"], list):
+				ajouter = True
+				nb = len(contraintes["nom_élément"])
+				for i in range(nb):
+					if not contrainte_élément_valide(connexion, contraintes["nom_élément"][i], contraintes["nombre"][i], ligne[1:]):
+						ajouter = False
+						break
+				dico['ligne'].append(contraintes["nb_points"] if ajouter else 0)
+			else:
+				dico['ligne'].append(contraintes["nb_points"] if contrainte_élément_valide(connexion, contraintes["nom_élément"], contraintes["nombre"], ligne[1:]) else 0)
+	
+	return dico
+
+		
+	
+	
 
 # def get_table_like(connexion, nom_table, like_pattern):
 #     """
