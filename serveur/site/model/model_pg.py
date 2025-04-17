@@ -494,8 +494,8 @@ def get_grille(connexion, id_grille :int) -> list[list[str|None]] :
 	taille_grille = len(tuiles) // 2
 	grille = [[None]]
 	for i in range(taille_grille):
-		grille[0].append(get_img_tuile(connexion, tuiles[i]["id_tuile"]))
-		grille.append([get_img_tuile(connexion, tuiles[taille_grille + i]["id_tuile"])] + [None for _ in range(taille_grille)])
+		grille[0].append(tuiles[i]["id_tuile"])
+		grille.append([tuiles[taille_grille + i]["id_tuile"]] + [None for _ in range(taille_grille)])
 	return grille
 
 
@@ -694,7 +694,7 @@ def grille_remplie(connexion, id_partie :int) -> bool :
 	-------
 	Le booléen correspondant.
 	"""
-	query = 'SELECT COUNT(*) AS nb FROM tour WHERE id_partie = %s'
+	query = 'SELECT COUNT(*) AS nb FROM tour WHERE id_partie = %s AND pos_x IS NOT NULL'
 	query_tmp = 'SELECT id_grille FROM partie WHERE id_partie = %s'
 	query2 = f'SELECT taille FROM grille WHERE id_grille = ({query_tmp})'
 	result = execute_select_query(connexion, query, [id_partie])[0]['nb']
