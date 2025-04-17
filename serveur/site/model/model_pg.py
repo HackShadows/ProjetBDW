@@ -678,6 +678,21 @@ def maj_classement(connexion, taille_grille :int, difficulté :str, date_maj :da
 	query = 'UPDATE classement SET date_maj=%s WHERE taille_grille=%s AND difficulté=%s'
 	return execute_other_query(connexion, query, [date_maj, taille_grille, difficulté])
 
+def fin_partie(connexion, taille_grille :int, difficulté :str, id_partie :int) :
+	"""
+	Ajoute la partie à son classement.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_partie : int
+	    Identifiant de la partie.
+	"""
+	query = 'UPDATE partie SET date_maj=%s WHERE taille_grille=%s AND difficulté=%s'
+	maj_classement()
+	return execute_other_query(connexion, query, [date_maj, taille_grille, difficulté])
+
 
 def grille_remplie(connexion, id_partie :int) -> bool :
 	"""

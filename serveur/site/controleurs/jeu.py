@@ -49,7 +49,6 @@ if POST:
 
 
 if grille_remplie(connexion, id_partie) : 
-	print(get_contraintes_validées(connexion, SESSION['grille']))
 	REQUEST_VARS['phase'] = 'resultats'
 	REQUEST_VARS['resultat_grille'] = get_contraintes_validées(connexion, SESSION['grille'])
 	REQUEST_VARS['score'] = sum(REQUEST_VARS['resultat_grille']["colonne"] + REQUEST_VARS['resultat_grille']["ligne"])
