@@ -59,9 +59,9 @@ elif SESSION["num_tour"] % 4 < 2 :
 
 else : REQUEST_VARS['phase'] = "defausse_carte"
 
-REQUEST_VARS['grille'] = [list(map(lambda id_tuile: get_img_tuile(connexion, id_tuile) if id_tuile != None  else None, ligne)) for ligne in SESSION['grille']]
+REQUEST_VARS['grille'] = [[get_img_tuile(connexion, id_tuile) if id_tuile is not None else None for id_tuile in ligne] for ligne in SESSION['grille']]
 
-REQUEST_VARS['pioche'] = list(map(lambda id_tuile: get_img_tuile(connexion, id_tuile) if id_tuile != None  else None, get_pioche(connexion, id_pioche)))
+REQUEST_VARS['pioche'] = [get_img_tuile(connexion, id_tuile) if id_tuile is not None  else None for id_tuile in get_pioche(connexion, id_pioche)]
 
 
 # = {

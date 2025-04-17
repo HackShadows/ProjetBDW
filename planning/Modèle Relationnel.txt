@@ -46,4 +46,4 @@ contient_element(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t
 contient_tuile_contrainte(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #̲i̲d̲_̲g̲r̲i̲l̲l̲e̲, (s̲u̲r̲_̲l̲i̲g̲n̲e̲, p̲o̲s̲i̲t̲i̲o̲n̲))
 
 
-contient_tuile_jeu(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #i̲d̲_̲p̲i̲o̲c̲h̲e̲, rang)
+contient_tuile_jeu(#̲i̲d̲_̲t̲u̲i̲l̲e̲, #i̲d̲_̲p̲i̲o̲c̲h̲e̲, r̲a̲n̲g̲)

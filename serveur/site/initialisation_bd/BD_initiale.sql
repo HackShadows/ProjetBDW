@@ -124,7 +124,7 @@ create table contient_tuile_jeu (
   id_tuile integer,
   id_pioche INTEGER,
   rang integer,
-  PRIMARY KEY (id_tuile, id_pioche)
+  PRIMARY KEY (id_tuile, id_pioche, rang)
 );
 
 ALTER TABLE Partie ADD FOREIGN KEY (id_joueur) REFERENCES Joueur (id_joueur);
