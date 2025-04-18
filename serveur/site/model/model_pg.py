@@ -660,7 +660,7 @@ def nouveau_classement(connexion, taille_grille :int, difficulté :str, date_cr�
 	query = 'INSERT INTO classement (taille_grille, difficulté, nom, date_création, date_maj) VALUES (%s, %s, %s, %s, %s)'
 	return execute_other_query(connexion, query, [taille_grille, difficulté, nom_classement, date_création, date_création])
 
-def maj_classement(connexion, taille_grille :int, difficulté :str, date_maj :datetime) :
+def maj_classement(connexion, taille_grille :int, difficulté :str, date_maj :datetime = None) :
 	"""
 	Met à jour la date du classement.
 	
@@ -675,10 +675,11 @@ def maj_classement(connexion, taille_grille :int, difficulté :str, date_maj :da
 	date_maj : datetime
 	    Date de mise à jour du classement.
 	"""
+	if date_maj is None : date_maj = datetime.now()
 	query = 'UPDATE classement SET date_maj=%s WHERE taille_grille=%s AND difficulté=%s'
 	return execute_other_query(connexion, query, [date_maj, taille_grille, difficulté])
 
-def fin_partie(connexion, taille_grille :int, difficulté :str, id_partie :int) :
+def fin_partie(connexion, id_partie :int, score :int) :
 	"""
 	Ajoute la partie à son classement.
 	
@@ -688,10 +689,11 @@ def fin_partie(connexion, taille_grille :int, difficulté :str, id_partie :int) 
 	    Connexion à la base de donnée.
 	id_partie : int
 	    Identifiant de la partie.
+	score : int
+	    Score de la partie.
 	"""
-	query = 'UPDATE partie SET date_maj=%s WHERE taille_grille=%s AND difficulté=%s'
-	maj_classement()
-	return execute_other_query(connexion, query, [date_maj, taille_grille, difficulté])
+	query = 'UPDATE partie SET en_cours=false, score=%s WHERE id_partie=%s'
+	return execute_other_query(connexion, query, [score, id_partie])
 
 
 def grille_remplie(connexion, id_partie :int) -> bool :
@@ -777,8 +779,17 @@ def contrainte_nombre_valide(connexion, type_contrainte :str, nombre :int, tuile
 	-------
 	True si la contrainte est vérifiée, False sinon.
 	"""
-
-	return True
+	if type_contrainte == "NB_Elts_Exact":
+		return nombre == sum([sum(get_elements_tuile(connexion, id_tuile).values()) for id_tuile in tuiles_jeu])
+	elif type_contrainte == "NB_Diff_Elts":
+		return nombre == len(set(clé for id_tuile in tuiles_jeu for clé in get_elements_tuile(connexion, id_tuile).keys()))
+	elif type_contrainte == "NB_Elt_Fix_Exact":
+		dico = {}
+		for id_tuile in tuiles_jeu :
+			for k, v in get_elements_tuile(connexion, id_tuile).items() : dico[k] = v if k not in dico else v + dico[k]
+		return nombre in dico.values()
+	else:
+		raise AssertionError("Type_contrainte incorrect !")
 
 def contrainte_élément_valide(connexion, nom_élément :str, nombre :int|None, tuiles_jeu :list[int]) -> bool :
 	"""
@@ -837,6 +848,7 @@ def get_contraintes_validées(connexion, grille :list[list[int|None]]) -> dict[l
 	"""
 	dico = {"colonne" : [], "ligne" : []}
 
+	# Vérification des contraintes de la colonne
 	for ligne in grille[1:]:
 		contraintes = get_contraintes(connexion, ligne[0])
 		if contraintes["type"] == "élément":
@@ -847,9 +859,30 @@ def get_contraintes_validées(connexion, grille :list[list[int|None]]) -> dict[l
 					if not contrainte_élément_valide(connexion, contraintes["nom_élément"][i], contraintes["nombre"][i], ligne[1:]):
 						ajouter = False
 						break
+				dico['colonne'].append(contraintes["nb_points"] if ajouter else 0)
+			else:
+				dico['colonne'].append(contraintes["nb_points"] if contrainte_élément_valide(connexion, contraintes["nom_élément"], contraintes["nombre"], ligne[1:]) else 0)
+		elif contraintes["type"] == "nombre":
+			dico['colonne'].append(contraintes["nb_points"] if contrainte_nombre_valide(connexion, contraintes["type_contrainte"], contraintes["nombre"], ligne[1:]) else 0)
+	
+	# Vérification des contraintes de la ligne
+	taille = len(grille)
+	for colonne in range(1, taille):
+		contraintes = get_contraintes(connexion, grille[0][colonne])
+		tuiles_jeu = [ligne[colonne] for ligne in grille[1:]]
+		if contraintes["type"] == "élément": 
+			if isinstance(contraintes["nom_élément"], list):
+				ajouter = True
+				nb = len(contraintes["nom_élément"])
+				for i in range(nb):
+					if not contrainte_élément_valide(connexion, contraintes["nom_élément"][i], contraintes["nombre"][i], tuiles_jeu):
+						ajouter = False
+						break
 				dico['ligne'].append(contraintes["nb_points"] if ajouter else 0)
 			else:
-				dico['ligne'].append(contraintes["nb_points"] if contrainte_élément_valide(connexion, contraintes["nom_élément"], contraintes["nombre"], ligne[1:]) else 0)
+				dico['ligne'].append(contraintes["nb_points"] if contrainte_élément_valide(connexion, contraintes["nom_élément"], contraintes["nombre"], tuiles_jeu) else 0)
+		elif contraintes["type"] == "nombre":
+			dico['ligne'].append(contraintes["nb_points"] if contrainte_nombre_valide(connexion, contraintes["type_contrainte"], contraintes["nombre"], tuiles_jeu) else 0)
 	
 	return dico
 

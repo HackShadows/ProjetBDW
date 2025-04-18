@@ -1,7 +1,8 @@
-from model.model_pg import nouvelle_partie, get_infos_partie
+from model.model_pg import nouvelle_partie, get_infos_partie, fin_partie
 from model.model_pg import nouvelle_pioche, get_pioche, get_id_pioche, défausser_pioche, remplir_pioche
 from model.model_pg import get_grille, grille_remplie
-from model.model_pg import nouveau_tour, get_contraintes_validées, get_img_tuile, get_contraintes
+from model.model_pg import get_contraintes_validées, get_img_tuile
+from model.model_pg import nouveau_tour, maj_classement
 
 
 connexion = SESSION['CONNEXION']
@@ -52,6 +53,9 @@ if grille_remplie(connexion, id_partie) :
 	REQUEST_VARS['phase'] = 'resultats'
 	REQUEST_VARS['resultat_grille'] = get_contraintes_validées(connexion, SESSION['grille'])
 	REQUEST_VARS['score'] = sum(REQUEST_VARS['resultat_grille']["colonne"] + REQUEST_VARS['resultat_grille']["ligne"])
+	fin_partie(connexion, id_partie, REQUEST_VARS['score'])
+	maj_classement(connexion, REQUEST_VARS['taille_grille'], SESSION['partie_en_cours']['difficulté'])
+	
 
 elif SESSION["num_tour"] % 4 < 2 : 
 	REQUEST_VARS['phase'] = "joue_carte"

@@ -8,8 +8,8 @@ create table Classement (
   taille_grille integer, 
   difficulté varchar(10),
   nom varchar(64), 
-  date_création date, 
-  date_maj date, 
+  date_création TIMESTAMP, 
+  date_maj TIMESTAMP, 
   PRIMARY KEY (taille_grille, difficulté)
 );
 
