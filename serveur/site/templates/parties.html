@@ -45,9 +45,17 @@
 	</div>
 </form>
 
+
+
 {% elif REQUEST_VARS['AFFICHAGE'] == "ACCUEIL" %}
 
-<a href="/" class="accueil_redirection">Choisir un joueur</a>
+<div class="warning">
+	<h2>Vous n'avez pas sélectionné de joueur !</h2>
+	<p>Veuillez retourner à l'accueil pour le sélectionner.</p>
+	<a href="/#player-page" class="redirection">Accueil : Choisir un joueur</a>
+</div>
+
+
 
 {% else %}
 
@@ -57,7 +65,7 @@
 		<label class="slider">Taille de la grille
 			<p class="slider_barre">2 <input type="range" class="taille" min="2" max="6" step="1" value="4" name="taille_grille"> 6</p>
 		</label>
-		
+
 		<label class="difficulté">Difficulté
 			<div class="radio-inputs">
 				<label class="radio">
@@ -75,7 +83,7 @@
 				</label>
 			</div>
 		</label>
-	
+
 		<button type="submit" id="button" name="action" value="créer_partie">Valider</button>
 	</form>
 </div>

@@ -2,6 +2,24 @@
 
 {% block main_content %}
 
+
+
+
+
+{% if 'joueur_actif' not in SESSION %}
+
+<div class="warning">
+	<h2>Vous n'avez pas sélectionné de partie !</h2>
+	<p>Veuillez retourner à la page des parties pour en sélectionner une.<br>(Comment vous êtes arrivés ici ?)</p>
+	<a href="/parties" class="redirection">Parties : Choisir une partie</a>
+</div>
+
+
+
+
+
+{% else %}
+
 {% if REQUEST_VARS['phase'] == 'resultats' %}
 <p>Félicitation, vous avez fait un score de {{ REQUEST_VARS['score'] }}</p>
 {% if REQUEST_VARS['score'] == 0 %}<p>??? attendez je crois que j'ai mal lu...</p>{% endif %}
@@ -87,5 +105,11 @@
 
 
 <a href="/">Arrêter temporairement la partie</a>
+
+
+
+
+
+{% endif %}
 
 {% endblock %}

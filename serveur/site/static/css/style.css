@@ -203,11 +203,11 @@ main h1 {
 }
 #player-page h2 {
 	width: fit-content;
-	padding: 0 10px 2px 10px;
+	padding: 0 30px 2px 10px;
 	border-radius: 8px;
 	margin: 0 0 1rem 3rem;
-	color: white;
-	background-color: royalblue;
+	color: black;
+	background-color: #4441;
 }
 #player-page table {
 	display: grid;
@@ -239,6 +239,9 @@ main h1 {
 }
 #player-page tbody tr:nth-child(even) td {
 	background-color: #EEE;
+}
+#player-page tbody tr:nth-child(odd) td {
+	background-color: #F8F8F8;
 }
 #player-page button {
 	position: absolute;
@@ -493,4 +496,46 @@ main h1 {
 .tuile-score-bien {
 	font-size: 2rem;
 	color: #0F0;
+}
+
+
+
+
+
+
+.warning {
+	width: fit-content;
+	padding: 3rem 5%;
+	border: double 14px orange;
+	border-radius: 30px;
+	margin: auto;
+}
+.warning h2 {
+	margin-bottom: 2rem;
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-align: center;
+	color: #700;
+}
+.warning p {
+	width: 90%;
+	margin: 1rem auto;
+}
+.warning .redirection {
+	display: block;
+	width: fit-content;
+	padding: 1rem 5%;
+	border-radius: 20px;
+	margin: auto;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	background-color: purple;
+}
+
+
+
+.targetable:hover {
+	/*background-color: gold !important;
+	transition: background-color 2s step-start;*/
 }
