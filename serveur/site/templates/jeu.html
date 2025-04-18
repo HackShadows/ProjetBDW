@@ -58,7 +58,7 @@
 			</td>
 			{% endfor %}
 			{% if REQUEST_VARS['phase'] == 'resultats' %}
-			<td class="{% if REQUEST_VARS['resultat_grille']['colonne'][y] == 0 %}tuile-score-nul{% else %}tuile-score-bien{% endif %}">+ {{ REQUEST_VARS['resultat_grille']['colonne'][y] }}</td>
+			<td class="{% if REQUEST_VARS['resultat_grille']['colonne'][y-1] == 0 %}tuile-score-nul{% else %}tuile-score-bien{% endif %}">+ {{ REQUEST_VARS['resultat_grille']['colonne'][y-1] }}</td>
 			{% else %}
 			<td></td>
 			{% endif %}
