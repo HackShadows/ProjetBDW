@@ -22,47 +22,48 @@ if POST and 'taille_grille' in POST and 'difficulté' in POST:
 
 # Page jeu
 
-REQUEST_VARS['taille_grille'] = SESSION['partie_en_cours']['taille_grille']
-id_partie = SESSION['partie_en_cours']['id_partie']
+if "partie_en_cours" in SESSION:
+	REQUEST_VARS['taille_grille'] = SESSION['partie_en_cours']['taille_grille']
+	id_partie = SESSION['partie_en_cours']['id_partie']
 
-if POST:
-	
-	if "emplacement" in POST and "choisie" in POST :
-		x, y = POST["emplacement"][0].split(",")
-		x = int(x)
-		y = int(y)
-		rg = int(POST["choisie"][0]) - 1
+	if POST:
 		
-		SESSION["grille"][y][x] = get_pioche(connexion, get_id_pioche(connexion, id_partie, SESSION["num_tour"]))[rg]
-		SESSION["num_tour"] += 1
+		if "emplacement" in POST and "choisie" in POST :
+			x, y = POST["emplacement"][0].split(",")
+			x = int(x)
+			y = int(y)
+			rg = int(POST["choisie"][0]) - 1
+			
+			SESSION["grille"][y][x] = get_pioche(connexion, get_id_pioche(connexion, id_partie, SESSION["num_tour"]))[rg]
+			SESSION["num_tour"] += 1
+			
+			id_pioche = défausser_pioche(connexion, get_id_pioche(connexion, id_partie, SESSION["num_tour"] - 1), rg)
+			nouveau_tour(connexion, id_partie, SESSION["num_tour"], id_pioche, rg, x, y)
 		
-		id_pioche = défausser_pioche(connexion, get_id_pioche(connexion, id_partie, SESSION["num_tour"] - 1), rg)
-		nouveau_tour(connexion, id_partie, SESSION["num_tour"], id_pioche, rg, x, y)
-	
-	elif "choisie" in POST :
-		rg = int(POST["choisie"][0]) - 1
+		elif "choisie" in POST :
+			rg = int(POST["choisie"][0]) - 1
 
-		SESSION["num_tour"] += 1
+			SESSION["num_tour"] += 1
 
-		id_pioche = défausser_pioche(connexion, get_id_pioche(connexion, id_partie, SESSION["num_tour"] - 1), rg)
-		nouveau_tour(connexion, id_partie, SESSION["num_tour"], id_pioche, rg)
+			id_pioche = défausser_pioche(connexion, get_id_pioche(connexion, id_partie, SESSION["num_tour"] - 1), rg)
+			nouveau_tour(connexion, id_partie, SESSION["num_tour"], id_pioche, rg)
 
 
 
-if grille_remplie(connexion, id_partie) : 
-	REQUEST_VARS['phase'] = 'resultats'
-	REQUEST_VARS['resultat_grille'] = get_contraintes_validées(connexion, SESSION['grille'])
-	REQUEST_VARS['score'] = sum(REQUEST_VARS['resultat_grille']["colonne"] + REQUEST_VARS['resultat_grille']["ligne"])
-	fin_partie(connexion, id_partie, REQUEST_VARS['score'])
-	maj_classement(connexion, REQUEST_VARS['taille_grille'], SESSION['partie_en_cours']['difficulté'])
-	
+	if grille_remplie(connexion, id_partie) : 
+		REQUEST_VARS['phase'] = 'resultats'
+		REQUEST_VARS['resultat_grille'] = get_contraintes_validées(connexion, SESSION['grille'])
+		REQUEST_VARS['score'] = sum(REQUEST_VARS['resultat_grille']["colonne"] + REQUEST_VARS['resultat_grille']["ligne"])
+		fin_partie(connexion, id_partie, REQUEST_VARS['score'])
+		maj_classement(connexion, REQUEST_VARS['taille_grille'], SESSION['partie_en_cours']['difficulté'])
+		
 
-elif SESSION["num_tour"] % 4 < 2 : 
-	REQUEST_VARS['phase'] = "joue_carte"
-	if SESSION["num_tour"] % 4 == 0 : remplir_pioche(connexion, id_pioche)
+	elif SESSION["num_tour"] % 4 < 2 : 
+		REQUEST_VARS['phase'] = "joue_carte"
+		if SESSION["num_tour"] % 4 == 0 : remplir_pioche(connexion, id_pioche)
 
-else : REQUEST_VARS['phase'] = "defausse_carte"
+	else : REQUEST_VARS['phase'] = "defausse_carte"
 
-REQUEST_VARS['grille'] = [[get_img_tuile(connexion, id_tuile) if id_tuile is not None else None for id_tuile in ligne] for ligne in SESSION['grille']]
+	REQUEST_VARS['grille'] = [[get_img_tuile(connexion, id_tuile) if id_tuile is not None else None for id_tuile in ligne] for ligne in SESSION['grille']]
 
-REQUEST_VARS['pioche'] = [get_img_tuile(connexion, id_tuile) if id_tuile is not None  else None for id_tuile in get_pioche(connexion, id_pioche)]
+	REQUEST_VARS['pioche'] = [get_img_tuile(connexion, id_tuile) if id_tuile is not None  else None for id_tuile in get_pioche(connexion, id_pioche)]
