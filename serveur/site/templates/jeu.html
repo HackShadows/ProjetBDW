@@ -40,7 +40,7 @@
 			</td>
 			{% endfor %}
 			{% if REQUEST_VARS['phase'] == 'resultats' %}
-			<td class="{% if REQUEST_VARS['resultat_grille']['colonne'][y] == 0 %}tuile-score-nul{% else %}tuile-score-bien{% endif %}">+ {{ REQUEST_VARS['resultat_grille']['colonne'][y] }}</td>
+			<td class="{% if REQUEST_VARS['resultat_grille']['ligne'][y] == 0 %}tuile-score-nul{% else %}tuile-score-bien{% endif %}">+ {{ REQUEST_VARS['resultat_grille']['colonne'][y] }}</td>
 			{% else %}
 			<td></td>
 			{% endif %}
@@ -50,7 +50,7 @@
 			<th></th>
 			{% if REQUEST_VARS['phase'] == 'resultats' %}
 			{% for x in range(REQUEST_VARS['taille_grille']) %}
-			<td class="{% if REQUEST_VARS['resultat_grille']['ligne'][x] == 0 %}tuile-score-nul{% else %}tuile-score-bien{% endif %}">+ {{ REQUEST_VARS['resultat_grille']['ligne'][x] }}</td>
+			<td class="{% if REQUEST_VARS['resultat_grille']['colonne'][x] == 0 %}tuile-score-nul{% else %}tuile-score-bien{% endif %}">+ {{ REQUEST_VARS['resultat_grille']['ligne'][x] }}</td>
 			{% endfor %}
 			<td>= {{ REQUEST_VARS['score'] }}</td>
 			{% else %}
