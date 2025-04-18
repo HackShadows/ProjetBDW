@@ -19,6 +19,10 @@ if POST and 'taille_grille' in POST and 'difficulté' in POST:
 	nouveau_tour(connexion, id_partie, 0, id_pioche)
 
 
+# Partie finie
+
+if "partie_en_cours" in SESSION and SESSION['num_tour'] == -1: del SESSION['partie_en_cours']
+
 
 # Page jeu
 
@@ -56,6 +60,8 @@ if "partie_en_cours" in SESSION:
 		REQUEST_VARS['score'] = sum(REQUEST_VARS['resultat_grille']["colonne"] + REQUEST_VARS['resultat_grille']["ligne"])
 		fin_partie(connexion, id_partie, REQUEST_VARS['score'])
 		maj_classement(connexion, REQUEST_VARS['taille_grille'], SESSION['partie_en_cours']['difficulté'])
+		SESSION['num_tour'] = -1
+		
 		
 
 	elif SESSION["num_tour"] % 4 < 2 : 
