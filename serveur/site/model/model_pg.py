@@ -215,6 +215,28 @@ def id_disponible(connexion, nom_table :str) -> int:
 
 
 # Fonctions utilisées par le contrôleur accueil.py
+def nouveau_joueur(connexion, nom :str, prénom :str, pseudo :str, année :int) :
+	"""
+	Permet d'ajouter un nouveau joueur à la base de donnée.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	nom : str
+	    Nom du nouveau joueur.
+	prénom : str
+	    Prénom du nouveau joueur.
+	pseudo : str
+	    Pseudonyme du nouveau joueur.
+	année : int
+	    Année de naissance du nouveau joueur.
+	"""
+	assert len(nom) <= 64 and len(prénom) <= 64 and len(pseudo) <= 64
+	id_joueur = id_disponible(connexion, "joueur")
+	query = 'INSERT INTO joueur (id_joueur, nom, prénom, pseudo, année_naiss) VALUES (%s, %s, %s, %s, %s)'
+	execute_other_query(connexion, query, [id_joueur, nom, prénom, pseudo, année])
+
 def parties_terminees(connexion) -> list[dict]:
 	"""
 	Retourne les 10 dernières parties terminées, avec le pseudo du joueur et son score, 
