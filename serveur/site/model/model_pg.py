@@ -466,8 +466,10 @@ def remplir_grille(connexion, id_grille :int, taille_grille :int, difficulté :s
 		id_tuiles_possibles.append(152) 
 		for i in range(2): id_tuiles_possibles.append(158 + i)
 		id_tuiles_possibles.append(164)
+	if taille_grille >= 5:
+		for i in range(max(7, taille_grille-4)): id_tuiles_possibles.pop(153 + i)
 	
-	query = 'SELECT id_tuile FROM tuilecontrainte WHERE est_difficile=%s AND id_tuile IN (' + ",".join(id_tuiles_possibles) + ')'
+	query = 'SELECT id_tuile FROM tuilecontrainte WHERE est_difficile=%s AND id_tuile IN (' + ",".join(map(str, id_tuiles_possibles)) + ')'
 	insert_query = 'INSERT INTO contient_tuile_contrainte (id_tuile, id_grille, sur_ligne, position) VALUES (%s, %s, %s, %s)'
 
 	if difficulté == "Moyenne" :
