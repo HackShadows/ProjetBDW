@@ -377,10 +377,9 @@ def parties_en_cours(connexion, id_joueur :int) -> list[dict]:
 
 	Renvoie
 	-------
-	Liste de dictionnaires (clés :'id_partie', 'score', 'difficulté', 'taille').
+	Liste de dictionnaires (clés :'id_partie', 'date_création', 'difficulté', 'taille').
 	"""
-	query1 = 'SELECT id_partie, score, id_grille FROM partie WHERE id_joueur = %s AND en_cours = true'
-	query = f'SELECT P.id_partie, P.score, G.difficulté, G.taille FROM ({query1}) P JOIN grille G USING(id_grille)'
+	query = 'SELECT id_partie, date_création, taille_grille, difficulté FROM partie WHERE id_joueur = %s AND en_cours = true ORDER BY date_création DESC'
 	return execute_select_query(connexion, query, [id_joueur])
 
 
