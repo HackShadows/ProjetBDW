@@ -505,45 +505,60 @@ main h1 {
 
 
 #select-partie table {
-	display: flex;
-	flex-flow: column nowrap;
+	display: grid;
+	grid-template-columns: 0px 1fr 1fr 3fr;
 	max-height: 100%;
+	margin: 0 20%;
 	overflow-y: scroll;
 }
-#select-partie thead {
-	display: block;
-	margin: 0 20%
+#select-partie thead, #select-partie tbody {
+	display: contents;
+}
+
+#select-partie tr {
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-column: 1 / -1;
+	width: 100%;
 }
 #select-partie thead tr {
+	height: 2rem;
+	padding: .4rem 0;
 	font-size: 1rem;
+	color: white;
+	background-color: #333;
 }
-#select-partie tbody {
-	display: block;
-	margin: 0 20%
-}
-#select-partie tr {
-	display: flex;
-	flex-flow: row wrap;
-	gap: 3%;
+#select-partie tbody tr {
 	position: relative;
-	width: 100%;
+	box-sizing: content-box;
+	padding: 1rem 0 .7rem 0;
+	border: solid #200 2px;
+	border-top: none;
 	font-size: 2rem;
 }
+
 #select-partie tbody tr td {
 	height: 100%;
 	text-align: center
 }
-#select-partie tbody tr td:has(time) {
-	flex-grow: 1;
-	font-size: .8rem;
-	color: #333;
-	vertical-align: top;
+#select-partie thead th:last-child {
+	padding-right: 5%;
+	text-align: right;
 }
+#select-partie tbody td:has(time) {
+	height: 3rem;
+	padding-right: 5%;
+	font-size: .8rem;
+	vertical-align: top;
+	text-align: right;
+	color: #333;
+}
+
 #select-partie tbody th {
 	width: 0;
 	height: 0;
 }
-#select-partie tbody th button {
+#select-partie tbody button {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -551,6 +566,19 @@ main h1 {
 	bottom: 0;
 	width: 100%;
 	height: 100%;
+	box-shadow: none;
+	transition: all .5s linear;
+}
+#select-partie tbody button:hover {
+	box-shadow: green 0 1px 4px 0 inset;
+	transition: all .2s linear;
+}
+#select-partie tbody button::before {
+	content: "";
+	position: absolute;
+	width: 10%;
+	height: 100%;
+	background-color: color-gradient(green 0%, transparent 100%);
 }
 
 
