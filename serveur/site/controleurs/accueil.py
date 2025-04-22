@@ -1,4 +1,5 @@
-from model.model_pg import get_joueurs, count_instances, parties_terminees, nb_parties, get_infos_joueur
+from model.model_pg import get_joueurs, count_instances, get_infos_joueur, nouveau_joueur
+from model.model_pg import parties_terminees, nb_parties
 
 if POST and 'id_joueur' in POST: SESSION['joueur_actif'] = get_infos_joueur(SESSION['CONNEXION'], POST['id_joueur'][0])
 
