@@ -2,7 +2,7 @@ from model.model_pg import nouvelle_partie, get_infos_partie, fin_partie
 from model.model_pg import nouvelle_pioche, get_pioche, get_id_pioche, défausser_pioche, remplir_pioche
 from model.model_pg import get_grille, grille_remplie
 from model.model_pg import get_contraintes_validées, get_img_tuile
-from model.model_pg import nouveau_tour, maj_classement
+from model.model_pg import nouveau_tour, get_tour, maj_classement
 
 
 connexion = SESSION['CONNEXION']
@@ -10,13 +10,17 @@ connexion = SESSION['CONNEXION']
 
 # Arrivée sur la page jeu depuis parties
 
-if POST and 'taille_grille' in POST and 'difficulté' in POST:
-	id_partie = nouvelle_partie(connexion, int(POST['taille_grille'][0]), POST['difficulté'][0], SESSION["joueur_actif"][0]["id_joueur"])
+if POST and ('taille_grille' in POST and 'difficulté' in POST or 'partie' in POST):
+	if "partie" in POST: id_partie = POST["partie"]
+	else: id_partie = nouvelle_partie(connexion, int(POST['taille_grille'][0]), POST['difficulté'][0], SESSION["joueur_actif"][0]["id_joueur"])
+	
 	SESSION['partie_en_cours'] = get_infos_partie(connexion, id_partie)
 	SESSION['grille'] = get_grille(connexion, SESSION['partie_en_cours']['id_grille'])
-	SESSION['num_tour'] = 0
-	id_pioche = nouvelle_pioche(connexion)
-	nouveau_tour(connexion, id_partie, 0, id_pioche)
+	SESSION['num_tour'] = 0 if "partie" not in POST else get_tour(connexion, id_partie)
+	
+	if "partie" not in POST:
+		id_pioche = nouvelle_pioche(connexion)
+		nouveau_tour(connexion, id_partie, 0, id_pioche)
 
 
 # Partie finie

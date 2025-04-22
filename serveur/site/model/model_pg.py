@@ -602,6 +602,24 @@ def nouveau_tour(connexion, id_partie :int, id_tour :int, id_pioche :int, rang :
 	query = 'INSERT INTO tour (id_tour, id_partie, pos_x, pos_y, rang, id_pioche) VALUES (%s, %s, %s, %s, %s, %s)'
 	execute_other_query(connexion, query, [id_tour, id_partie, posx, posy, rang, id_pioche])
 
+def get_tour(connexion, id_partie :int) -> int :
+	"""
+	Renvoie l'identifiant du dernier tour de la partie en cours.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	id_partie : int
+	    Identifiant de la partie.
+	
+	Renvoie
+	-------
+	L'identifiant du tour.
+	"""
+	query = 'SELECT MAX(id_tour) AS max FROM tour WHERE id_partie=%s'
+	return execute_select_query(connexion, query, [id_partie])[0]["max"]
+
 
 def nouvelle_pioche(connexion) -> int :
 	"""
