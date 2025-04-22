@@ -529,7 +529,15 @@ main h1 {
 	width: 100%;
 	font-size: 2rem;
 }
-#select-partie tbody tr td:nth-child(1) {
+#select-partie tbody tr td {
+	height: 100%;
+	text-align: center
+}
+#select-partie tbody tr td:has(time) {
+	flex-grow: 1;
+	font-size: .8rem;
+	color: #333;
+	vertical-align: top;
 }
 #select-partie tbody th {
 	width: 0;

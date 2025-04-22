@@ -4,7 +4,7 @@
 
 {% if REQUEST_VARS['AFFICHAGE'] == "DEFAUT" %}
 
-<form id="select-partie" method="POST" action="parties" class="">
+<form id="select-partie" method="POST" action="jeu" class="">
 	<table>
 		<thead>
 			<tr>
@@ -20,7 +20,7 @@
 				<th><button type="submit" name="partie" value="{{ partie['id_partie'] }}"></button></th>
 				<td>{{ partie['difficulté'] }}</td>
 				<td>{{ partie['taille'] }}x{{ partie['taille'] }}</td>
-				<td>{{ partie['date_création'] }}</td>
+				<td><time datetime="{{ partie['date_création'].strftime("%Y-%m-%d %H:%M") }}">{{ partie['date_création'].strftime("%d %B %Y  %H:%M") }}</time></td>
 			</tr>
 			{% endfor %}
 		</tbody>
