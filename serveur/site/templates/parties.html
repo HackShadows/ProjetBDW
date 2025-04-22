@@ -4,7 +4,37 @@
 
 {% if REQUEST_VARS['AFFICHAGE'] == "DEFAUT" %}
 
-<form method="POST" action="parties" class="formulaire" id="player-page">
+<form id="select-partie" method="POST" action="parties" class="">
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Difficulté</th>
+				<th>Taille</th>
+				<th>date de création</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for partie in REQUEST_VARS['parties'] %}
+			<tr>
+				<th><button type="submit" name="partie" value="{{ partie['id_partie'] }}"></button></th>
+				<td>{{ partie['difficulté'] }}</td>
+				<td>{{ partie['taille'] }}x{{ partie['taille'] }}</td>
+				<td>{{ partie['date_création'] }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+
+	<label>
+		Créer un nouvelle partie
+		<input type="submit" name="action" value="nouvelle_partie">
+	</label>
+</form>
+
+<!--<form method="POST" action="parties" class="formulaire">
 	<button type="submit" class="button" name="action" value="nouvelle_partie">
 		<span class="button_text" id="button_text1">Nouvelle partie</span>
 		<span class="button_icon">
@@ -14,7 +44,7 @@
 			</svg>
 		</span>
 	</button>
-	
+
 	<div>
 		<h2>Choisissez votre partie</h2>
 
@@ -38,12 +68,12 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		
+
 		<button type="submit" class="button" name="action" value="reprendre_partie">
 			<span class="button_text" id="button_text2">Reprendre la partie</span>
 		</button>
 	</div>
-</form>
+</form>-->
 
 
 
@@ -63,7 +93,7 @@
 	<form method="POST" action="jeu" class="form_main">
 		
 		<label class="slider">Taille de la grille
-			<p class="slider_barre">2 <input type="range" class="taille" min="2" max="6" step="1" value="4" name="taille_grille"> 6</p>
+			<p class="slider_barre">2 <input type="range" class="taille" min="2" max="7" step="1" value="4" name="taille_grille"> 7</p>
 		</label>
 
 		<label class="difficulté">Difficulté
