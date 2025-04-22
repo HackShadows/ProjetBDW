@@ -11,7 +11,7 @@ connexion = SESSION['CONNEXION']
 # Arrivée sur la page jeu depuis parties
 
 if POST and ('taille_grille' in POST and 'difficulté' in POST or 'partie' in POST):
-	if "partie" in POST: id_partie = POST["partie"]
+	if "partie" in POST: id_partie = POST["partie"][0]
 	else: id_partie = nouvelle_partie(connexion, int(POST['taille_grille'][0]), POST['difficulté'][0], SESSION["joueur_actif"][0]["id_joueur"])
 	
 	SESSION['partie_en_cours'] = get_infos_partie(connexion, id_partie)
@@ -21,6 +21,8 @@ if POST and ('taille_grille' in POST and 'difficulté' in POST or 'partie' in PO
 	if "partie" not in POST:
 		id_pioche = nouvelle_pioche(connexion)
 		nouveau_tour(connexion, id_partie, 0, id_pioche)
+	else:
+		id_pioche = get_id_pioche(connexion, id_partie, SESSION['num_tour'])
 
 
 # Partie finie
