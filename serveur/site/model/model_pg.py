@@ -379,7 +379,7 @@ def parties_en_cours(connexion, id_joueur :int) -> list[dict]:
 	-------
 	Liste de dictionnaires (clés :'id_partie', 'date_création', 'difficulté', 'taille').
 	"""
-	query = 'SELECT id_partie, date_création, taille_grille, difficulté FROM partie WHERE id_joueur = %s AND en_cours = true ORDER BY date_création DESC'
+	query = 'SELECT id_partie, date_création, taille_grille AS taille, difficulté FROM partie WHERE id_joueur = %s AND en_cours = true ORDER BY date_création DESC'
 	return execute_select_query(connexion, query, [id_joueur])
 
 
@@ -454,7 +454,20 @@ def remplir_grille(connexion, id_grille :int, taille_grille :int, difficulté :s
 	difficulté : str
 	    Difficulté de la grille.
 	"""
-	query = 'SELECT id_tuile FROM tuilecontrainte WHERE est_difficile=%s'
+	id_tuiles_possibles = [i for i in range(101, 135)]
+	for i in range(6): id_tuiles_possibles.append(145 + i)
+	for i in range(2): id_tuiles_possibles.append(153 + i)
+	if taille_grille >= 3: 
+		for i in range(135, 145): id_tuiles_possibles.append(i)
+		id_tuiles_possibles.append(151)
+		for i in range(155, 158): id_tuiles_possibles.append(i)
+		for i in range(160, 164): id_tuiles_possibles.append(i)
+	if taille_grille >= 4:
+		id_tuiles_possibles.append(152) 
+		for i in range(2): id_tuiles_possibles.append(158 + i)
+		id_tuiles_possibles.append(164)
+	
+	query = 'SELECT id_tuile FROM tuilecontrainte WHERE est_difficile=%s AND id_tuile IN (' + ",".join(id_tuiles_possibles) + ')'
 	insert_query = 'INSERT INTO contient_tuile_contrainte (id_tuile, id_grille, sur_ligne, position) VALUES (%s, %s, %s, %s)'
 
 	if difficulté == "Moyenne" :
