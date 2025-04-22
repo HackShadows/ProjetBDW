@@ -1,8 +1,10 @@
-from model.model_pg import moy_nb_parties, score_min_max, score_0
+from model.model_pg import moy_nb_parties, score_min_max, score_0, score_max
 
 REQUEST_VARS['moyenne'] = moy_nb_parties(SESSION['CONNEXION'])
 REQUEST_VARS['scores'] = score_min_max(SESSION['CONNEXION'])
 REQUEST_VARS['score_0'] = score_0(SESSION['CONNEXION'])
+REQUEST_VARS['score_max'] = score_max(SESSION['CONNEXION'])
+
 
 # if POST and 'bouton_valider' in POST:  # formulaire soumis
 #     nom_recette = POST['nom_recette'][0]  # attention, un <input> retourne une liste

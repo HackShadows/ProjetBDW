@@ -384,6 +384,25 @@ def score_0(connexion) -> list[dict]:
 	result = execute_select_query(connexion, query)
 	return [{"joueur":get_infos_joueur(connexion, dic["id_joueur"]), "partie":get_infos_partie(connexion, dic["id_partie"])} for dic in result]
 
+def score_max(connexion) -> list[dict]:
+	"""
+	Retourne les informations sur les joueurs et les parties où le joueur a validé toutes les contraintes.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+
+	Renvoie
+	-------
+	Liste de dictionnaires (clés :'joueur', 'partie', valeurs : dictionnaire(clés : nom, prénom, pseudo, année_naiss), dictionnaire(clés : attributs de partie)).
+	"""
+	query1 = 'SELECT SUM(T.nb_points) AS total, C.id_grille FROM tuilecontrainte T JOIN contient_tuile_contrainte C USING(id_tuile) GROUP BY C.id_grille'
+	query2 = 'SELECT id_joueur, id_partie, score, id_grille FROM partie'
+	query = f'SELECT P.id_joueur, P.id_partie FROM ({query1}) T JOIN ({query2}) P USING(id_grille) WHERE P.score = T.total'
+	result = execute_select_query(connexion, query)
+	return [{"joueur":get_infos_joueur(connexion, dic["id_joueur"]), "partie":get_infos_partie(connexion, dic["id_partie"])} for dic in result]
+
 
 # Fonctions utilisées par le contrôleur parties.py
 def parties_en_cours(connexion, id_joueur :int) -> list[dict]:
