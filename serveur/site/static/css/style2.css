@@ -171,7 +171,6 @@
 	-o-transition: height var(--level-transition-duration);
 	transition: height var(--level-transition-duration);
 	cursor: inherit;
-	margin: 0px 5%;
 }
   
 .slider .taille::-webkit-slider-thumb {
