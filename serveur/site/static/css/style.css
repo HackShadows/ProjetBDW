@@ -603,15 +603,36 @@ main h1 {
 }
 #new-partie label {
 	display: block;
+	position: relative;
 	width: fit-content;
 	padding: 1rem 2rem;
 	border-radius: 30px 30px 0 0;
 	margin: auto;
-	font-size: 2rem;
-	color: white;
+	overflow: hidden;
+	cursor: pointer;
 	background-color: #518;
 }
-#new-partie input {
+#new-partie label span {
+	display: inline-block;
+	position: relative;
+	font-size: 2rem;
+	color: white;
+}
+#new-partie label::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 100%;
+	bottom: 0;
+	width: calc(100% + 33%);
+	height: 100%;
+	background: linear-gradient(to right, #407 75%, #72A);
+	transition: right .4s linear;
+}
+#new-partie label:hover::before {
+	right: -40px;
+}
+#new-partie label input {
 	display: none;
 }
 
