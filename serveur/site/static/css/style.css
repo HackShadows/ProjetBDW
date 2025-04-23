@@ -571,8 +571,8 @@ main h1 {
 	transition: all .1s linear;
 }
 #select-partie tbody button:hover {
-	box-shadow: green 0 0 20px 0 inset;
-	transition: all .05s linear;
+	box-shadow: black 0 0 10px 0 inset;
+	transition: all .1s linear;
 }
 #select-partie tbody button::before {
 	content: "";
@@ -582,12 +582,12 @@ main h1 {
 	bottom: 0;
 	width: 0px;
 	height: 100%;
-	background: linear-gradient(to right, green, transparent);
+	background: linear-gradient(to right, white, transparent);
 	transition: all .1s linear;
 }
 #select-partie tbody button:hover::before {
 	width: 20%;
-	transition: all .05s linear;
+	transition: all .1s linear;
 }
 
 
