@@ -77,47 +77,47 @@
 
 
 .form_main {
-	height: 100%;
-	aspect-ratio: 3 / 3;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background-color: rgb(255, 255, 255);
-	padding: 30px 30px 30px 30px;
-	box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.062);
-	position: relative;
-	overflow: hidden;
+	flex-flow: column nowrap;
 	justify-content: space-around;
+	align-items: center;
+	position: relative;
+	aspect-ratio: 3 / 3;
+	min-width: 50%;
+	height: 100%;
+	padding: 30px 30px 30px 30px;
+	overflow: hidden;
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.062);
 }
 
 .form_main::before {
-	position: absolute;
 	content: "";
+	position: absolute;
+	left: -40%;
+	top: -5%;
 	width: 80%;
 	height: 80%;
-	background-color: rgb(209, 193, 255);
-	transform: rotate(45deg);
-	left: -180px;
-	bottom: 30px;
 	z-index: 1;
 	border-radius: 30px;
+	transform: rotate(45deg);
+	background-color: rgb(209, 193, 255);
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.082);
 }
 
 #button {
-	z-index: 2;
 	position: relative;
 	width: 100%;
-	border: none;
-	background-color: rgb(162, 104, 255);
+	z-index: 2;
 	height: 30px;
-	color: white;
+	border: none;
+	margin: 10px;
 	font-size: .8em;
 	font-weight: 500;
 	letter-spacing: 1px;
-	margin: 10px;
+	color: white;
 	cursor: pointer;
+	background-color: rgb(162, 104, 255);
 }
 
 #button:hover {
@@ -193,7 +193,28 @@
 	flex-flow: row nowrap;
 	align-items: center;
 	justify-content: space-between;
+	padding: 2% 0;
 }
+.slider_barre > div {
+	flex-grow: 1;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-evenly;
+	align-items: stretch;
+	height: 100%;
+	padding: 0 5%;
+}
+.slider_barre > div > div {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-evenly;
+	font-size: .8rem;
+	font-weight: bold;
+	background: linear-gradient(to right, transparent, #EEEF 60%, transparent);
+}
+.slider_barre input:-webkit-progress-value { background: royalblue }
+.slider_barre input:-moz-progress-bar { background: royalblue }
+.slider_barre input { color: royalblue }
 
 
 

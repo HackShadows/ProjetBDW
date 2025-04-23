@@ -2,6 +2,8 @@
 
 {% block main_content %}
 
+
+
 {% if REQUEST_VARS['AFFICHAGE'] == "DEFAUT" %}
 
 <form id="select-partie" method="POST" action="jeu" class="">
@@ -36,50 +38,13 @@
 	</label>
 </form>
 
-<!--<form method="POST" action="parties" class="formulaire">
-	<button type="submit" class="button" name="action" value="nouvelle_partie">
-		<span class="button_text" id="button_text1">Nouvelle partie</span>
-		<span class="button_icon">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" fill="none" class="svg">
-				<line y2="19" y1="5" x2="12" x1="12"></line>
-				<line y2="12" y1="12" x2="19" x1="5"></line>
-			</svg>
-		</span>
-	</button>
 
-	<div>
-		<h2>Choisissez votre partie</h2>
-
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Difficulté</th>
-					<th>Taille</th>
-					<th>Score</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for partie in REQUEST_VARS['parties'] %}
-				<tr>
-					<th><button type="submit" name="id_partie" value="{{ partie['id_partie'] }}"></button></th>
-					<td>{{ partie['difficulté'] }}</td>
-					<td>{{ partie['taille'] }}</td>
-					<td>{{ partie['score'] }}</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-
-		<button type="submit" class="button" name="action" value="reprendre_partie">
-			<span class="button_text" id="button_text2">Reprendre la partie</span>
-		</button>
-	</div>
-</form>-->
 
 
 
 {% elif REQUEST_VARS['AFFICHAGE'] == "ACCUEIL" %}
+
+
 
 <div class="warning">
 	<h2>Vous n'avez pas sélectionné de joueur !</h2>
@@ -89,13 +54,24 @@
 
 
 
+
+
 {% else %}
+
+
 
 <div  class="formulaire">
 	<form method="POST" action="jeu" class="form_main">
 		
 		<label class="slider">Taille de la grille
-			<p class="slider_barre">2 <input type="range" class="taille" min="2" max="7" step="1" value="4" name="taille_grille"> 7</p>
+			<div class="slider_barre">
+				<span>2</span>
+				<div>
+					<div><span>3</span><span>4</span><span>5</span><span>6</span></div>
+					<input type="range" class="taille" min="2" max="7" step="1" value="4" name="taille_grille">
+				</div>
+				<span>7</span>
+			</div>
 		</label>
 
 		<label class="difficulté">Difficulté
@@ -120,6 +96,12 @@
 	</form>
 </div>
 
+
+
+
+
 {% endif %}
+
+
 
 {% endblock %}

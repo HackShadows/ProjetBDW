@@ -223,10 +223,15 @@ main h1 {
 	text-align: center;
 	font-size: 1rem;
 }
-#player-page thead, #player-page tbody, #player-page tr {
+#player-page thead, #player-page tbody {
 	display: contents;
 }
-#player-page thead th {
+#player-page tr {
+	grid-column: 1 / -1;
+	display: grid;
+	grid-template-columns: subgrid;
+}
+#player-page thead tr {
 	position: sticky;
 	top: 0px;
 	z-index: 2;
@@ -234,6 +239,9 @@ main h1 {
 	font-size: 1.1rem;
 	background-color: #DDD;
 	box-shadow: 0 1px #888, 0 2px #AAA, 0 4px #CCC, 0 6px #EEE;
+}
+#player-page tbody tr {
+	position: relative;
 }
 #player-page tbody td {
 	padding: .41rem 0;
@@ -246,9 +254,10 @@ main h1 {
 }
 #player-page button {
 	position: absolute;
-	left: 0px;
-	right: 0px;
-	height: 2rem;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 	z-index: 1;
 }
 #player-page button:hover {
@@ -328,7 +337,12 @@ main h1 {
 	row-gap: 2rem;
 }
 #classements ul {
-	display: contents;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 24.7rem);
+	justify-content: space-evenly;
+	align-items: center;
+	width: 100%;
+	row-gap: 2rem;
 }
 #classements li {
 	display: flex;
@@ -336,7 +350,8 @@ main h1 {
 	align-items: stretch;
 	position: relative;
 	min-width: 25vw;
-	padding: 1rem 2rem;
+	height: fit-content;
+	padding: 4% 6%;
 	border: solid 3px #555;
 	border-radius: 30px;
 	box-shadow: #888 3px 3px 10px, #AAA 5px 1px 5px inset;

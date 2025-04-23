@@ -39,9 +39,9 @@
 		<button type="submit" name="grille" value="{{ classement['taille_grille'] }} {{ classement['difficulté'] }}"></button>
 		<div class="classement-head">
 			<h2>{{ classement['nom'] }}</h2>
-			<span class="classement-maj">maj {{ classement['date_maj'] }}</span>
+			<span class="classement-maj">maj <time datetime="{{ classement['date_maj'].strftime("%Y-%m-%d %H:%M") }}">{{ classement['date_maj'].strftime("%Y-%m-%d %H:%M") }}</time></span>
 		</div>
-		<span class="classement-crea">création {{ classement['date_création'] }}</span>
+		<span class="classement-crea">création <time datetime="{{ classement['date_création'].strftime("%Y-%m-%d %H:%M") }}">{{ classement['date_création'].strftime("%Y-%m-%d %H:%M") }}</time></span>
 		<hr>
 		<div class="classement-content">
 			<span class="classement-difficulte">{{ classement['difficulté'] }}</span>
