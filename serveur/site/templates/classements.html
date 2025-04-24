@@ -10,7 +10,7 @@ Contributeur 2 : CISERANE Marius p2303380
 {% if 'infos_classement' in REQUEST_VARS %}
 
 
-<h1>Classement {{ "on sait pas" }}</h1>
+<h1>Classement {{ REQUEST_VARS['infos_classement'][0] }}</h1>
 
 <table id="classement">
 	<thead>
@@ -20,10 +20,9 @@ Contributeur 2 : CISERANE Marius p2303380
 		<th>Date</th>
 	</thead>
 	<tbody>
-		{% for ligne in REQUEST_VARS['infos_classement'] %}
+		{% for ligne in REQUEST_VARS['infos_classement'][1] %}
 		<tr>
-			<!-- IF PLAYER IS FIRST ... -->
-			<td>{{ 0 }}</td>
+			<td>{{ ligne['rang'] }}</td>
 			<td>{{ ligne['id_joueur'] }}</td>
 			<td>{{ ligne['score'] }}</td>
 			<td>{{ ligne['date'] }}</td>

@@ -327,7 +327,7 @@ def get_tuiles_1element(connexion) -> dict:
 
 
 # Fonctions utilisées par le contrôleur classements.py
-def infos_classement(connexion, taille_grille :int, difficulté :str) -> list[dict]:
+def infos_classement(connexion, taille_grille :int, difficulté :str) -> tuple[str, list[dict]]:
 	"""
 	Récupère la liste des joueurs présents dans le classements souhaité.
 	
@@ -342,17 +342,34 @@ def infos_classement(connexion, taille_grille :int, difficulté :str) -> list[di
 
 	Renvoie
 	-------
-	Liste de dictionnaires (clés : 'joueur', 'score', 'rang', 'date', 
+	Nom du classement + liste de dictionnaires (clés : 'joueur', 'score', 'rang', 'date', 
 	valeurs : dictionnaire(clés : id_joueur, nom, prénom, pseudo, année_naiss), score du joueur, rang du joueur, date de la partie).
 	"""
 	query = 'SELECT id_joueur, score, date_création AS date FROM partie WHERE en_cours=false AND taille_grille=%s AND difficulté=%s ORDER BY score DESC, date_création'
+	query_nom = 'SELECT nom FROM classement WHERE taille_grille=%s AND difficulté=%s'
 	result = execute_select_query(connexion, query, [taille_grille, difficulté])
+	nom_classement = execute_select_query(connexion, query_nom, [taille_grille, difficulté])[0]
 	classement = []
 	for rg, dic in enumerate(result):
 		dic["joueur"] = get_infos_joueur(connexion, dic.pop("id_joueur"))
 		dic['rang'] = rg + 1
 		classement.append(dic)
-	return classement
+	return (nom_classement, classement)
+
+def get_classements(connexion) -> list[dict]:
+	"""
+	Renvoie la liste de tous les classements contenants au moins une partie.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+
+	Renvoie
+	-------
+	Liste de dictionnaires (clés : attributs de 'classement').
+	"""
+	return get_instances(connexion, "classement")
 
 
 # Fonctions utilisées par le contrôleur statistiques.py

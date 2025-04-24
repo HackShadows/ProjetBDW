@@ -86,11 +86,12 @@ Contributeur 2 : CISERANE Marius p2303380
 		</tr>
 	</table>
 
-
+	{% if REQUEST_VARS['phase'] != 'resultats' %}
 	<label>
 		Valider
 		<input type=submit>
 	</label>
+	{% endif %}
 
 
 	<ul>
