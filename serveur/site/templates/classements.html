@@ -12,25 +12,32 @@ Contributeur 2 : CISERANE Marius p2303380
 
 <h1>Classement {{ REQUEST_VARS['infos_classement'][0] }}</h1>
 
-<table id="classement">
-	<thead>
-		<th>#</th>
-		<th>Joueur</th>
-		<th>Score</th>
-		<th>Date</th>
-	</thead>
-	<tbody>
-		{% for ligne in REQUEST_VARS['infos_classement'][1] %}
-		<tr>
-			<td>{{ ligne['rang'] }}</td>
-			<td>{{ ligne['id_joueur'] }}</td>
-			<td>{{ ligne['score'] }}</td>
-			<td>{{ ligne['date'] }}</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
-
+<form id="classement" method="POST" action="jeu" class="">
+	<table>
+		<thead>
+			<th></th>
+			<th>#</th>
+			<th>Pseudo</th>
+			<th>Nom</th>
+			<th>Prénom</th>
+			<th>Score</th>
+			<th>Date</th>
+		</thead>
+		<tbody>
+			{% for ligne in REQUEST_VARS['infos_classement'][1] %}
+			<tr>
+				<th><button type="submit" name="partie" value="{{ ligne['id_partie'] }}"></button></th>
+				<td>{{ ligne['rang'] }}</td>
+				<td>{{ ligne['joueur']['pseudo'] }}</td>
+				<td>{{ ligne['joueur']['nom'] }}</td>
+				<td>{{ ligne['joueur']['prénom'] }}</td>
+				<td>{{ ligne['score'] }}</td>
+				<td><time datetime="{{ ligne['date'].strftime("%Y-%m-%d %H:%M") }}">{{ ligne['date'].strftime("%d %B %Y  %H:%M") }}</time></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</form>
 
 {% else %}
 
@@ -41,11 +48,11 @@ Contributeur 2 : CISERANE Marius p2303380
 	{% for classement in REQUEST_VARS['classements'] %}
 	<li>
 		<button type="submit" name="grille" value="{{ classement['taille_grille'] }} {{ classement['difficulté'] }}"></button>
+		<h2>{{ classement['nom'] }}</h2>
 		<div class="classement-head">
-			<h2>{{ classement['nom'] }}</h2>
+			<span class="classement-crea">création <time datetime="{{ classement['date_création'].strftime("%Y-%m-%d %H:%M") }}">{{ classement['date_création'].strftime("%Y-%m-%d %H:%M") }}</time></span>
 			<span class="classement-maj">maj <time datetime="{{ classement['date_maj'].strftime("%Y-%m-%d %H:%M") }}">{{ classement['date_maj'].strftime("%Y-%m-%d %H:%M") }}</time></span>
 		</div>
-		<span class="classement-crea">création <time datetime="{{ classement['date_création'].strftime("%Y-%m-%d %H:%M") }}">{{ classement['date_création'].strftime("%Y-%m-%d %H:%M") }}</time></span>
 		<hr>
 		<div class="classement-content">
 			<span class="classement-difficulte">{{ classement['difficulté'] }}</span>

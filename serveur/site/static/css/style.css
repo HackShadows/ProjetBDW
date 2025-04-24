@@ -374,7 +374,6 @@ main h1 {
 	flex-flow: column nowrap;
 	align-items: stretch;
 	position: relative;
-	min-width: 25vw;
 	height: fit-content;
 	padding: 4% 6%;
 	border: solid 3px #555;
@@ -403,10 +402,12 @@ main h1 {
 #classements li h2 {
 	font-size: 2rem;
 	color: black;
+	text-wrap-mode: nowrap;
 }
 #classements .classement-maj {
 	font-size: 1rem;
 	color: #666;
+	text-wrap-mode: nowrap;
 }
 #classements .classement-crea {
 	font-size: .8rem;
@@ -545,31 +546,31 @@ main h1 {
 
 
 
-#select-partie table {
+#select-partie table, #classement table {
 	display: grid;
 	grid-template-columns: 0px 1fr 1fr 3fr;
 	max-height: 100%;
 	margin: 0 20%;
 	overflow-y: scroll;
 }
-#select-partie thead, #select-partie tbody {
+#select-partie thead, #select-partie tbody, #classement thead, #classement tbody {
 	display: contents;
 }
 
-#select-partie tr {
+#select-partie tr, #classement tr {
 	display: grid;
 	grid-template-columns: subgrid;
 	grid-column: 1 / -1;
 	width: 100%;
 }
-#select-partie thead tr {
+#select-partie thead tr, #classement thead tr {
 	height: 2rem;
 	padding: .4rem 0;
 	font-size: 1rem;
 	color: white;
 	background-color: #333;
 }
-#select-partie tbody tr {
+#select-partie tbody tr, #classement tbody tr {
 	position: relative;
 	box-sizing: content-box;
 	padding: 1rem 0 .7rem 0;
@@ -578,15 +579,15 @@ main h1 {
 	font-size: 2rem;
 }
 
-#select-partie tbody tr td {
+#select-partie tbody tr td, #classement tbody tr td {
 	height: 100%;
 	text-align: center
 }
-#select-partie thead th:last-child {
+#select-partie thead th:last-child, #classement thead th:last-child {
 	padding-right: 5%;
 	text-align: right;
 }
-#select-partie tbody td:has(time) {
+#select-partie tbody td:has(time), #classement tbody td:has(time) {
 	height: 3rem;
 	padding-right: 5%;
 	font-size: .8rem;
@@ -595,11 +596,11 @@ main h1 {
 	color: #333;
 }
 
-#select-partie tbody th {
+#select-partie tbody th, #classement tbody th {
 	width: 0;
 	height: 0;
 }
-#select-partie tbody button {
+#select-partie tbody button, #classement tbody button {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -610,11 +611,11 @@ main h1 {
 	box-shadow: none;
 	transition: all .1s linear;
 }
-#select-partie tbody button:hover {
+#select-partie tbody button:hover, #classement tbody button:hover {
 	box-shadow: black 0 0 10px 0 inset;
 	transition: all .1s linear;
 }
-#select-partie tbody button::before {
+#select-partie tbody button::before, #classement tbody button::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -625,7 +626,7 @@ main h1 {
 	background: linear-gradient(to right, white, transparent);
 	transition: all .1s linear;
 }
-#select-partie tbody button:hover::before {
+#select-partie tbody button:hover::before, #classement tbody button:hover::before {
 	width: 20%;
 	transition: all .1s linear;
 }

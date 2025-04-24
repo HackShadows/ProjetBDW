@@ -342,16 +342,16 @@ def infos_classement(connexion, taille_grille :int, difficulté :str) -> tuple[s
 
 	Renvoie
 	-------
-	Nom du classement + liste de dictionnaires (clés : 'joueur', 'score', 'rang', 'date', 
+	Nom du classement + liste de dictionnaires (clés : 'joueur', 'score', 'rang', 'date', 'id_partie'
 	valeurs : dictionnaire(clés : id_joueur, nom, prénom, pseudo, année_naiss), score du joueur, rang du joueur, date de la partie).
 	"""
-	query = 'SELECT id_joueur, score, date_création AS date FROM partie WHERE en_cours=false AND taille_grille=%s AND difficulté=%s ORDER BY score DESC, date_création'
+	query = 'SELECT id_joueur, score, date_création AS date, id_partie FROM partie WHERE en_cours=false AND taille_grille=%s AND difficulté=%s ORDER BY score DESC, date_création'
 	query_nom = 'SELECT nom FROM classement WHERE taille_grille=%s AND difficulté=%s'
 	result = execute_select_query(connexion, query, [taille_grille, difficulté])
-	nom_classement = execute_select_query(connexion, query_nom, [taille_grille, difficulté])[0]
+	nom_classement = execute_select_query(connexion, query_nom, [taille_grille, difficulté])[0]['nom']
 	classement = []
 	for rg, dic in enumerate(result):
-		dic["joueur"] = get_infos_joueur(connexion, dic.pop("id_joueur"))
+		dic["joueur"] = get_infos_joueur(connexion, dic.pop("id_joueur"))[0]
 		dic['rang'] = rg + 1
 		classement.append(dic)
 	return (nom_classement, classement)
@@ -369,7 +369,12 @@ def get_classements(connexion) -> list[dict]:
 	-------
 	Liste de dictionnaires (clés : attributs de 'classement').
 	"""
-	return get_instances(connexion, "classement")
+	query1 = 'SELECT taille_grille, difficulté FROM partie WHERE en_cours=false GROUP BY taille_grille, difficulté'
+	difficile = "difficulté = 'Difficile'"
+	non_difficile = "difficulté != 'Difficile'"
+	query_non_difficile = f'SELECT * FROM classement WHERE {non_difficile} AND (taille_grille, difficulté) IN ({query1}) ORDER BY difficulté, taille_grille'
+	query_difficile = f'SELECT * FROM classement WHERE {difficile} AND (taille_grille, difficulté) IN ({query1}) ORDER BY difficulté, taille_grille'
+	return execute_select_query(connexion, query_non_difficile) + execute_select_query(connexion, query_difficile)
 
 
 # Fonctions utilisées par le contrôleur statistiques.py
@@ -582,29 +587,34 @@ def remplir_grille(connexion, id_grille :int, taille_grille :int, difficulté :s
 		for i in range(2*taille_grille):
 			execute_other_query(connexion, insert_query, [tuiles[randint(0, nb-1)]['id_tuile'], id_grille, i<taille_grille, i%taille_grille +1])
 
-def get_grille(connexion, id_grille :int) -> list[list[str|None]] :
+def get_grille(connexion, id_partie :int) -> list[list[str|None]] :
 	"""
-	Renvoie la grille d'identifiant 'id_grille'.
+	Renvoie la grille d'identifiant contenant l'ensemble des tuiles ayant été jouées durant la partie.
 	
 	Paramètres
 	----------
 	connexion : 
 	    Connexion à la base de donnée.
-	id_grille : int
-	    Identifiant de la grille.
+	id_partie : int
+	    Identifiant de la partie.
 	
 	Renvoie
 	-------
 	Une liste contenant une liste pour chaque ligne, avec 
-	None si la case est vide, le nom de l'image de la carte présente sinon.
+	None si la case est vide, l'identifiant de la tuile présente sinon.
 	"""
 	query = 'SELECT id_tuile FROM contient_tuile_contrainte WHERE id_grille=%s ORDER BY sur_ligne DESC, position'
-	tuiles = execute_select_query(connexion, query, [id_grille])
-	taille_grille = len(tuiles) // 2
+	query_id = 'SELECT id_grille FROM partie WHERE id_partie=%s'
+	query2 = 'SELECT pos_x, pos_y, id_tuile FROM tour WHERE id_partie=%s and pos_x is not null order by pos_y, pos_x;'
+	id_grille = int(execute_select_query(connexion, query_id, [id_partie])[0]['id_grille'])
+	tuiles_contraintes = execute_select_query(connexion, query, [id_grille])
+	taille_grille = len(tuiles_contraintes) // 2
 	grille = [[None]]
 	for i in range(taille_grille):
-		grille[0].append(tuiles[i]["id_tuile"])
-		grille.append([tuiles[taille_grille + i]["id_tuile"]] + [None for _ in range(taille_grille)])
+		grille[0].append(tuiles_contraintes[i]["id_tuile"])
+		grille.append([tuiles_contraintes[taille_grille + i]["id_tuile"]] + [None for _ in range(taille_grille)])
+	tuiles_jeu = execute_select_query(connexion, query2, [id_partie])
+	for tuile in tuiles_jeu: grille[tuile['pos_y']][tuile['pos_x']] = int(tuile['id_tuile'])
 	return grille
 
 
@@ -651,7 +661,7 @@ def get_id_pioche(connexion, id_partie :int, id_tour :int) -> int :
 	return execute_select_query(connexion, query, [id_partie, id_tour])[0]["id_pioche"]
 
 
-def nouveau_tour(connexion, id_partie :int, id_tour :int, id_pioche :int, rang :int|None = None, posx :int|None = None, posy :int|None = None) :
+def nouveau_tour(connexion, id_partie :int, id_tour :int, id_pioche :int, rang :int|None = None, id_tuile :int|None = None, posx :int|None = None, posy :int|None = None) :
 	"""
 	Crée un nouveau tour de jeu dans la partie d'identifiant 'id_partie'.
 	
@@ -667,13 +677,15 @@ def nouveau_tour(connexion, id_partie :int, id_tour :int, id_pioche :int, rang :
 	    Identifiant de la pioche associée au tour.
 	rang : int
 	    Position de la tuile jeu prise dans la pioche (0 -> 4).
+	id_tuile : int
+	    Identifiant de la tuile venant d'être jouée.
 	posx : int
 	    Numéro de la colonne où la tuile jeu a été placée.
 	posy : int
 	    Numéro de la ligne où la tuile jeu a été placée.
 	"""
-	query = 'INSERT INTO tour (id_tour, id_partie, pos_x, pos_y, rang, id_pioche) VALUES (%s, %s, %s, %s, %s, %s)'
-	execute_other_query(connexion, query, [id_tour, id_partie, posx, posy, rang, id_pioche])
+	query = 'INSERT INTO tour (id_tour, id_partie, pos_x, pos_y, rang, id_pioche, id_tuile) VALUES (%s, %s, %s, %s, %s, %s, %s)'
+	execute_other_query(connexion, query, [id_tour, id_partie, posx, posy, rang, id_pioche, id_tuile])
 
 def get_tour(connexion, id_partie :int) -> int :
 	"""

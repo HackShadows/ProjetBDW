@@ -18,7 +18,6 @@ if POST and ('taille_grille' in POST and 'difficulté' in POST or 'partie' in PO
 	else: id_partie = nouvelle_partie(connexion, int(POST['taille_grille'][0]), POST['difficulté'][0], SESSION["joueur_actif"][0]["id_joueur"])
 	
 	SESSION['partie_en_cours'] = get_infos_partie(connexion, id_partie)
-	SESSION['grille'] = get_grille(connexion, SESSION['partie_en_cours']['id_grille'])
 	SESSION['num_tour'] = 0 if "partie" not in POST else get_tour(connexion, id_partie)
 	
 	if "partie" not in POST:
@@ -36,13 +35,11 @@ if "partie_en_cours" in SESSION and SESSION['num_tour'] == -1: del SESSION['part
 # Page jeu
 
 if "partie_en_cours" in SESSION:
+	REQUEST_VARS['grille_id'] = get_grille(connexion, SESSION['partie_en_cours']['id_partie'])
 	REQUEST_VARS['taille_grille'] = SESSION['partie_en_cours']['taille_grille']
 	id_partie = SESSION['partie_en_cours']['id_partie']
 
-	try:
-		assert isinstance(id_pioche, int)
-	except:
-		id_pioche = get_id_pioche(connexion, id_partie, SESSION['num_tour'])
+	if 'id_pioche' not in globals(): id_pioche = get_id_pioche(connexion, id_partie, SESSION['num_tour'])
 
 	if POST:
 		
@@ -52,11 +49,12 @@ if "partie_en_cours" in SESSION:
 			y = int(y)
 			rg = int(POST["choisie"][0]) - 1
 			
-			SESSION["grille"][y][x] = get_pioche(connexion, get_id_pioche(connexion, id_partie, SESSION["num_tour"]))[rg]
+			id_tuile = get_pioche(connexion, get_id_pioche(connexion, id_partie, SESSION["num_tour"]))[rg]
+			REQUEST_VARS["grille_id"][y][x] = id_tuile
 			SESSION["num_tour"] += 1
 			
 			id_pioche = défausser_pioche(connexion, get_id_pioche(connexion, id_partie, SESSION["num_tour"] - 1), rg)
-			nouveau_tour(connexion, id_partie, SESSION["num_tour"], id_pioche, rg, x, y)
+			nouveau_tour(connexion, id_partie, SESSION["num_tour"], id_pioche, rg, id_tuile, x, y)
 		
 		elif "choisie" in POST :
 			rg = int(POST["choisie"][0]) - 1
@@ -70,7 +68,7 @@ if "partie_en_cours" in SESSION:
 
 	if grille_remplie(connexion, id_partie) : 
 		REQUEST_VARS['phase'] = 'resultats'
-		REQUEST_VARS['resultat_grille'] = get_contraintes_validées(connexion, SESSION['grille'])
+		REQUEST_VARS['resultat_grille'] = get_contraintes_validées(connexion, REQUEST_VARS['grille_id'])
 		REQUEST_VARS['score'] = sum(REQUEST_VARS['resultat_grille']["colonne"] + REQUEST_VARS['resultat_grille']["ligne"])
 		fin_partie(connexion, id_partie, REQUEST_VARS['score'])
 		maj_classement(connexion, REQUEST_VARS['taille_grille'], SESSION['partie_en_cours']['difficulté'])
@@ -85,6 +83,6 @@ if "partie_en_cours" in SESSION:
 
 	else : REQUEST_VARS['phase'] = "defausse_carte"
 
-	REQUEST_VARS['grille'] = [[get_img_tuile(connexion, id_tuile) if id_tuile is not None else None for id_tuile in ligne] for ligne in SESSION['grille']]
+	REQUEST_VARS['grille'] = [[get_img_tuile(connexion, id_tuile) if id_tuile is not None else None for id_tuile in ligne] for ligne in REQUEST_VARS['grille_id']]
 
 	REQUEST_VARS['pioche'] = [get_img_tuile(connexion, id_tuile) if id_tuile is not None  else None for id_tuile in get_pioche(connexion, id_pioche)]

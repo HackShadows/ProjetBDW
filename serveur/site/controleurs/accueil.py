@@ -4,7 +4,9 @@
 from model.model_pg import get_joueurs, count_instances, get_infos_joueur, nouveau_joueur
 from model.model_pg import parties_terminees, nb_parties
 
-if POST and 'id_joueur' in POST: SESSION['joueur_actif'] = get_infos_joueur(SESSION['CONNEXION'], POST['id_joueur'][0])
+if POST and 'id_joueur' in POST: 
+    SESSION['joueur_actif'] = get_infos_joueur(SESSION['CONNEXION'], POST['id_joueur'][0])
+    if 'partie_en_cours' in SESSION: SESSION.pop("partie_en_cours")
 
 # REQUEST_VARS['joueurs'] = (count_instances(SESSION['CONNEXION'], "joueur"), sorted(get_instances(SESSION['CONNEXION'], "joueur"), key=lambda d : d["nom"]))
 REQUEST_VARS['joueurs'] = (count_instances(SESSION['CONNEXION'], "joueur"), get_joueurs(SESSION['CONNEXION']))
