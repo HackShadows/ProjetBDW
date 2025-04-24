@@ -82,7 +82,6 @@ Contributeur 2 : CISERANE Marius p2303380
 			{% for x in range(REQUEST_VARS['taille_grille']) %}
 			<td class="{% if REQUEST_VARS['resultat_grille']['ligne'][x] == 0 %}tuile-score-nul{% else %}tuile-score-bien{% endif %}">+ {{ REQUEST_VARS['resultat_grille']['ligne'][x] }}</td>
 			{% endfor %}
-			<td>= {{ REQUEST_VARS['score'] }}</td>
 			{% else %}
 			{% for x in range(REQUEST_VARS['taille_grille']) %}
 			<td></td>

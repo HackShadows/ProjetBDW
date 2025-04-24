@@ -411,6 +411,7 @@ main h1 {
 	left: 0px;
 	right: 0px;
 	bottom: 0px;
+	cursor: url("../img/basic_curseur.png") , auto;
 	/*background-color: #FE86;*/
 }
 #classements li .classement-head {
