@@ -36,6 +36,11 @@ if "partie_en_cours" in SESSION:
 	REQUEST_VARS['taille_grille'] = SESSION['partie_en_cours']['taille_grille']
 	id_partie = SESSION['partie_en_cours']['id_partie']
 
+	try:
+		assert isinstance(id_pioche, int)
+	except:
+		id_pioche = get_id_pioche(connexion, id_partie, SESSION['num_tour'])
+
 	if POST:
 		
 		if "emplacement" in POST and "choisie" in POST :
