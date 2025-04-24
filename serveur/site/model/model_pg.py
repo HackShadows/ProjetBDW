@@ -516,12 +516,21 @@ def remplir_grille(connexion, id_grille :int, taille_grille :int, difficulté :s
 	if difficulté == "Moyenne" :
 		tuiles_faciles = execute_select_query(connexion, query, [False])
 		tuiles_difficiles = execute_select_query(connexion, query, [True])
+		positions = [i < taille_grille for i in range(2*taille_grille)]
 		nb1 = len(tuiles_faciles)
 		nb2 = len(tuiles_difficiles)
+		ligne = 1
+		colonne = 1
 		for i in range(taille_grille):
-			execute_other_query(connexion, insert_query, [tuiles_faciles[randint(0, nb1-1)]['id_tuile'], id_grille, True, i+1])
+			position = positions.pop(randint(0, 2*taille_grille-1-i))
+			execute_other_query(connexion, insert_query, [tuiles_faciles[randint(0, nb1-1)]['id_tuile'], id_grille, position, ligne if position else colonne])
+			if position : ligne += 1
+			else : colonne += 1
 		for i in range(taille_grille):
-			execute_other_query(connexion, insert_query, [tuiles_difficiles[randint(0, nb2-1)]['id_tuile'], id_grille, False, i+1])
+			position = positions.pop(randint(0, taille_grille-1-i))
+			execute_other_query(connexion, insert_query, [tuiles_difficiles[randint(0, nb2-1)]['id_tuile'], id_grille, position, ligne if position else colonne])
+			if position : ligne += 1
+			else : colonne += 1
 	else :
 		tuiles = execute_select_query(connexion, query, [difficulté=="Difficile"])
 		nb = len(tuiles)
