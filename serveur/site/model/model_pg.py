@@ -216,7 +216,7 @@ def id_disponible(connexion, nom_table :str) -> int:
 	while i <= lg and result[i-1][f"id_{nom_table}"] == i: i += 1
 	return i
 
-def get_rang(connexion, taille_grille :int, difficulté :str, id_partie :int) -> int:
+def get_rang(connexion, taille_grille :int, difficulté :str, id_partie :int) -> tuple[int, int]:
 	"""
 	Renvoie le rang du joueur passé en paramètre dans le classement souhaité.
 	
@@ -233,13 +233,15 @@ def get_rang(connexion, taille_grille :int, difficulté :str, id_partie :int) ->
 
 	Renvoie
 	-------
-	Rang du joueur dans le classement, 0 si le joueur n'apparaît pas dans le classement.
+	Rang du joueur dans le classement, 0 si le joueur n'apparaît pas dans le classement, 
+	et nombre de joueurs apparaissant dans le classement.
 	"""
 	query = 'SELECT id_partie FROM partie WHERE en_cours=false AND taille_grille=%s AND difficulté=%s ORDER BY score DESC, date_création'
 	result = execute_select_query(connexion, query, [taille_grille, difficulté])
+	nb = len(result)
 	for rg, dic in enumerate(result):
-		if int(dic["id_partie"]) == id_partie: return rg+1
-	return 0
+		if int(dic["id_partie"]) == id_partie: return (rg+1, nb)
+	return (0, nb)
 
 
 # Fonctions utilisées par le contrôleur accueil.py
