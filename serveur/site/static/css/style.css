@@ -77,10 +77,11 @@ header > p {
 	align-items: center;
 	font-size: 1rem;
 	text-align: center;
+	color: #EDE0DE;
 }
 header > p > span {
 	font-size: 1.2rem;
-	color: green;
+	color: greenyellow;
 }
 /*@keyframes changeBg {
 	0% {
@@ -562,7 +563,7 @@ main h1 {
 	background-color: #0F0;
 }
 .contrainte_defaut {
-	background-color: transparent;
+	background: none;
 }
 
 
@@ -573,11 +574,12 @@ main h1 {
 
 #select-partie table, #classement table {
 	display: grid;
-	grid-template-columns: 0px 1fr 1fr 3fr;
 	max-height: 100%;
 	margin: 0 20%;
 	overflow-y: scroll;
 }
+#select-partie table { grid-template-columns: 0px 1fr 1fr 3fr; }
+#classement    table { grid-template-columns: 0px repeat(6, 1fr); }
 #select-partie thead, #select-partie tbody, #classement thead, #classement tbody {
 	display: contents;
 }
