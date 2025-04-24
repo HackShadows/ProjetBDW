@@ -13,7 +13,7 @@ Grille(i̲d̲_̲g̲r̲i̲l̲l̲e̲, taille, difficulté)
 Pioche(i̲d̲_̲p̲i̲o̲c̲h̲e̲, nb_tuiles_découvertes)
 
 
-Tour((#i̲d̲_̲p̲a̲r̲t̲i̲e̲, i̲d̲_̲t̲o̲u̲r̲), posx, posy, rang, #id_pioche)
+Tour((#i̲d̲_̲p̲a̲r̲t̲i̲e̲, i̲d̲_̲t̲o̲u̲r̲), posx, posy, rang, #id_pioche, #id_tuile)
 
 
 Element(n̲o̲m̲_̲é̲l̲é̲m̲e̲n̲t̲)

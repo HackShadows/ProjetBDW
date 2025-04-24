@@ -54,6 +54,7 @@ create table Tour (
   pos_y integer,
   rang integer,
   id_pioche integer, 
+  id_tuile integer,
   PRIMARY KEY (id_tour, id_partie)
 );
 
@@ -133,6 +134,7 @@ ALTER TABLE Partie ADD FOREIGN KEY (id_grille) REFERENCES Grille (id_grille);
 
 ALTER TABLE Tour ADD FOREIGN KEY (id_partie) REFERENCES Partie (id_partie);
 ALTER TABLE Tour ADD FOREIGN KEY (id_pioche) REFERENCES Pioche (id_pioche);
+ALTER TABLE Tour ADD FOREIGN KEY (id_tuile) REFERENCES TuileJeu (id_tuile);
 
 ALTER TABLE TuileJeu ADD FOREIGN KEY (id_tuile) REFERENCES Tuile (id_tuile);
 

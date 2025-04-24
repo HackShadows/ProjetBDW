@@ -1,41 +1,47 @@
-ContrainteElement:
-/XT\ Contrainte <- ContrainteElement, ContrainteNombre
-ContrainteNombre: type_contrainte, nombre
+Rang: rang
+contient_tuile_jeu, 1N Pioche, 0N TuileJeu, 1N Rang
+Pioche: id_pioche, nb_tuiles_découvertes
+a_tiré_dans, 11 Pioche, 11 Tour : rang
 :
 :
-:
-
-possède, 11 ContrainteElement, 0N Element : nombre
-Contrainte: id_contrainte
-:
-Coordonnees:sur_ligne, _position
-:
-:
-
-Element: nom_élément
-est_associée_à, 1N TuileContrainte, 0N Contrainte
-TuileContrainte: est_difficile, nb_points
-contient_tuile_contrainte, 1N Grille, 0N TuileContrainte, 0N Coordonnees
-Grille: id_grille, taille, difficulté
-:
+Classement: taille_grille, _difficulté, nom, date_création, date_maj
 
 contient_element, 0N Element, 1N TuileJeu : nombre
 TuileJeu: 
-/XT\ Tuile <- TuileContrainte, TuileJeu
-Tuile: id_tuile, chemin_texture
-dispose_de, 11 Grille, 11 Partie
-Joueur: id_joueur, nom, prénom, pseudo, année_naiss
-
-Rang: rang
-contient_tuile_jeu, 1N Pioche, 0N TuileJeu, 1N Rang
-:
+a_joué, 01 Tour, 0N TuileJeu : posx, posy
+Tour: id_tour
 est_associée_au, 0N Partie, _11 Tour
 Partie: id_partie, date_création, horaire_début, en_cours
 est_classé_dans, 1N Classement, 0N Joueur, 11 Partie : score
 
+Element: nom_élément
+/XT\ Tuile <- TuileContrainte, TuileJeu
+TuileContrainte: est_difficile, nb_points
+contient_tuile_contrainte, 1N Grille, 0N TuileContrainte, 0N Coordonnees
+Grille: id_grille, taille, difficulté
+dispose_de, 11 Grille, 11 Partie
+Joueur: id_joueur, nom, prénom, pseudo, année_naiss
+
+possède, 11 ContrainteElement, 0N Element : nombre
+Tuile: id_tuile, chemin_texture
+est_associée_à, 1N TuileContrainte, 0N Contrainte
+Coordonnees:sur_ligne, _position
 :
-Pioche: id_pioche, nb_tuiles_découvertes
-a_tiré_dans, 11 Pioche, 11 Tour : posx, posy, rang
-Tour: id_tour
 :
-Classement: taille_grille, _difficulté, nom, date_création, date_maj
+:
+
+ContrainteElement:
+/XT\ Contrainte <- ContrainteElement, ContrainteNombre
+Contrainte: id_contrainte
+:
+:
+:
+:
+
+:
+ContrainteNombre: type_contrainte, nombre
+:
+:
+:
+:
+:
