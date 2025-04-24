@@ -43,6 +43,7 @@ if "partie_en_cours" in SESSION:
 
 	if POST:
 		
+		# Phase de jeu
 		if "emplacement" in POST and "choisie" in POST :
 			x, y = POST["emplacement"][0].split(",")
 			x = int(x)
@@ -56,6 +57,7 @@ if "partie_en_cours" in SESSION:
 			id_pioche = défausser_pioche(connexion, get_id_pioche(connexion, id_partie, SESSION["num_tour"] - 1), rg)
 			nouveau_tour(connexion, id_partie, SESSION["num_tour"], id_pioche, rg, id_tuile, x, y)
 		
+		# Phase de défausse
 		elif "choisie" in POST :
 			rg = int(POST["choisie"][0]) - 1
 
@@ -76,7 +78,7 @@ if "partie_en_cours" in SESSION:
 		SESSION['num_tour'] = -1
 		
 		
-
+	# Sélection de la phase suivante et transmission des données à la vue
 	elif SESSION["num_tour"] % 4 < 2 : 
 		REQUEST_VARS['phase'] = "joue_carte"
 		if SESSION["num_tour"] % 4 == 0 : remplir_pioche(connexion, id_pioche)
