@@ -116,7 +116,14 @@ footer {
 footer > * {
 	margin-left: 5%;
 }
-
+#pied_page span a {
+	color: #338;
+	cursor: url("../img/selection_curseur.png") , auto;
+}
+#pied_page span a:hover {
+	color: #407;
+	cursor: url("../img/selection_curseur.png") , auto;
+}
 
 
 
