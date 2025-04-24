@@ -42,7 +42,8 @@ header {
 	align-items: center;
 	width: 100%;
 	box-shadow: 0 0 3px 0 #ccc;
-	animation: changeBg 5s infinite alternate linear;
+	background: #233e41;
+	/*animation: changeBg 5s infinite alternate linear;*/
 }
 header > div {
 	display: flex;
@@ -58,7 +59,7 @@ header h1, strong {
 }
 header h1 {
 	font-size: 3.5rem;
-	background-image: url(../img/vague2.jpg);
+	background-image: url(../img/vague.jpg);
 }
 header strong {
 	font-size: 2rem;
@@ -81,27 +82,26 @@ header > p > span {
 	font-size: 1.2rem;
 	color: green;
 }
-@keyframes changeBg {
+/*@keyframes changeBg {
 	0% {
-		background: #7FFFD4;
+		background: #8bf8e7;
 	}
 	20% {
-		background: #B2FFFF;
+		background: #73e0cf;
 	}
 	40% {
-		background: #77BDFE;
+		background: #60e0eb;
 	}
 	60% {
-		background: #AEEEEE;
+		background: #a6f2fa;
 	}
 	80% {
-		background: #A0E7E5;
+		background: #8bf8e7;
 	}
 	100% {
-		background: #7FFFD4;
+		background: #34BAB5;
 	}
-}
-
+}*/
 
 
 footer {
