@@ -598,7 +598,7 @@ main > p:has(+ #jeu) {
 
 
 
-#select-partie table, #classement table {
+#select-partie table, #classement table, #activite table {
 	display: grid;
 	max-height: 100%;
 	margin: 0 20%;
@@ -613,17 +613,17 @@ main > p:has(+ #jeu) {
 	box-shadow: black 0 3px 10px 0;
 }
 #classement    table { grid-template-columns: 0px repeat(6, 1fr); }
-#select-partie thead, #select-partie tbody, #classement thead, #classement tbody {
+#select-partie thead, #select-partie tbody, #classement thead, #classement tbody, #activite thead, #activite tbody {
 	display: contents;
 }
 
-#select-partie tr, #classement tr {
+#select-partie tr, #classement tr, #activite tr {
 	display: grid;
 	grid-template-columns: subgrid;
 	grid-column: 1 / -1;
 	width: 100%;
 }
-#select-partie thead tr, #classement thead tr {
+#select-partie thead tr, #classement thead tr, #activite thead tr {
 	height: 2rem;
 	padding: .4rem 0;
 	font-size: 1rem;
@@ -636,7 +636,7 @@ main > p:has(+ #jeu) {
 	z-index: 1;
 }
 #classement thead tr { padding-right: 20px }
-#select-partie tbody tr, #classement tbody tr {
+#select-partie tbody tr, #classement tbody tr, #activite tbody tr {
 	position: relative;
 	box-sizing: content-box;
 	padding: 1rem 0 .7rem 0;
@@ -645,11 +645,11 @@ main > p:has(+ #jeu) {
 	font-size: 2rem;
 }
 
-#select-partie tbody tr td, #classement tbody tr td {
+#select-partie tbody tr td, #classement tbody tr td, #activite tbody tr td {
 	height: 100%;
 	text-align: center
 }
-#select-partie thead th:last-child, #classement thead th:last-child {
+#select-partie thead th:last-child, #classement thead th:last-child, #activite thead th:last-child {
 	padding-right: 5%;
 	text-align: right;
 }
@@ -662,11 +662,11 @@ main > p:has(+ #jeu) {
 	color: #333;
 }
 
-#select-partie tbody th, #classement tbody th {
+#select-partie tbody th, #classement tbody th, #activite tbody th {
 	width: 0;
 	height: 0;
 }
-#select-partie tbody button, #classement tbody button {
+#select-partie tbody button, #classement tbody button, #activite tbody button {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -677,12 +677,12 @@ main > p:has(+ #jeu) {
 	box-shadow: none;
 	transition: all .1s linear;
 }
-#select-partie tbody button:hover, #classement tbody button:hover {
+#select-partie tbody button:hover, #classement tbody button:hover, #activite tbody button:hover {
 	box-shadow: black 0 0 10px 0 inset;
 	transition: all .1s linear;
 	cursor: url("../img/basic_curseur.png") , auto;
 }
-#select-partie tbody button::before, #classement tbody button::before {
+#select-partie tbody button::before, #classement tbody button::before, #activite tbody button::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -693,7 +693,7 @@ main > p:has(+ #jeu) {
 	background: linear-gradient(to right, white, transparent);
 	transition: all .1s linear;
 }
-#select-partie tbody button:hover::before, #classement tbody button:hover::before {
+#select-partie tbody button:hover::before, #classement tbody button:hover::before, #activite tbody button:hover::before {
 	width: 20%;
 	transition: all .1s linear;
 }
