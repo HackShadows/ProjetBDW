@@ -10,48 +10,52 @@ Contributeur 2 : CISERANE Marius p2303380
 
 <ul id="stats-page">
 	<li><label>
-		<output>{{ (100*23.345)|round/100 }}</output>
-		<span>parties lancées par joueurs en moyenne</span>
-	</label></li>
-
-	<li><label>
-		<output>BLITZSTREAM</output>
-		<span>est le joueur le plus talentueux, avec un score de : <span>99999</span></span>
-	</label></li>
-
-	<li><label>
-		<output>NAKAMURA</output>
-		<span>est le pire joueur qu'on ait connu, avec un score de : <span>-3</span></span>
-	</label></li>
-
-	<li><label>
-		<output>{{ REQUEST_VARS['score_0'] }}</output>
-		<span>est le pire joueur qu'on ait connue</span>
-	</label></li>
-<!--
-	<li><label>
 		<output>{{ (100*REQUEST_VARS['moyenne']|round)/100 }}</output>
 		<span>lancées par joueurs en moyenne</span>
 	</label></li>
 
 	{% if REQUEST_VARS.scores.maxi is not none %}
 	<li><label>
-		<output>{{ REQUEST_VARS['scores']['maxi'][1]['pseudo'] }}</output>
+		<output>{{ REQUEST_VARS['scores']['maxi'][1][0]['pseudo'] }}</output>
 		<span>est le joueur le plus talentueux, avec un score de : <span>{{ REQUEST_VARS['scores']['maxi'][0] }}</span></span>
 	</label></li>
 	{% endif %}
 
+	<li><label>
+		{% if REQUEST_VARS['score_max'] %}
+		<output><form method="POST" action="jeu"><ul>
+		{% for partie in REQUEST_VARS['score_max'] %}
+			<li>
+				<button type="submit" name="partie" value="{{ partie['partie']['id_partie'] }}">{{ partie['joueur'][0]['pseudo'] }}</button>
+			</li>
+		{% endfor %}
+		</ul></form></output>
+		{% else %}
+		<output>N/A</output>
+		{% endif %}
+		<span>sont toutes les parties ayant fait un 100%</span>
+	</label></li>
+
 	{% if REQUEST_VARS.scores.mini is not none %}
 	<li><label>
-		<output>{{ REQUEST_VARS['scores']['mini'] }}</output>
+		<output>{{ REQUEST_VARS['scores']['mini'][1][0]['pseudo'] }}</output>
 		<span>est le pire joueur qu'on ait connu, avec un score de : <span>{{ REQUEST_VARS['scores']['mini'][0] }}</span></span>
 	</label></li>
 	{% endif %}
 
 	<li><label>
-		<output>{{ REQUEST_VARS['score_0'] }}</output>
-		<span>est le pire joueur qu'on ait connue</span>
+		{% if REQUEST_VARS['score_0'] %}
+		<output><form method="POST" action="jeu"><ul>
+		{% for partie in REQUEST_VARS['score_0'] %}
+			<li>
+				<button type="submit" name="partie" value="{{ partie['partie']['id_partie'] }}">{{ partie['joueur'][0]['pseudo'] }}</button>
+			</li>
+		{% endfor %}
+		</ul></form></output>
+		{% else %}
+		<output>N/A</output>
+		{% endif %}
+		<span>sont toutes les parties n'ayant validées aucune tuile</span>
 	</label></li>
--->
 </ul>
 {% endblock %}

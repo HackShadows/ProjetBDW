@@ -128,6 +128,7 @@ footer > * {
 
 
 
+
 #div-central {
 	flex-grow: 1;
 	display: flex;
@@ -343,12 +344,12 @@ main h1 {
 #stats-page li {
 	display: contents;
 }
-#stats-page li:nth-child(-n+2) output { color: #811; }
-#stats-page li:nth-child( n+3) output { color: #8BF; }
-#stats-page li:nth-child(-n+2) label > span { color: #111; }
-#stats-page li:nth-child( n+3) label > span { color: #AAA; }
-#stats-page li:nth-child(-n+2) label > span > span { color: #8F0; }
-#stats-page li:nth-child( n+3) label > span > span { color: #F00; }
+#stats-page li:nth-child(-n+3) output { color: #811; }
+#stats-page li:nth-child( n+4) output { color: #8BF; }
+#stats-page li:nth-child(-n+3) label > span { color: #111; }
+#stats-page li:nth-child( n+4) label > span { color: #AAA; }
+#stats-page li:nth-child(-n+3) label > span > span { color: #8F0; }
+#stats-page li:nth-child( n+4) label > span > span { color: #F00; }
 #stats-page label {
 	display: flex;
 	flex-flow: column nowrap;
@@ -369,6 +370,24 @@ main h1 {
 	font-size: 1.2rem;
 	color: red;
 	font-weight: bold;
+}
+#stats-page output:has(form) {
+	width: 100%;
+}
+#stats-page output form ul {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	font-size: 1rem;
+	text-align: 1rem;
+}
+#stats-page output form ul button {
+	padding: .1rem .5rem;
+	font-size: inherit;
+	cursor: pointer;
+}
+#stats-page output form ul button:hover {
+	background-color: #EEE;
 }
 
 
