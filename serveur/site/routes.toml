@@ -32,3 +32,8 @@ template = "parties.html"
 url = "jeu"
 controleur = "controleurs/jeu.py"
 template = "jeu.html"
+
+[[routes]]
+url = "plan"
+controleur = "controleurs/plan.py"
+template = "plan.html"
