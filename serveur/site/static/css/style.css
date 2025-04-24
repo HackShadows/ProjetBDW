@@ -33,7 +33,7 @@ header {
 	align-items: center;
 	width: 100%;
 	box-shadow: 0 0 3px 0 #ccc;
-	background-color: aquamarine;
+	animation: changeBg 5s infinite alternate linear;
 }
 header > div {
 	display: flex;
@@ -63,6 +63,26 @@ header > p {
 header > p > span {
 	font-size: 1.2rem;
 	color: green;
+}
+@keyframes changeBg {
+	0% {
+		background: #7FFFD4;
+	}
+	20% {
+		background: #B2FFFF;
+	}
+	40% {
+		background: #77BDFE;
+	}
+	60% {
+		background: #AEEEEE;
+	}
+	80% {
+		background: #A0E7E5;
+	}
+	100% {
+		background: #7FFFD4;
+	}
 }
 
 
