@@ -623,6 +623,10 @@ main > p:has(+ #jeu) {
 	margin: 0 20%;
 	overflow-y: scroll;
 }
+#activite table {
+	grid-template-columns: 0px repeat(4, 1fr);
+	width: 60%;
+}
 #select-partie table {
 	grid-template-columns: 0px 1fr 1fr 3fr;
 	max-height: calc(4*(5.8rem));
