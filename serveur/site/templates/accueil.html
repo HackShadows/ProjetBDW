@@ -39,31 +39,34 @@ Contributeur 2 : CISERANE Marius p2303380
 		</tbody>
 	</table>
 </form>
-<div id="activite">
+<div>
 	<h2>Activité du site</h2>
 
 	<ul>
 		<li>Nombre de joueurs : {{ REQUEST_VARS['joueurs'][0] }}</li>
 		<li>Nombre de parties jouée depuis le lancement : {{ REQUEST_VARS['nb_parties']['en_cours'] + REQUEST_VARS['nb_parties']['terminées'] }} dont {{ REQUEST_VARS['nb_parties']['en_cours'] }} en cours !</li>
 		<li>Voici les statistiques des 10 dernières parties finies sur le site :
-			<table>
-				<thead>
-					<th>Joueur</th>
-					<th>Difficulté</th>
-					<th>Taille</th>
-					<th>Score</th>
-				</thead>
-				<tbody>
-					{% for partie in REQUEST_VARS['parties_terminées'] %}
-					<tr>
-						<td>{{ partie['pseudo'] }}</td>
-						<td>{{ partie['difficulté'] }}</td>
-						<td>{{ partie['taille'] }}</td>
-						<td>{{ partie['score'] }}</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+			<form id="activite"  method="POST" action="jeu">
+				<table>
+					<thead>
+						<th>Joueur</th>
+						<th>Difficulté</th>
+						<th>Taille</th>
+						<th>Score</th>
+					</thead>
+					<tbody>
+						{% for partie in REQUEST_VARS['parties_terminées'] %}
+						<tr>
+							<th><button type="submit" name="partie" value="{{ partie['id_partie'] }}"></button></th>
+							<td>{{ partie['pseudo'] }}</td>
+							<td>{{ partie['difficulté'] }}</td>
+							<td>{{ partie['taille'] }}</td>
+							<td>{{ partie['score'] }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</form>
 		</li>
 </div>
 {% endblock %}
