@@ -28,7 +28,7 @@ Contributeur 2 : CISERANE Marius p2303380
 {% if REQUEST_VARS['phase'] == 'resultats' %}
 <p>Félicitation, vous avez fait un score de {{ REQUEST_VARS['score'] }}</p>
 <p>Vous êtes classé {{ REQUEST_VARS['rang'][0] }}e sur {{ REQUEST_VARS['rang'][1] }} !</p>
-{% if REQUEST_VARS['score'] == 0 %}<p>??? attendez je crois que j'ai mal lu...</p>{% endif %}
+<p>{% if REQUEST_VARS['score'] == 0 %}??? attendez je crois que j'ai mal lu...{% endif %}</p>
 {% endif %}
 
 <form id="jeu" action="/jeu" method="POST">

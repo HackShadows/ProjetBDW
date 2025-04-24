@@ -330,9 +330,8 @@ main h1 {
 	flex-flow: column nowrap;
 	align-items: center;
 	margin-right: 8%;
-	background-image: linear-gradient(to bottom, gold, black);
 	border-radius: 50px;
-	box-shadow: black 0 10px 30px 0;
+	box-shadow: black 0 0 30px 0 inset;
 }
 #stats-page li {
 	display: contents;
@@ -449,6 +448,17 @@ main h1 {
 
 
 
+main > p:has(~ #jeu) {
+	text-align: center;
+	font-size: 2rem;
+	font-weight: bold;
+	color: #333
+}
+main > p:has(+ #jeu) {
+	font-size: .8rem;
+	font-weight: normal;
+	color: grey;
+}
 #jeu img {display: block; margin: auto; width:13vmin;}
 
 #jeu {
