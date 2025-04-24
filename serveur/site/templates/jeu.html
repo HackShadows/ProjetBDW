@@ -1,3 +1,8 @@
+<!--
+Contributeur 1 : BOULLOT Matthias p2306662
+Contributeur 2 : CISERANE Marius p2303380
+-->
+
 {% extends "base.html" %}
 
 {% block main_content %}
@@ -22,6 +27,7 @@
 
 {% if REQUEST_VARS['phase'] == 'resultats' %}
 <p>Félicitation, vous avez fait un score de {{ REQUEST_VARS['score'] }}</p>
+<p>Vous êtes classé {{ REQUEST_VARS['rang'] }}e !</p>
 {% if REQUEST_VARS['score'] == 0 %}<p>??? attendez je crois que j'ai mal lu...</p>{% endif %}
 {% endif %}
 

@@ -1,8 +1,11 @@
+# Contributeur 1 : CISERANE Marius p2303380
+# Contributeur 2 : BOULLOT Matthias p2306662
+
 from model.model_pg import nouvelle_partie, get_infos_partie, fin_partie
 from model.model_pg import nouvelle_pioche, get_pioche, get_id_pioche, défausser_pioche, remplir_pioche
 from model.model_pg import get_grille, grille_remplie
 from model.model_pg import get_contraintes_validées, get_img_tuile
-from model.model_pg import nouveau_tour, get_tour, maj_classement
+from model.model_pg import nouveau_tour, get_tour, maj_classement, get_rang
 
 
 connexion = SESSION['CONNEXION']
@@ -71,6 +74,7 @@ if "partie_en_cours" in SESSION:
 		REQUEST_VARS['score'] = sum(REQUEST_VARS['resultat_grille']["colonne"] + REQUEST_VARS['resultat_grille']["ligne"])
 		fin_partie(connexion, id_partie, REQUEST_VARS['score'])
 		maj_classement(connexion, REQUEST_VARS['taille_grille'], SESSION['partie_en_cours']['difficulté'])
+		REQUEST_VARS['rang'] = get_rang(connexion, REQUEST_VARS['taille_grille'], SESSION['partie_en_cours']['difficulté'], id_partie)
 		SESSION['num_tour'] = -1
 		
 		

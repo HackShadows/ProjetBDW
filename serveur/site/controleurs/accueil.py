@@ -1,3 +1,6 @@
+# Contributeur 1 : CISERANE Marius p2303380
+# Contributeur 2 : BOULLOT Matthias p2306662
+
 from model.model_pg import get_joueurs, count_instances, get_infos_joueur, nouveau_joueur
 from model.model_pg import parties_terminees, nb_parties
 

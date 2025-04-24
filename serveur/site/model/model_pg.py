@@ -1,3 +1,6 @@
+# Contributeur 1 : CISERANE Marius p2303380
+# Contributeur 2 : BOULLOT Matthias p2306662
+
 import psycopg
 from psycopg import sql
 from psycopg.rows import dict_row
@@ -213,6 +216,31 @@ def id_disponible(connexion, nom_table :str) -> int:
 	while i <= lg and result[i-1][f"id_{nom_table}"] == i: i += 1
 	return i
 
+def get_rang(connexion, taille_grille :int, difficulté :str, id_partie :int) -> int:
+	"""
+	Renvoie le rang du joueur passé en paramètre dans le classement souhaité.
+	
+	Paramètres
+	----------
+	connexion : 
+	    Connexion à la base de donnée.
+	taille_grille : int
+	    Taille des grilles du classement.
+	difficulté : str
+	    Difficulté des grilles du classement.
+	id_partie : int
+	    Identifiant de la partie.
+
+	Renvoie
+	-------
+	Rang du joueur dans le classement, 0 si le joueur n'apparaît pas dans le classement.
+	"""
+	query = 'SELECT id_partie FROM partie WHERE en_cours=false AND taille_grille=%s AND difficulté=%s ORDER BY score DESC, date_création'
+	result = execute_select_query(connexion, query, [taille_grille, difficulté])
+	for rg, dic in enumerate(result):
+		if int(dic["id_partie"]) == id_partie: return rg+1
+	return 0
+
 
 # Fonctions utilisées par le contrôleur accueil.py
 def nouveau_joueur(connexion, nom :str, prénom :str, pseudo :str, année :int) :
@@ -315,7 +343,7 @@ def infos_classement(connexion, taille_grille :int, difficulté :str) -> list[di
 	Renvoie
 	-------
 	Liste de dictionnaires (clés : 'joueur', 'score', 'rang', 'date', 
-	valeurs : dictionnaire(clés : nom, prénom, pseudo, année_naiss), score du joueur, rang du joueur, date de la partie).
+	valeurs : dictionnaire(clés : id_joueur, nom, prénom, pseudo, année_naiss), score du joueur, rang du joueur, date de la partie).
 	"""
 	query = 'SELECT id_joueur, score, date_création AS date FROM partie WHERE en_cours=false AND taille_grille=%s AND difficulté=%s ORDER BY score DESC, date_création'
 	result = execute_select_query(connexion, query, [taille_grille, difficulté])
