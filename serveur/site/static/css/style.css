@@ -533,11 +533,20 @@ main h1 {
 }
 .tuile-score-nul {
 	font-size: 2rem;
-	color: #800;
+	color: red;
 }
 .tuile-score-bien {
 	font-size: 2rem;
 	color: #0F0;
+}
+.contrainte_perdu {
+	background-color: red;
+}
+.contrainte_valide {
+	background-color: #0F0;
+}
+.contrainte_defaut {
+	background-color: rgba(0, 128, 0, 0);
 }
 
 
