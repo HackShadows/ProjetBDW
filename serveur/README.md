@@ -69,7 +69,7 @@ source .vebdw/bin/activate  # .vebdw\Scripts\activate sous Windows
 
 Démarrer le serveur en indiquant le nom du sous-répertoire contenant votre site web :
 ```sh
-python server.py <repertoire_de_votre_site>
+python serveur.py <repertoire_de_votre_site>
 ```
 
 Si tout s'est bien passé, vous devriez voir [http://localhost:4242](l'interface suivante) :

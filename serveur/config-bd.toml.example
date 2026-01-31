@@ -1,0 +1,6 @@
+# config-bd.toml.example
+POSTGRESQL_SERVER = "localhost"
+POSTGRESQL_USER = "votre_utilisateur"
+POSTGRESQL_PASSWORD = "votre_mot_de_passe"
+POSTGRESQL_DATABASE = "nom_de_la_base"
+POSTGRESQL_SCHEMA = "projetbdw"
