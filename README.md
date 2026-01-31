@@ -53,9 +53,3 @@ Rendez-vous sur http://localhost:4242 !
 ## 👥 Auteurs
 * **Marius Ciserane**
 * **Matthias Boullot**
-
-### 5. Nettoyage final
-
-Avant de faire `git add .` :
-1.  **Supprime** les dossiers `__pycache__` s'ils existent déjà.
-2.  **Supprime** le dossier de l'environnement virtuel (`.vebdw`) s'il est présent, on ne versionne jamais l'environnement virtuel, juste le fichier `requirements.in` (ou `.txt`).
