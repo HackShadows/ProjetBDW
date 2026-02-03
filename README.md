@@ -1,8 +1,10 @@
 # Lost Seas - Version Web (Projet BDW)
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue.svg)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-green.svg)
 ![Jinja2](https://img.shields.io/badge/Template-Jinja2-orange.svg)
+![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
+![Status](https://img.shields.io/badge/Status-Terminé-success.svg)
 
 Adaptation web du jeu de société **Lost Seas**, développée en Python selon une architecture **MVC (Modèle-Vue-Contrôleur)**.
 
