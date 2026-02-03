@@ -31,6 +31,7 @@ Le projet respecte une séparation stricte des responsabilités :
 .
 ├── .gitignore
 ├── README.md
+├── LICENSE                     # Licence MIT du projet
 │
 ├── planning/                   # Documentation et conception BDD
 │   ├── Modèle Relationnel.txt
