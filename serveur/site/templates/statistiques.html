@@ -11,7 +11,7 @@ Contributeur 2 : CISERANE Marius p2303380
 <ul id="stats-page">
 	<li><label>
 		<output>{{ (100*REQUEST_VARS['moyenne']|round)/100 }}</output>
-		<span>lancées par joueurs en moyenne</span>
+		<span>parties lancées par joueurs en moyenne</span>
 	</label></li>
 
 	{% if REQUEST_VARS.scores.maxi is not none %}
@@ -26,20 +26,20 @@ Contributeur 2 : CISERANE Marius p2303380
 		<output><form method="POST" action="jeu"><ul>
 		{% for partie in REQUEST_VARS['score_max'] %}
 			<li>
-				<button type="submit" name="partie" value="{{ partie['partie']['id_partie'] }}">{{ partie['joueur'][0]['pseudo'] }}</button>
+				<button type="submit" name="partie" value="{{ partie['partie']['id_partie'] }}">{{ partie['partie']['taille_grille'] }}{{ partie['partie']['difficulté'][0] }}:{{ partie['joueur'][0]['pseudo'] }}</button>
 			</li>
 		{% endfor %}
 		</ul></form></output>
 		{% else %}
 		<output>N/A</output>
 		{% endif %}
-		<span>sont toutes les parties ayant fait un 100%</span>
+		<span>sont toutes les parties ayant validées toutes leurs contraintes</span>
 	</label></li>
 
 	{% if REQUEST_VARS.scores.mini is not none %}
 	<li><label>
 		<output>{{ REQUEST_VARS['scores']['mini'][1][0]['pseudo'] }}</output>
-		<span>est le pire joueur qu'on ait connu, avec un score de : <span>{{ REQUEST_VARS['scores']['mini'][0] }}</span></span>
+		<span>est le joueur le plus récent ayant fait la pire partie, avec un score de : <span>{{ REQUEST_VARS['scores']['mini'][0] }}</span></span>
 	</label></li>
 	{% endif %}
 
@@ -48,14 +48,14 @@ Contributeur 2 : CISERANE Marius p2303380
 		<output><form method="POST" action="jeu"><ul>
 		{% for partie in REQUEST_VARS['score_0'] %}
 			<li>
-				<button type="submit" name="partie" value="{{ partie['partie']['id_partie'] }}">{{ partie['joueur'][0]['pseudo'] }}</button>
+				<button type="submit" name="partie" value="{{ partie['partie']['id_partie'] }}">{{ partie['partie']['taille_grille'] }}{{ partie['partie']['difficulté'][0] }}:{{ partie['joueur'][0]['pseudo'] }}</button>
 			</li>
 		{% endfor %}
 		</ul></form></output>
 		{% else %}
 		<output>N/A</output>
 		{% endif %}
-		<span>sont toutes les parties n'ayant validées aucune tuile</span>
+		<span>sont les {% if (REQUEST_VARS['score_0']|length) == 5 %}5 {% endif %}parties les plus récentes n'ayant validées aucune tuile</span>
 	</label></li>
 </ul>
 {% endblock %}

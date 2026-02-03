@@ -1,7 +1,0 @@
-# fichier de configuration au SGBD postgreSQL
-
-POSTGRESQL_SERVER = "bd-pedago.univ-lyon1.fr"
-POSTGRESQL_USER = "p2303380"
-POSTGRESQL_PASSWORD = "9BHXHrmxCsAc" 
-POSTGRESQL_DATABASE = "p2303380"
-POSTGRESQL_SCHEMA = "projetbdw"

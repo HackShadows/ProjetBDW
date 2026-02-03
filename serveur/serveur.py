@@ -61,7 +61,13 @@ class WebHandler(BaseHTTPRequestHandler):
         template_name = WebHandler._routes[url_path][1]  # get template filename corresponding to url_path
         with open(controleur_file, encoding='utf-8') as infile:  # execute controller file
             try:
-                exec(infile.read())  # security issues, but we assume that the script is run locally only
+                ns = {
+					"SESSION"		: SESSION
+					,"REQUEST_VARS"	: REQUEST_VARS
+					,"GET"			: GET
+					,"POST"			: POST
+				}
+                exec(infile.read(), ns, ns)  # security issues, but we assume that the script is run locally only
             except Exception as e:  # print controller error and exit
                 traceback.print_exc()
                 logger.error(f"Erreur ({controleur_file}) : {e}")
@@ -164,7 +170,13 @@ class WebServer(HTTPServer):
         check_init = self.check_exists_file(self.init_file)
         if check_init:  # execute init file
             with open(self.init_file) as infile:
-                exec(infile.read())  # security issues, but we assume that the script is run locally only
+                ns = {
+					"SESSION"		: SESSION
+					,"REQUEST_VARS"	: REQUEST_VARS
+					,"GET"			: GET
+					,"POST"			: POST
+				}
+                exec(infile.read(), ns, ns)  # security issues, but we assume that the script is run locally only
         # setup jinja templates
         self.env = Environment(  # class variable for template environment (based on Jinja)
             loader=FileSystemLoader([kwargs.get('templates_dir', self.directory), self.directory + '/templates', ]),

@@ -408,7 +408,7 @@ def score_min_max(connexion) -> dict[tuple[int, dict]|str, None]:
 	-------
 	Dictionnaire (clés : 'mini', 'maxi', valeurs : (score, dictionnaire(clés : nom, prénom, pseudo, année_naiss))).
 	"""
-	query = 'SELECT id_joueur, score FROM partie WHERE en_cours=false ORDER BY score {ordre}, date_création ASC LIMIT 1'
+	query = 'SELECT id_joueur, score FROM partie WHERE en_cours=false ORDER BY score {ordre}, date_création DESC LIMIT 1'
 	tris = ['ASC', 'DESC']
 	dico = {"mini":None, "maxi":None}
 	for tri in tris:
@@ -432,7 +432,7 @@ def score_0(connexion) -> list[dict]:
 	-------
 	Liste de dictionnaires (clés :'joueur', 'partie', valeurs : dictionnaire(clés : nom, prénom, pseudo, année_naiss), dictionnaire(clés : attributs de partie)).
 	"""
-	query = 'SELECT id_joueur, id_partie FROM partie WHERE en_cours=false AND score = 0'
+	query = 'SELECT id_joueur, id_partie FROM partie WHERE en_cours=false AND score = 0 ORDER BY date_création DESC LIMIT 5'
 	result = execute_select_query(connexion, query)
 	return [{"joueur":get_infos_joueur(connexion, dic["id_joueur"]), "partie":get_infos_partie(connexion, dic["id_partie"])} for dic in result]
 
