@@ -1,5 +1,26 @@
-**/.swp
+# --- Python (Fichiers compilés) ---
 **/__pycache__/
-**/.DS_Store
-/serveur/.vebdw/
-/serveur/config-bd.toml
+*.py[cod]
+*$py.class
+
+# --- Environnement Virtuel ---
+.vebdw/
+
+# --- Configuration & Sécurité ---
+# Ce fichier contient tes identifiants BDD : ne jamais le commiter !
+config-bd.toml
+
+# --- IDE et Éditeurs de texte ---
+# VS Code
+.vscode/
+# PyCharm / IntelliJ
+.idea/
+# Vim
+*.swp
+*.swo
+
+# --- Système d'exploitation ---
+# Mac
+.DS_Store
+# Windows
+Thumbs.db
